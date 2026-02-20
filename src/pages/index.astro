@@ -67,7 +67,7 @@ const techStack = Array.isArray(author?.data.techStack) ? author.data.techStack 
           {author?.data.avatar ? (
             <Image
               src={author.data.avatar}
-              alt={author.data.name}
+              alt={`Profile photo of ${author.data.name}`}
               width={208}
               height={208}
               class="relative h-full w-full rounded-2xl object-cover ring-2 ring-primary-200 dark:ring-primary-900 shadow-lg"
