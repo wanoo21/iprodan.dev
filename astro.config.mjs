@@ -12,9 +12,18 @@ import robotsTxt from "astro-robots-txt";
 export default defineConfig({
   prefetch: true,
   site: SITE_METADATA.siteUrl,
+  output: "server",
   adapter: cloudflare({
     imageService: "cloudflare",
   }),
+  image: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**.githubusercontent.com",
+      },
+    ],
+  },
   integrations: [mdx(), sitemap(), solidJs(), metaTags(), robotsTxt()],
   vite: {
     plugins: [tailwindcss()],

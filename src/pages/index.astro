@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 
-import { ITEMS_PER_PAGE } from "@/consts";
+import { ITEMS_PER_PAGE, OPEN_SOURCE_PROJECTS } from "@/consts";
 import RootLayout from "@/layouts/RootLayout.astro";
 import Link from "@/components/Link.astro";
 import Tag from "@/components/Tag.astro";
@@ -17,10 +17,7 @@ const t = useTranslations();
 const posts = await getCollection("blog", excludeDrafts).then(sortBlogPosts);
 const author = await getEntry("authors", "default");
 
-const techStack = [
-  "Angular", "TypeScript", "Astro", "Node.js",
-  "TailwindCSS", "MJML", "Web Components", "Stencil.js",
-];
+const techStack = Array.isArray(author?.data.techStack) ? author.data.techStack : [];
 ---
 
 <RootLayout
@@ -34,23 +31,25 @@ const techStack = [
       <div class="flex-1 space-y-5">
         <div>
           <p class="text-sm font-semibold uppercase tracking-widest text-primary-500 mb-2">
-            Frontend Engineer
+            {author?.data.occupation}
           </p>
           <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-gray-100 sm:text-5xl">
-            Ion Prodan
+            {author?.data.name}
           </h1>
         </div>
         <p class="text-lg text-gray-600 dark:text-gray-400 max-w-xl leading-relaxed">
           {t("siteMetadata.description")}
         </p>
         <!-- Tech Stack -->
-        <div class="flex flex-wrap gap-2 pt-1">
-          {techStack.map((tech) => (
-            <span class="rounded-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 px-3 py-1 text-xs font-medium text-gray-600 dark:text-gray-400">
-              {tech}
-            </span>
-          ))}
-        </div>
+        {techStack.length > 0 && (
+          <div class="flex flex-wrap gap-2 pt-1">
+            {techStack.map((tech) => (
+              <span class="rounded-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 px-3 py-1 text-xs font-medium text-gray-600 dark:text-gray-400">
+                {tech}
+              </span>
+            ))}
+          </div>
+        )}
         <!-- Social Links -->
         {author && (
           <div class="flex gap-3 pt-1">
@@ -138,32 +137,28 @@ const techStack = [
       Open Source
     </h2>
     <div class="grid gap-4 sm:grid-cols-2">
-      <a href="https://github.com/wanoo21/tailwind-astro-starting-blog" target="_blank" rel="noopener noreferrer"
-        class="group rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/40 p-5 hover:border-primary-300 dark:hover:border-primary-700 transition-colors no-underline">
-        <div class="flex items-start justify-between gap-2">
-          <h3 class="font-semibold text-gray-900 dark:text-gray-100 group-hover:text-primary-500 transition-colors text-sm">
-            tailwind-astro-starting-blog
-          </h3>
-          <span class="text-xs text-gray-400 flex-shrink-0 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full px-2 py-0.5">⭐ Popular</span>
-        </div>
-        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1.5">
-          A feature-rich Astro + TailwindCSS blog starter used by developers worldwide.
-        </p>
-        <span class="inline-block mt-2 text-xs font-medium text-primary-400">Astro</span>
-      </a>
-      <a href="https://ngb.email" target="_blank" rel="noopener noreferrer"
-        class="group rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/40 p-5 hover:border-primary-300 dark:hover:border-primary-700 transition-colors no-underline">
-        <div class="flex items-start justify-between gap-2">
-          <h3 class="font-semibold text-gray-900 dark:text-gray-100 group-hover:text-primary-500 transition-colors text-sm">
-            ngb.email
-          </h3>
-          <span class="text-xs text-gray-400 flex-shrink-0 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full px-2 py-0.5">Open Source</span>
-        </div>
-        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1.5">
-          Drag-and-drop email template editor for Angular, built with MJML and TailwindCSS.
-        </p>
-        <span class="inline-block mt-2 text-xs font-medium text-primary-400">Angular · TypeScript</span>
-      </a>
+      {OPEN_SOURCE_PROJECTS.map((project) => (
+        <a
+          href={project.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={project.ariaLabel}
+          class="group rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/40 p-5 hover:border-primary-300 dark:hover:border-primary-700 transition-colors no-underline"
+        >
+          <div class="flex items-start justify-between gap-2">
+            <h3 class="font-semibold text-gray-900 dark:text-gray-100 group-hover:text-primary-500 transition-colors text-sm">
+              {project.title}
+            </h3>
+            <span class="text-xs text-gray-400 flex-shrink-0 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full px-2 py-0.5">
+              {project.badge}
+            </span>
+          </div>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1.5">
+            {project.description}
+          </p>
+          <span class="inline-block mt-2 text-xs font-medium text-primary-400">{project.lang}</span>
+        </a>
+      ))}
     </div>
   </section>
 </RootLayout>

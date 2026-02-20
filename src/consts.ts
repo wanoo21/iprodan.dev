@@ -80,6 +80,28 @@ export const NAVIGATION = [
   { href: "/about", title: "nav.about" },
 ] as const;
 
+/**
+ * Featured open-source projects shown on the homepage.
+ */
+export const OPEN_SOURCE_PROJECTS = [
+  {
+    title: "tailwind-astro-starting-blog",
+    description: "A feature-rich Astro + TailwindCSS blog starter used by developers worldwide.",
+    href: "https://github.com/wanoo21/tailwind-astro-starting-blog",
+    badge: "⭐ Popular",
+    lang: "Astro",
+    ariaLabel: "View tailwind-astro-starting-blog on GitHub",
+  },
+  {
+    title: "ngb.email",
+    description: "Drag-and-drop email template editor for Angular, built with MJML and TailwindCSS.",
+    href: "https://ngb.email",
+    badge: "Open Source",
+    lang: "Angular · TypeScript",
+    ariaLabel: "Visit ngb.email website",
+  },
+] as const;
+
 export const POST_METADATA = {
   defaultLayout: "column", // Default layout for blog posts, options: simple and column
   showFullWidthCover: false, // Show full width cover image in blog post
