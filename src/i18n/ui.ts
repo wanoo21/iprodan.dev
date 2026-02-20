@@ -5,7 +5,7 @@ export const ui = {
     // Site Metadata
     'siteMetadata.title': 'iprodan.dev',
     'siteMetadata.headerTitle': 'iprodan.dev',
-    'siteMetadata.description': 'Personal blog by Ivan Prodan — writing about web development, tech, and software engineering.',
+    'siteMetadata.description': 'Frontend engineer writing about Angular, TypeScript, Astro, and the art of building things on the open web.',
     'siteMetadata.language': 'en-US',
 
     // Pages
