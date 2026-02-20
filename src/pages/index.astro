@@ -4,8 +4,8 @@ import { getCollection } from "astro:content";
 import { ITEMS_PER_PAGE } from "@/consts";
 import RootLayout from "@/layouts/RootLayout.astro";
 import Link from "@/components/Link.astro";
-import ListPostCover from "@/components/ListPostCover.astro";
 import Tag from "@/components/Tag.astro";
+import FormattedDate from "@/components/FormattedDate.astro";
 import { excludeDrafts, sortBlogPosts } from "@/functions";
 import { useTranslations } from "@/i18n";
 
@@ -18,83 +18,72 @@ const posts = await getCollection("blog", excludeDrafts).then(sortBlogPosts);
   title={t("siteMetadata.title")}
   description={t("siteMetadata.description")}
 >
-  <div class="divide-y divide-gray-200 dark:divide-gray-700">
-    <div class="space-y-2 pb-8 pt-6 md:space-y-5">
+  <div class="py-10">
+    <div class="mb-12">
       <h1
-        class="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14"
+        class="text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-100 sm:text-5xl mb-4"
       >
-        {t("pages.home.latestPosts")}
+        Hi, I'm Ivan 👋
       </h1>
-      <p class="text-lg leading-7 text-gray-500 dark:text-gray-400">
+      <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl">
         {t("siteMetadata.description")}
       </p>
     </div>
-    <ul class="divide-y divide-gray-200 dark:divide-gray-700">
-      {!posts.length && t("pages.home.noPosts")}
-      {
-        posts.slice(0, ITEMS_PER_PAGE).map((post) => {
-          const { title, summary, tags } = post.data;
-          return (
-            <li class="py-12">
-              <article>
-                <div class="space-y-2 xl:grid xl:grid-cols-4 space-x-4 xl:space-y-0 xl:items-stretch">
-                  <ListPostCover {post} class="space-y-5 xl:col-span-1" />
-                  <div class="space-y-5 xl:col-span-3">
-                    <div class="space-y-6">
-                      <div>
-                        <h2 class="text-2xl font-bold leading-8 tracking-tight">
-                          <Link
-                            href={`/blog/${post.id}`}
-                            class="text-gray-900 dark:text-gray-100"
-                          >
-                            {title}
-                          </Link>
-                        </h2>
-                        <div class="flex flex-wrap">
-                          {tags.map((ref) => (
-                            <Tag slug={ref.id} />
-                          ))}
-                        </div>
-                      </div>
-                      <div class="prose max-w-none text-gray-500 dark:text-gray-400">
-                        {summary}
-                      </div>
+
+    <div>
+      <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-6 pb-2 border-b border-gray-200 dark:border-gray-700">
+        {t("pages.home.latestPosts")}
+      </h2>
+      <ul class="space-y-8">
+        {!posts.length && <li class="text-gray-500 dark:text-gray-400">{t("pages.home.noPosts")}</li>}
+        {
+          posts.slice(0, ITEMS_PER_PAGE).map((post) => {
+            const { title, summary, tags, date } = post.data;
+            return (
+              <li>
+                <article class="group">
+                  <div class="flex items-start gap-4">
+                    <div class="min-w-[100px] text-sm text-gray-500 dark:text-gray-400 pt-1">
+                      <FormattedDate date={date} />
                     </div>
-                    <div class="text-base font-medium leading-6">
-                      <Link
-                        href={`/blog/${post.id}`}
-                        class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
-                        aria-label={t('pages.home.readMoreAbout', {title})}
-                      >
-                        {t('pages.home.readMore')} &rarr;
-                      </Link>
+                    <div class="flex-1 space-y-2">
+                      <h3 class="text-lg font-semibold leading-snug">
+                        <Link
+                          href={`/blog/${post.id}`}
+                          class="text-gray-900 dark:text-gray-100 hover:text-primary-500 dark:hover:text-primary-400 transition-colors"
+                        >
+                          {title}
+                        </Link>
+                      </h3>
+                      <p class="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">
+                        {summary}
+                      </p>
+                      <div class="flex flex-wrap gap-1">
+                        {tags.map((ref) => (
+                          <Tag slug={ref.id} />
+                        ))}
+                      </div>
                     </div>
                   </div>
-                </div>
-              </article>
-            </li>
-          );
-        })
+                </article>
+              </li>
+            );
+          })
+        }
+      </ul>
+      {
+        posts.length > ITEMS_PER_PAGE && (
+          <div class="mt-8">
+            <Link
+              href="/blog"
+              class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 text-sm font-medium"
+              aria-label={t("pages.home.viewAllPosts")}
+            >
+              {t("pages.home.viewAllPosts")} &rarr;
+            </Link>
+          </div>
+        )
       }
-    </ul>
+    </div>
   </div>
-  {
-    posts.length > ITEMS_PER_PAGE && (
-      <div class="flex justify-end text-base font-medium leading-6">
-        <Link
-          href="/blog"
-          class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
-          aria-label={t('pages.home.viewAllPosts')}
-        >
-        {t('pages.home.viewAllPosts')} &rarr;
-        </Link>
-      </div>
-    )
-  }
-  <!--TODO: Add newsletter form-->
-  <!--{siteMetadata.newsletter?.provider && (-->
-  <!--        <div class="flex items-center justify-center pt-4">-->
-  <!--            <NewsletterForm />-->
-  <!--        </div>-->
-  <!--)}-->
 </RootLayout>
