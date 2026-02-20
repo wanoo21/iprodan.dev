@@ -5,8 +5,8 @@
  */
 export const SITE_METADATA = {
   theme: "system", // Options: system, light, dark
-  siteUrl: "https://tasb.yon.fun/",
-  siteRepo: "https://github.com/wanoo21/tailwind-astro-starting-blog",
+  siteUrl: "https://iprodan.dev",
+  siteRepo: "https://github.com/wanoo21/iprodan.dev",
   robots: "index, follow", // Options: index, noindex, follow, nofollow
 
   // These are not supported yet
@@ -77,9 +77,29 @@ export const ITEMS_PER_PAGE = 5;
 export const NAVIGATION = [
   { href: "/", title: "nav.home" },
   { href: "/blog", title: "nav.blog" },
-  { href: "/tags", title: "nav.tags" },
-  { href: "/projects", title: "nav.projects" },
   { href: "/about", title: "nav.about" },
+] as const;
+
+/**
+ * Featured open-source projects shown on the homepage.
+ */
+export const OPEN_SOURCE_PROJECTS = [
+  {
+    title: "tailwind-astro-starting-blog",
+    description: "A feature-rich Astro + TailwindCSS blog starter used by developers worldwide.",
+    href: "https://github.com/wanoo21/tailwind-astro-starting-blog",
+    badge: "⭐ Popular",
+    lang: "Astro",
+    ariaLabel: "View tailwind-astro-starting-blog on GitHub",
+  },
+  {
+    title: "ngb.email",
+    description: "Drag-and-drop email template editor for Angular, built with MJML and TailwindCSS.",
+    href: "https://ngb.email",
+    badge: "Open Source",
+    lang: "Angular · TypeScript",
+    ariaLabel: "Visit ngb.email website",
+  },
 ] as const;
 
 export const POST_METADATA = {
