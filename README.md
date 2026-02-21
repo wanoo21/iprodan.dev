@@ -1,23 +1,26 @@
 ![img.png](img.png)
 
-# Tailwind Astro Starter Project
+# Ion Prodan's Blog
 
-[![GitHub Repo stars](https://img.shields.io/github/stars/wanoo21/tailwind-astro-starting-blog?style=social)](https://GitHub.com/wanoo21/tailwind-astro-starting-blog/stargazers/)
-[![GitHub forks](https://img.shields.io/github/forks/wanoo21/tailwind-astro-starting-blog?style=social)](https://GitHub.com/wanoo21/tailwind-astro-starting-blog/network/)
-[![Twitter URL](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2Fipwanciu)](https://twitter.com/ipwanciu)
-[![Sponsor](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&link=https://github.com/sponsors/wanoo21)](https://github.com/sponsors/wanoo21)
+[![GitHub Repo stars](https://img.shields.io/github/stars/wanoo21/iprodan.dev?style=social)](https://github.com/wanoo21/iprodan.dev/stargazers/)
+[![Twitter URL](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2Fwanoo21)](https://twitter.com/wanoo21)
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/wanoo21/tailwind-astro-starting-blog)
+Personal blog and portfolio. Built with the [tailwind-astro-starting-blog](https://github.com/wanoo21/tailwind-astro-starting-blog) template.
 
-This template is perfect for those who want to use Tailwind CSS and Astro to build a blog.
+## Live Site
 
-It is inspired by the [Tailwind Next.js Starter Blog](https://github.com/timlrx/tailwind-nextjs-starter-blog) - one of the most popular Next.js blogging templates.
+[iprodan.dev](https://iprodan.dev)
 
-Feature request or Facing issue? Check the [discussion page](https://github.com/wanoo21/tailwind-astro-starting-blog/discussions) to see if it has been brought up previously. Otherwise, feel free to start a new discussion thread. All ideas are welcomed!
+## Projects
 
-## Demo
+Open source and side projects featured on this site:
 
-[Live Demo](https://tasb.yon.fun/) - Deployed on Vercel.
+| Project | Description |
+| :------ | :---------- |
+| [tailwind-astro-starting-blog](https://github.com/wanoo21/tailwind-astro-starting-blog) | A feature-rich Astro + TailwindCSS blog starter used by developers worldwide |
+| [snipsco.com](https://snipsco.com) | Code snippets made easy. Built entirely with Angular |
+| [quiky.email](https://quiky.email) | Free AI-powered email writing tools. No sign-up required. Built with Astro |
+| [ngb.email](https://github.com/wanoo21/ngb.email) | A fully customizable, open-source drag-and-drop email template editor for Angular (archived) |
 
 ## Features
 
@@ -38,20 +41,14 @@ Feature request or Facing issue? Check the [discussion page](https://github.com/
 - Projects page
 - i18n support
 - **Fully SEO optimized**, including Open Graph and Twitter Cards
-- Almost Perfect lighthouse score (for mobile - 99/95/100/91) - [Lighthouse Report](https://pagespeed.web.dev/analysis/https-tasb-yon-fun/gp1vypobei?form_factor=mobile)
 
-![lighthouse score](image.png)
-
-Even thought these features looks the same as the original template, they are implemented in a different way, and there are more to come.
-
-However, there are some features that are not in the original template, like:
+This site is built on the [tailwind-astro-starting-blog](https://github.com/wanoo21/tailwind-astro-starting-blog) template. Notable features include:
 
 - Support for multiple authors pages - **each author will have** its own page, with a list of all the posts written by him/her.
 - Support for multiple tags pages - **each tag has its own page with custom description**, that can be customized with markdown.
 - Related posts - **each post has** a list of related posts, provided by the author inside the markdown file.
 - Pagination inside blog/tags pages - **each blog/tags page has** a pagination.
 - Cool animations provided by Astro.
-- And many more that would come in the future.
 
 ## Internationalization
 
@@ -59,7 +56,7 @@ This template has support for i18n, it's set up for English as default. You can 
 
 ## Extend / Customize
 
-`src/consts.ts` contains a list of constants that you can customize to your liking, including the blog title, description, author, social media links, etc.
+`src/consts.ts` contains a list of constants that you can customize to your liking, including the blog title, description, author, social media links, and open source projects (`OPEN_SOURCE_PROJECTS`), etc.
 
 `src/functions.ts` contains a list of functions that changes the default behavior of the template, including default post sorting and exclude draft posts.
 

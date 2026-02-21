@@ -1058,7 +1058,266 @@ _**Agent (model composer-1.5, mode Agent)**_
 
 ---
 
+<think><details><summary>Thought Process</summary>
+**Reviewing href value**
 
+I found a potential typo in the href value that might need correction. I confirmed the href value is correctly set to "https://snipsco.com" on line 101. </details></think>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/ip/Projects/iprodan.dev/src/consts.ts</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints">
+<details>
+<summary>Tool use: **read_lints**</summary>
+
+
+Parameters:
+
+```json
+{
+  "paths": [
+    "/Users/ip/Projects/iprodan.dev/src/consts.ts"
+  ]
+}
+```
+Result:
+
+```json
+{
+  "linterErrorsByFile": [
+    {
+      "relativeWorkspacePath": "/Users/ip/Projects/iprodan.dev/src/consts.ts"
+    }
+  ]
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/ip/Projects/iprodan.dev/src/consts.ts</summary>
+
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+ngb.email is now in `OPEN_SOURCE_PROJECTS` with:
+- **title:** ngb.email
+- **description:** A fully customizable, open-source drag-and-drop email template editor for Angular, integrated with MJML and TailwindCSS (no longer maintained).
+- **href:** https://github.com/wanoo21/ngb.email
+- **badge:** Archived
+- **lang:** Angular
+
+---
+
+_**User**_
+
+Let's update @README.md file accordingly.
+
+---
+
+_**Agent (model composer-1.5, mode Agent)**_
+
+
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/ip/Projects/iprodan.dev/README.md</summary>
+
+</details>
+</tool-use>
+
+---
+
+<think><details><summary>Thought Process</summary>
+**Updating README**
+
+I'm updating the README to reflect that this is Ion Prodan's personal blog/portfolio site rather than a generic template. I'm changing the README title to 'Ion Prodan's Blog' and updating repo references and demo link to iprodan.dev. I'm adding a new section for open source projects and updating social links to reflect recent changes. I need to clarify whether the README should be rewritten for iprodan.dev or just updated with project listings. I should update the README to reflect that this is a personal blog for iprodan.dev with project listings. </details></think>
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/ip/Projects/iprodan.dev/src/consts.ts</summary>
+
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/ip/Projects/iprodan.dev/README.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/ip/Projects/iprodan.dev/README.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/ip/Projects/iprodan.dev/README.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/ip/Projects/iprodan.dev/README.md</summary>
+
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/ip/Projects/iprodan.dev/README.md</summary>
+
+</details>
+
+</tool-use>
+
+---
+
+
+
+---
+
+
+Updates to the README are done:
+
+1. **Header** – Title set to “Ion Prodan's Blog”, repo badges use `iprodan.dev`, Twitter link set to `wanoo21`.
+2. **Live Site** – Added section with link to [iprodan.dev](https://iprodan.dev).
+3. **Projects** – New table listing:
+   - tailwind-astro-starting-blog  
+   - snipsco.com (Angular)  
+   - quiky.email (Astro)  
+   - ngb.email (archived)
+4. **Template** – Mention that the site is built on the tailwind-astro-starting-blog template.
+5. **Cleanup** – Removed template-specific links (Vercel deploy, Lighthouse) and “And many more”.
+6. **Extend / Customize** – Documented the `OPEN_SOURCE_PROJECTS` constant in `src/consts.ts`.
 
 ---
 

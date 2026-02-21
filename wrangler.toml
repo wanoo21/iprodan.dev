@@ -5,7 +5,7 @@ compatibility_flags = ["nodejs_compat"]
 main = "./dist/_worker.js/index.js"
 
 assets = { directory = "./dist", binding = "ASSETS" }
-# routes = [{ pattern = "**", zone_name = "iprodan.dev" }]
+routes = [{ pattern = "iprodan.dev", custom_domain = true }]
 
 [vars]
 # Add any environment-specific variables here
