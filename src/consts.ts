@@ -96,12 +96,28 @@ export const OPEN_SOURCE_PROJECTS = [
     ariaLabel: "View tailwind-astro-starting-blog on GitHub",
   },
   {
+    title: "snipsco.com",
+    description: "Code snippets made easy. Built entirely with Angular.",
+    href: "https://snipsco.com",
+    badge: "Angular",
+    lang: "Angular",
+    ariaLabel: "View snipsco.com",
+  },
+  {
+    title: "quiky.email",
+    description: "Free AI-powered email writing tools. No sign-up required. Built with Astro.",
+    href: "https://quiky.email",
+    badge: "Astro",
+    lang: "Astro",
+    ariaLabel: "View quiky.email",
+  },
+  {
     title: "ngb.email",
-    description: "Drag-and-drop email template editor for Angular, built with MJML and TailwindCSS.",
-    href: "https://ngb.email",
-    badge: "Open Source",
-    lang: "Angular · TypeScript",
-    ariaLabel: "Visit ngb.email website",
+    description: "A fully customizable, open-source drag-and-drop email template editor for Angular, integrated with MJML and TailwindCSS (no longer maintained).",
+    href: "https://github.com/wanoo21/ngb.email",
+    badge: "Archived",
+    lang: "Angular",
+    ariaLabel: "View ngb.email on GitHub",
   },
 ] as const;
 
