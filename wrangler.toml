@@ -1,6 +1,19 @@
 name = "iprodan-dev"
-compatibility_date = "2025-01-01"
+compatibility_date = "2026-02-21"
 compatibility_flags = ["nodejs_compat"]
 
-[env.production]
-name = "iprodan-dev"
+main = "./dist/_worker.js/index.js"
+
+assets = { directory = "./dist", binding = "ASSETS" }
+# routes = [{ pattern = "**", zone_name = "iprodan.dev" }]
+
+[vars]
+# Add any environment-specific variables here
+# e.g.
+# API_KEY = "your-api-key"
+# BASE_URL = "https://your-api-base-url.com"
+
+# Optional: Enable minification
+minify = true
+
+placement = "smart"
