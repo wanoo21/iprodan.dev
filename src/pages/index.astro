@@ -17,7 +17,9 @@ const t = useTranslations();
 const posts = await getCollection("blog", excludeDrafts).then(sortBlogPosts);
 const author = await getEntry("authors", "default");
 
-const techStack = Array.isArray(author?.data.techStack) ? author.data.techStack : [];
+const techStack = Array.isArray(author?.data.techStack)
+  ? author.data.techStack
+  : [];
 ---
 
 <RootLayout
@@ -26,57 +28,75 @@ const techStack = Array.isArray(author?.data.techStack) ? author.data.techStack 
 >
   <!-- Hero -->
   <section class="py-12 sm:py-16">
-    <div class="flex flex-col-reverse gap-10 sm:flex-row sm:items-center sm:gap-16">
+    <div
+      class="flex flex-col-reverse gap-10 sm:flex-row sm:items-center sm:gap-16"
+    >
       <!-- Text -->
       <div class="flex-1 space-y-5">
         <div>
-          <p class="text-sm font-semibold uppercase tracking-widest text-primary-500 mb-2">
+          <p
+            class="text-sm font-semibold uppercase tracking-widest text-primary-500 mb-2"
+          >
             {author?.data.occupation}
           </p>
-          <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-gray-100 sm:text-5xl">
+          <h1
+            class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-gray-100 sm:text-5xl"
+          >
             {author?.data.name}
           </h1>
         </div>
-        <p class="text-lg text-gray-600 dark:text-gray-400 max-w-xl leading-relaxed">
+        <p
+          class="text-lg text-gray-600 dark:text-gray-400 max-w-xl leading-relaxed"
+        >
           {t("siteMetadata.description")}
         </p>
         <!-- Tech Stack -->
-        {techStack.length > 0 && (
-          <div class="flex flex-wrap gap-2 pt-1">
-            {techStack.map((tech) => (
-              <span class="rounded-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 px-3 py-1 text-xs font-medium text-gray-600 dark:text-gray-400">
-                {tech}
-              </span>
-            ))}
-          </div>
-        )}
+        {
+          techStack.length > 0 && (
+            <div class="flex flex-wrap gap-2 pt-1">
+              {techStack.map((tech) => (
+                <span class="rounded-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 px-3 py-1 text-xs font-medium text-gray-600 dark:text-gray-400">
+                  {tech}
+                </span>
+              ))}
+            </div>
+          )
+        }
         <!-- Social Links -->
-        {author && (
-          <div class="flex gap-3 pt-1">
-            {author.data.github && <SocialIcon kind="github" href={author.data.github} size={5} />}
-            {author.data.twitter && <SocialIcon kind="twitter" href={author.data.twitter} size={5} />}
-            {author.data.linkedin && <SocialIcon kind="linkedin" href={author.data.linkedin} size={5} />}
-            {author.data.email && <SocialIcon kind="mail" href={`mailto:${author.data.email}`} size={5} />}
-          </div>
-        )}
+        {
+          author && (
+            <div class="flex gap-3 pt-1">
+              {author.data.github && (
+                <SocialIcon kind="github" href={author.data.github} size={5} />
+              )}
+              {author.data.twitter && (
+                <SocialIcon
+                  kind="twitter"
+                  href={author.data.twitter}
+                  size={5}
+                />
+              )}
+              {author.data.linkedin && (
+                <SocialIcon
+                  kind="linkedin"
+                  href={author.data.linkedin}
+                  size={5}
+                />
+              )}
+            </div>
+          )
+        }
       </div>
       <!-- Photo -->
-      <div class="flex-shrink-0">
-        <div class="relative mx-auto h-40 w-40 sm:h-52 sm:w-52">
-          <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary-400 to-primary-600 opacity-20 blur-xl"></div>
-          {author?.data.avatar ? (
-            <Image
-              src={author.data.avatar}
-              alt={`Profile photo of ${author.data.name}`}
-              width={208}
-              height={208}
-              class="relative h-full w-full rounded-2xl object-cover ring-2 ring-primary-200 dark:ring-primary-900 shadow-lg"
-            />
-          ) : (
-            <div class="relative h-full w-full rounded-2xl bg-gradient-to-br from-primary-100 to-primary-200 dark:from-gray-800 dark:to-gray-700 ring-2 ring-primary-200 dark:ring-primary-900 flex items-center justify-center">
-              <span class="text-5xl">👤</span>
-            </div>
-          )}
+      <div class="shrink-0">
+        <div class="relative mx-auto aspect-9/16 w-40">
+          <Image
+            src={author!.data.avatar!}
+            alt={`Profile photo of ${author!.data.name}`}
+            widths={[208, 416]}
+            sizes="(max-width: 640px) 208px, calc(208px * 2.5)"
+            class="relative h-full w-full object-cover"
+          />
         </div>
       </div>
     </div>
@@ -87,78 +107,110 @@ const techStack = Array.isArray(author?.data.techStack) ? author.data.techStack 
 
   <!-- Posts -->
   <section class="py-10">
-    <h2 class="text-xs font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-6">
+    <h2
+      class="text-xs font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-6"
+    >
       {t("pages.home.latestPosts")}
     </h2>
-    {!posts.length ? (
-      <div class="rounded-xl border border-dashed border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/40 px-8 py-12 text-center">
-        <p class="text-2xl mb-2">✍️</p>
-        <p class="font-semibold text-gray-700 dark:text-gray-300">Writing in progress</p>
-        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">First posts coming soon. <Link href="/about" class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">Learn more about me →</Link></p>
-      </div>
-    ) : (
-      <ul class="divide-y divide-gray-100 dark:divide-gray-800">
-        {posts.slice(0, ITEMS_PER_PAGE).map((post) => {
-          const { title, summary, tags, date } = post.data;
-          return (
-            <li class="py-5 group">
-              <Link href={`/blog/${post.id}`} class="flex flex-col sm:flex-row sm:items-baseline sm:gap-6 no-underline">
-                <time class="flex-shrink-0 text-xs tabular-nums text-gray-400 dark:text-gray-500 sm:w-28">
-                  <FormattedDate date={date} />
-                </time>
-                <div class="mt-1 sm:mt-0 flex-1 min-w-0">
-                  <h3 class="text-base font-semibold text-gray-900 dark:text-gray-100 group-hover:text-primary-500 transition-colors line-clamp-1">
-                    {title}
-                  </h3>
-                  <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5 line-clamp-1">{summary}</p>
-                  <div class="flex gap-1 mt-1 flex-wrap">
-                    {tags.map((ref) => <Tag slug={ref.id} />)}
+    {
+      !posts.length ? (
+        <div class="rounded-xl border border-dashed border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/40 px-8 py-12 text-center">
+          <p class="text-2xl mb-2">✍️</p>
+          <p class="font-semibold text-gray-700 dark:text-gray-300">
+            Writing in progress
+          </p>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+            First posts coming soon.{" "}
+            <Link
+              href="/about"
+              class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
+            >
+              Learn more about me →
+            </Link>
+          </p>
+        </div>
+      ) : (
+        <ul class="divide-y divide-gray-100 dark:divide-gray-800">
+          {posts.slice(0, ITEMS_PER_PAGE).map((post) => {
+            const { title, summary, tags, date } = post.data;
+            return (
+              <li class="py-5 group">
+                <Link
+                  href={`/blog/${post.id}`}
+                  class="flex flex-col sm:flex-row sm:items-baseline sm:gap-6 no-underline"
+                >
+                  <time class="flex-shrink-0 text-xs tabular-nums text-gray-400 dark:text-gray-500 sm:w-28">
+                    <FormattedDate date={date} />
+                  </time>
+                  <div class="mt-1 sm:mt-0 flex-1 min-w-0">
+                    <h3 class="text-base font-semibold text-gray-900 dark:text-gray-100 group-hover:text-primary-500 transition-colors line-clamp-1">
+                      {title}
+                    </h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5 line-clamp-1">
+                      {summary}
+                    </p>
+                    <div class="flex gap-1 mt-1 flex-wrap">
+                      {tags.map((ref) => (
+                        <Tag slug={ref.id} />
+                      ))}
+                    </div>
                   </div>
-                </div>
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
-    )}
-    {posts.length > ITEMS_PER_PAGE && (
-      <div class="mt-6">
-        <Link href="/blog" class="text-sm font-medium text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
-          {t("pages.home.viewAllPosts")} &rarr;
-        </Link>
-      </div>
-    )}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      )
+    }
+    {
+      posts.length > ITEMS_PER_PAGE && (
+        <div class="mt-6">
+          <Link
+            href="/blog"
+            class="text-sm font-medium text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
+          >
+            {t("pages.home.viewAllPosts")} &rarr;
+          </Link>
+        </div>
+      )
+    }
   </section>
 
   <!-- Open Source spotlight -->
   <div class="border-t border-gray-100 dark:border-gray-800"></div>
   <section class="py-10">
-    <h2 class="text-xs font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-6">
+    <h2
+      class="text-xs font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-6"
+    >
       Open Source
     </h2>
     <div class="grid gap-4 sm:grid-cols-2">
-      {OPEN_SOURCE_PROJECTS.map((project) => (
-        <a
-          href={project.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={project.ariaLabel}
-          class="group rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/40 p-5 hover:border-primary-300 dark:hover:border-primary-700 transition-colors no-underline"
-        >
-          <div class="flex items-start justify-between gap-2">
-            <h3 class="font-semibold text-gray-900 dark:text-gray-100 group-hover:text-primary-500 transition-colors text-sm">
-              {project.title}
-            </h3>
-            <span class="text-xs text-gray-400 flex-shrink-0 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full px-2 py-0.5">
-              {project.badge}
+      {
+        OPEN_SOURCE_PROJECTS.map((project) => (
+          <a
+            href={project.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={project.ariaLabel}
+            class="group rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/40 p-5 hover:border-primary-300 dark:hover:border-primary-700 transition-colors no-underline"
+          >
+            <div class="flex items-start justify-between gap-2">
+              <h3 class="font-semibold text-gray-900 dark:text-gray-100 group-hover:text-primary-500 transition-colors text-sm">
+                {project.title}
+              </h3>
+              <span class="text-xs text-gray-400 flex-shrink-0 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full px-2 py-0.5">
+                {project.badge}
+              </span>
+            </div>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1.5">
+              {project.description}
+            </p>
+            <span class="inline-block mt-2 text-xs font-medium text-primary-400">
+              {project.lang}
             </span>
-          </div>
-          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1.5">
-            {project.description}
-          </p>
-          <span class="inline-block mt-2 text-xs font-medium text-primary-400">{project.lang}</span>
-        </a>
-      ))}
+          </a>
+        ))
+      }
     </div>
   </section>
 </RootLayout>

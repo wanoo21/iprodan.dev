@@ -4,6 +4,9 @@
  * A few of these are not used yet, and are subject to change, example of this is Author.
  */
 export const SITE_METADATA = {
+  title: "Ion Prodan",
+  description: "Ion Prodan's blog",
+  language: "en",
   theme: "system", // Options: system, light, dark
   siteUrl: "https://iprodan.dev",
   siteRepo: "https://github.com/wanoo21/iprodan.dev",
