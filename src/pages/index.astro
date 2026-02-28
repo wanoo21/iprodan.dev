@@ -132,30 +132,43 @@ const techStack = Array.isArray(author?.data.techStack)
       ) : (
         <ul class="divide-y divide-gray-100 dark:divide-gray-800">
           {posts.slice(0, ITEMS_PER_PAGE).map((post) => {
-            const { title, summary, tags, date } = post.data;
+            const { title, summary, tags, date, cover } = post.data;
             return (
-              <li class="py-5 group">
+              <li class="py-5 group relative">
                 <Link
                   href={`/blog/${post.id}`}
-                  class="flex flex-col sm:flex-row sm:items-baseline sm:gap-6 no-underline"
-                >
-                  <time class="flex-shrink-0 text-xs tabular-nums text-gray-400 dark:text-gray-500 sm:w-28">
-                    <FormattedDate date={date} />
-                  </time>
-                  <div class="mt-1 sm:mt-0 flex-1 min-w-0">
-                    <h3 class="text-base font-semibold text-gray-900 dark:text-gray-100 group-hover:text-primary-500 transition-colors line-clamp-1">
+                  class="absolute inset-0"
+                  aria-label={title}
+                />
+                <div class="flex items-center gap-4">
+                  <div class="flex-1 min-w-0">
+                    <time class="text-xs tabular-nums text-gray-400 dark:text-gray-500">
+                      <FormattedDate date={date} />
+                    </time>
+                    <h3 class="mt-0.5 text-base font-semibold text-gray-900 dark:text-gray-100 group-hover:text-primary-500 transition-colors line-clamp-1">
                       {title}
                     </h3>
-                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5 line-clamp-1">
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5 line-clamp-2">
                       {summary}
                     </p>
-                    <div class="flex gap-1 mt-1 flex-wrap">
+                    <div class="relative z-10 flex gap-1 mt-2 flex-wrap">
                       {tags.map((ref) => (
                         <Tag slug={ref.id} />
                       ))}
                     </div>
                   </div>
-                </Link>
+                  {cover && (
+                    <div class="shrink-0 w-24 h-16 sm:w-32 sm:h-20 rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800">
+                      <Image
+                        src={cover}
+                        alt={title}
+                        width={128}
+                        height={80}
+                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                  )}
+                </div>
               </li>
             );
           })}

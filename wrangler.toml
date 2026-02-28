@@ -7,13 +7,6 @@ main = "./dist/_worker.js/index.js"
 assets = { directory = "./dist", binding = "ASSETS" }
 routes = [{ pattern = "iprodan.dev", custom_domain = true }]
 
-[vars]
-# Add any environment-specific variables here
-# e.g.
-# API_KEY = "your-api-key"
-# BASE_URL = "https://your-api-base-url.com"
-
 # Optional: Enable minification
 minify = true
-
-placement = "smart"
+placement = { mode = "smart" }
