@@ -1,7 +1,5 @@
 import { createSignal } from "solid-js";
 
-// Migrated from src/pages/interpolate-size/migrate-from.tsx (Angular)
-
 interface ChatDemoProps {
   useInterpolateSize?: boolean;
 }
@@ -12,21 +10,6 @@ export default function ChatDemo(props: ChatDemoProps) {
 
   return (
     <>
-      <style>
-        {`.chat-demo-interpolate-size {
-  interpolate-size: allow-keywords;
-}
-
-.chat-demo-message-container {
-  height: 0;
-  overflow: hidden;
-  transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.chat-demo-message-container.open {
-  height: auto;
-}`}
-      </style>
       <div
         class="border border-gray-200 dark:border-gray-700 rounded-2xl p-5 bg-white dark:bg-gray-800 shadow-sm flex flex-col gap-6"
         classList={{ "chat-demo-interpolate-size": useInterpolateSize() }}

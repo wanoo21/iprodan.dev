@@ -1,5 +1,5 @@
 ---
-import ChatDemo from "./components/ChatDemo";
+import ChatDemo from "./_components/ChatDemo";
 import Layout from "@/layouts/RootLayout.astro";
 ---
 
@@ -17,7 +17,9 @@ import Layout from "@/layouts/RootLayout.astro";
           >interpolate-size
         </code>
       </h1>
-      <p class="text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto text-lg">
+      <p
+        class="text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto text-lg"
+      >
         A demonstration of the new CSS property that enables smooth transitions
         to and from intrinsic sizes like <code>height: auto</code>.
       </p>
@@ -54,4 +56,19 @@ import Layout from "@/layouts/RootLayout.astro";
       <ChatDemo useInterpolateSize={true} client:idle />
     </section>
   </div>
+  <style is:inline>
+    .chat-demo-interpolate-size {
+      interpolate-size: allow-keywords;
+    }
+
+    .chat-demo-message-container {
+      height: 0;
+      overflow: hidden;
+      transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+      &.open {
+        height: auto;
+      }
+    }
+  </style>
 </Layout>
