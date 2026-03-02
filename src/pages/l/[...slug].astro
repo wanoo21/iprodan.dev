@@ -1,0 +1,22 @@
+---
+import { getCollection, render } from "astro:content";
+import LabLayout from "@/layouts/LabLayout.astro";
+import ChatDemo from "@/components/labs/ChatDemo";
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const labs = await getCollection("labs", (entry) => !entry.data.draft);
+  return labs.map((lab) => ({
+    params: { slug: lab.id },
+    props: { entry: lab },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<LabLayout entry={entry}>
+  <Content components={{ ChatDemo }} />
+</LabLayout>

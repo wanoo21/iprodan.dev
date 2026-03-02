@@ -47,4 +47,14 @@ const tags = defineCollection({
   }),
 });
 
-export const collections = { blog, authors, tags };
+const labs = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/labs" }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    badge: z.string().optional(),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { blog, authors, tags, labs };

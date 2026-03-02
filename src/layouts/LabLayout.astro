@@ -1,0 +1,17 @@
+---
+import type { CollectionEntry } from "astro:content";
+import RootLayout from "./RootLayout.astro";
+
+type Props = {
+  entry: CollectionEntry<"labs">;
+};
+
+const { entry } = Astro.props;
+---
+
+<RootLayout
+  title={`${entry.data.title} | Labs`}
+  description={entry.data.description}
+>
+  <slot />
+</RootLayout>

@@ -86,7 +86,6 @@ export default function ChatDemo(props: ChatDemoProps) {
 }
 
 .element {
-  interpolate-size: allow-keywords;
   height: 0;
   transition: height 0.5s ease;
 }

@@ -80,6 +80,7 @@ export const ITEMS_PER_PAGE = 5;
 export const NAVIGATION = [
   { href: "/", title: "nav.home" },
   { href: "/blog", title: "nav.blog" },
+  { href: "/labs", title: "nav.labs" },
   { href: "/about", title: "nav.about" },
 ] as const;
 

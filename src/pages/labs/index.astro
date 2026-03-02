@@ -1,0 +1,55 @@
+---
+import { getCollection } from "astro:content";
+import RootLayout from "@/layouts/RootLayout.astro";
+import Link from "@/components/Link.astro";
+import { useTranslations } from "@/i18n";
+
+const t = useTranslations();
+
+const labs = await getCollection("labs", (entry) => !entry.data.draft);
+---
+
+<RootLayout
+  title={t("pages.labs.title")}
+  description={t("pages.labs.description")}
+>
+  <div class="divide-y divide-gray-200 dark:divide-gray-700">
+    <div class="space-y-2 pb-8 pt-6 md:space-y-5">
+      <h1
+        class="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14"
+      >
+        {t("pages.labs.allLabs")}
+      </h1>
+      <p class="text-lg leading-7 text-gray-500 dark:text-gray-400">
+        {t("pages.labs.description")}
+      </p>
+    </div>
+    <div class="py-12">
+      <div class="grid gap-4 sm:grid-cols-2">
+        {
+          labs.map((lab) => (
+            <Link
+              href={`/l/${lab.id}`}
+              aria-label={`View ${lab.data.title} lab`}
+              class="group rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/40 p-5 hover:border-primary-300 dark:hover:border-primary-700 transition-colors no-underline block"
+            >
+              <div class="flex items-start justify-between gap-2">
+                <h2 class="font-semibold text-gray-900 dark:text-gray-100 group-hover:text-primary-500 transition-colors text-sm">
+                  {lab.data.title}
+                </h2>
+                {lab.data.badge && (
+                  <span class="text-xs text-gray-400 flex-shrink-0 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full px-2 py-0.5">
+                    {lab.data.badge}
+                  </span>
+                )}
+              </div>
+              <p class="text-xs text-gray-500 dark:text-gray-400 mt-1.5">
+                {lab.data.description}
+              </p>
+            </Link>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</RootLayout>

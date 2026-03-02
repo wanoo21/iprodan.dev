@@ -20,4 +20,7 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
+  redirects: {
+    "/interpolate-size": "/l/interpolate-size",
+  },
 });

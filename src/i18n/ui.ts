@@ -23,6 +23,10 @@ export const ui = {
     'pages.projects.description': 'All projects',
     'pages.projects.allProjects': 'All projects',
     'pages.projects.showcase': 'Showcase your projects',
+    'pages.labs.title': 'Labs',
+    'pages.labs.description': 'Interactive experiments and showcases',
+    'pages.labs.allLabs': 'All labs',
+    'pages.home.labs': 'Labs',
     'pages.blog.title': 'Blog',
     'pages.blog.description': 'All blog posts',
     'pages.404.title': '404 - Not Found',
@@ -45,6 +49,7 @@ export const ui = {
     // Navigation
     'nav.home': 'Home',
     'nav.blog': 'Blog',
+    'nav.labs': 'Labs',
     'nav.projects': 'Projects',
     'nav.tags': 'Tags',
     'nav.about': 'About',
