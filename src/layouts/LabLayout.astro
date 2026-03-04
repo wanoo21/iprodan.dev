@@ -1,6 +1,8 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import RootLayout from "./RootLayout.astro";
+import { SITE_METADATA, POST_METADATA } from "@/consts";
+import Comments from "@/components/Comments.astro";
 
 type Props = {
   entry: CollectionEntry<"labs">;
@@ -14,4 +16,12 @@ const { entry } = Astro.props;
   description={entry.data.description}
 >
   <slot />
+  {
+    SITE_METADATA.comments?.provider === "giscus" &&
+      POST_METADATA.showComments && (
+        <div id="comments" class="mt-">
+          <Comments />
+        </div>
+      )
+  }
 </RootLayout>
