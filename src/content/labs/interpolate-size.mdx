@@ -24,6 +24,15 @@ import ChatDemo from "@/components/labs/ChatDemo";
         This feature requires Chrome 129+, Edge 129+, or a browser with <code>interpolate-size: allow-keywords</code> support. In unsupported browsers, both examples will snap.
       </div>
     </div>
+    <div class="interpolate-unsupported-alert bg-rose-50 border border-rose-200 text-rose-800 dark:bg-rose-900/40 dark:border-rose-700 dark:text-rose-200 px-5 py-4 rounded-xl text-sm inline-flex items-start text-left max-w-2xl shadow-sm">
+      <svg class="w-5 h-5 mr-3 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+      </svg>
+      <div>
+        <strong class="block mb-1">Unsupported Browser</strong>
+        Your browser does not support <code>interpolate-size: allow-keywords</code>. Both examples will snap instead of animating smoothly. Please use Chrome 129+, Edge 129+, or a compatible browser.
+      </div>
+    </div>
   </header>
 
   <section class="grid md:grid-cols-2 gap-8 items-start max-w-5xl mx-auto" aria-label="Interactive Labs">
@@ -33,6 +42,13 @@ import ChatDemo from "@/components/labs/ChatDemo";
 </div>
   <style>
     {`
+    /* Hide unsupported alert when interpolate-size is supported */
+    @supports (interpolate-size: allow-keywords) {
+      .interpolate-unsupported-alert {
+        display: none;
+      }
+    }
+
     .chat-demo-interpolate-size {
       interpolate-size: allow-keywords;
     }

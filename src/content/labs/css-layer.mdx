@@ -1,0 +1,91 @@
+---
+title: "CSS @layer"
+description: "Cascade layers and why they replace !important for controlling style precedence."
+badge: "CSS"
+---
+
+import LayerDemo from "@/components/labs/LayerDemo";
+
+<div class="max-w-5xl mx-auto space-y-10">
+  <header class="text-center space-y-5">
+    <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
+      CSS <code class="text-purple-600 bg-purple-50 dark:text-purple-300 dark:bg-purple-900/50 px-2 py-1 rounded-lg text-3xl md:text-4xl">@layer</code>
+    </h1>
+    <p class="text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto text-lg">
+      Cascade layers let you control style priority independent of selector specificity—and replace the need for <code>!important</code> escalation.
+    </p>
+    <div class="bg-amber-50 border border-amber-200 text-amber-800 dark:bg-amber-900/40 dark:border-amber-700 dark:text-amber-200 px-5 py-4 rounded-xl text-sm inline-flex items-start text-left max-w-2xl shadow-sm">
+      <svg class="w-5 h-5 mr-3 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <div>
+        <strong class="block mb-1">Browser Support</strong>
+        Cascade layers are supported in all modern browsers since March 2022 (Chrome 99+, Firefox 97+, Safari 15.4+).
+      </div>
+    </div>
+  </header>
+
+  <section class="space-y-6 max-w-3xl mx-auto">
+    <h2 class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">What is @layer?</h2>
+    <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+      The <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">@layer</code> at-rule lets you organize CSS into named cascade layers. Layers have explicit precedence: the first declared layer has the lowest priority, and the last declared layer has the highest. Un-layered styles always override layered styles.
+    </p>
+    <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+      The key insight: once layer order is established, the cascade ignores selector specificity within layers. A rule in a later layer wins over a rule in an earlier layer—even if the earlier rule has a more specific selector. This lets you use simpler selectors and avoid specificity hacks.
+    </p>
+
+    <h2 class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">!important vs @layer</h2>
+    <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+      With <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">!important</code>, you create an override war. To override a style that uses <code>!important</code>, you need another <code>!important</code>. This leads to specificity escalation and CSS that becomes hard to maintain—especially when mixing third-party styles, design systems, and utilities.
+    </p>
+    <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+      With <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">@layer</code>, you define layer order once (e.g. <code>@layer base, components, utilities;</code>). Later layers override earlier layers without any <code>!important</code>. It's the modern, maintainable way to control precedence when working with multiple CSS sources.
+    </p>
+    <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+      Note: when <code>!important</code> is used, layer priority reverses—the first declared layer with <code>!important</code> wins. This can be useful when you want a base layer to "win back" over overrides in certain cases.
+    </p>
+  </section>
+
+  <section class="grid md:grid-cols-2 gap-8 items-start max-w-5xl mx-auto" aria-label="Interactive Labs">
+    <LayerDemo useLayers={false} client:idle />
+    <LayerDemo useLayers={true} client:idle />
+  </section>
+</div>
+
+<style>
+  {`
+  /* !important approach - base and override (actually uses !important) */
+  .layer-demo-card-important {
+    background: #e0e7ff !important;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    color: #3730a3;
+  }
+
+  .layer-demo-card-important--danger {
+    background: #fecaca !important;
+    color: #991b1b;
+  }
+
+  /* @layer approach - layer order controls precedence */
+  @layer layer-demo-base, layer-demo-overrides;
+
+  @layer layer-demo-base {
+    .layer-demo-with-layers .layer-demo-card {
+      background: #e0e7ff;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      color: #3730a3;
+    }
+  }
+
+  @layer layer-demo-overrides {
+    .layer-demo-with-layers .layer-demo-card--danger {
+      background: #fecaca;
+      color: #991b1b;
+    }
+  }
+  `}
+</style>
