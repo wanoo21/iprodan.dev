@@ -1,8 +1,6 @@
 ---
 import { getCollection, render } from "astro:content";
 import LabLayout from "@/layouts/LabLayout.astro";
-import ChatDemo from "@/components/labs/ChatDemo";
-import LayerDemo from "@/components/labs/LayerDemo";
 
 export const prerender = true;
 
@@ -19,5 +17,5 @@ const { Content } = await render(entry);
 ---
 
 <LabLayout entry={entry}>
-  <Content components={{ ChatDemo, LayerDemo }} />
+  <Content />
 </LabLayout>

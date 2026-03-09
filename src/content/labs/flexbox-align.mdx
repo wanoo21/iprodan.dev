@@ -1,0 +1,61 @@
+---
+title: "Flexbox & Grid: align-content, align-items, justify-content, justify-items"
+description: "A super simple guide to the four alignment properties in flexbox and grid."
+badge: "CSS"
+---
+
+import FlexboxAlignDemo from "@/components/labs/FlexboxAlignDemo";
+
+<div class="max-w-5xl mx-auto space-y-10">
+  <header class="text-center space-y-5">
+    <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
+      <code class="text-purple-600 bg-purple-50 dark:text-purple-300 dark:bg-purple-900/50 px-2 py-1 rounded-lg text-3xl md:text-4xl">justify-content</code>, <code class="text-purple-600 bg-purple-50 dark:text-purple-300 dark:bg-purple-900/50 px-2 py-1 rounded-lg text-3xl md:text-4xl">justify-items</code>, <code class="text-purple-600 bg-purple-50 dark:text-purple-300 dark:bg-purple-900/50 px-2 py-1 rounded-lg text-3xl md:text-4xl">align-content</code>, <code class="text-purple-600 bg-purple-50 dark:text-purple-300 dark:bg-purple-900/50 px-2 py-1 rounded-lg text-3xl md:text-4xl">align-items</code>
+    </h1>
+    <p class="text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto text-lg">
+      Four properties that sound similar but control different things. Here's the simple breakdown.
+    </p>
+  </header>
+
+  <section class="space-y-6 max-w-3xl mx-auto">
+    <h2 class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">The two axes</h2>
+    <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+      Flexbox has a <strong>main axis</strong> and a <strong>cross axis</strong>. In a row (<code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">flex-direction: row</code>), the main axis is horizontal and the cross axis is vertical. In a column, they flip.
+    </p>
+
+    <h2 class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">*-items vs *-content</h2>
+    <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+      <strong><code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">*-items</code></strong> aligns <strong>each item</strong> within its cell or line. <code>justify-items</code> = main axis (left/right); <code>align-items</code> = cross axis (top/bottom). It affects the items themselves.
+    </p>
+    <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+      <strong><code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">*-content</code></strong> distributes <strong>extra space</strong>—either between items along the main axis, or between lines along the cross axis. It affects how leftover space is used, not the items' size.
+    </p>
+
+    <h2 class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">justify-content</h2>
+    <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+      A <strong>*-content</strong> property. Distributes extra space along the <strong>main axis</strong> (horizontal in a row). Use it when the container is wider than the items and you want to space them out: <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">flex-start</code>, <code>center</code>, <code>space-between</code>, etc.
+    </p>
+
+    <h2 class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">justify-items</h2>
+    <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+      An <strong>*-items</strong> property. Aligns <strong>each item</strong> along the main axis within its cell. In Grid, this positions items left/center/right inside their grid cell. 
+      <em>Note: Flexbox doesn't have <code>justify-items</code>—it's a Grid property.</em>
+    </p>
+
+    <h2 class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">align-items</h2>
+    <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+      An <strong>*-items</strong> property. Aligns <strong>each item</strong> along the cross axis within its line. In a row, that's vertical (top, center, bottom). Use it when items have different heights and you want them aligned: <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">stretch</code>, <code>center</code>, <code>flex-start</code>, <code>flex-end</code>.
+    </p>
+
+    <h2 class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">align-content</h2>
+    <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+      A <strong>*-content</strong> property. Distributes extra space <strong>between lines</strong> along the cross axis. Only applies when you have <strong>multiple lines</strong> (<code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">flex-wrap: wrap</code>). If everything fits on one line, <code>align-content</code> does nothing.
+    </p>
+  </section>
+
+  <section class="grid md:grid-cols-2 gap-8 items-stretch max-w-5xl mx-auto" aria-label="Interactive Labs">
+    <FlexboxAlignDemo variant="justify-content" client:idle />
+    <FlexboxAlignDemo variant="justify-items" client:idle />
+    <FlexboxAlignDemo variant="align-items" client:idle />
+    <FlexboxAlignDemo variant="align-content" client:idle />
+  </section>
+</div>
