@@ -1,0 +1,63 @@
+---
+title: "CSS safe alignment (flex & grid)"
+description: "What the safe keyword does in box alignment—and when to use it."
+published_date: 2026-03-31
+cover: /src/assets/lib/safe-grid-flex.png
+badge: "CSS"
+---
+
+import { Image } from "astro:assets";
+import safePoster from "@/assets/lib/safe-grid-flex.png";
+import SafeAlignmentDemo from "@/components/labs/SafeAlignmentDemo";
+
+<div class="max-w-5xl mx-auto space-y-10">
+  <header class="text-center space-y-5">
+    <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
+      <code class="text-purple-600 bg-purple-50 dark:text-purple-300 dark:bg-purple-900/50 px-2 py-1 rounded-lg text-3xl md:text-4xl">safe</code>{" "}
+      in flex and grid alignment
+    </h1>
+    <p class="text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto text-lg">
+      Box alignment lets you write values like <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">safe center</code> instead of plain <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">center</code>. Here is the short version of what that buys you.
+    </p>
+  </header>
+
+  <div class="max-w-3xl mx-auto">
+    <Image
+      src={safePoster}
+      alt="CSS snippet highlighting the safe keyword in align-items: safe center"
+      widths={[360, 540, 720, 900]}
+      sizes="(max-width: 48rem) 100vw, 48rem"
+      loading="eager"
+      decoding="async"
+      class="w-full rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm"
+    />
+  </div>
+
+  <section class="space-y-6 max-w-3xl mx-auto">
+    <h2 class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">What does <code>safe</code> mean?</h2>
+    <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+      Alignment keywords such as <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">center</code> or <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">end</code> can center or push content in a way that overflows the scrollable area on <strong>both</strong> sides. In the worst case you cannot scroll far enough to see where the content starts.
+    </p>
+    <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+      The <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">safe</code> keyword tells the browser: use the requested alignment only if it does not cause that kind of “lost” overflow. If it would, fall back to <strong>start</strong> alignment (the safe edge for reading order) so the content remains fully reachable by scrolling.
+    </p>
+    <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+      Syntax: put <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">safe</code> before the alignment keyword, for example <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">align-items: safe center;</code> or <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">justify-content: safe center;</code>. The opposite is <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">unsafe</code>, which keeps the chosen alignment even when overflow is awkward.
+    </p>
+
+    <h2 class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">Flexbox vs grid</h2>
+    <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+      The same idea applies to both <strong>flex</strong> and <strong>grid</strong> wherever the Box Alignment properties apply: for example <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">justify-content</code>, <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">align-items</code>, <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">justify-items</code>, <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">place-content</code>, and the <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">*-self</code> variants on individual items.
+    </p>
+    <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+      You will notice it most in scrollable regions (overflow) or when the viewport is narrower than the aligned group. It is a small addition to your CSS that prevents subtle scroll traps for centered or end-aligned layouts.
+    </p>
+  </section>
+
+  <section class="max-w-5xl mx-auto space-y-6" aria-label="Interactive Labs">
+    <p class="text-sm text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto text-center">
+      Each inner strip is horizontally scrollable so you can inspect how the aligned items overflow. Each row shows flex and grid side by side with the same values.
+    </p>
+    <SafeAlignmentDemo client:idle />
+  </section>
+</div>

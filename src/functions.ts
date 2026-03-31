@@ -27,3 +27,17 @@ export const excludeDrafts = ({data}: CollectionEntry<'blog'>): boolean => {
     // Usually this should be like this - import.meta.env.PROD ? !data.draft : true; but for the purpose of the demo, we are displaying drafts as well
     return import.meta.env.PROD ? true : true;
 }
+
+/**
+ * Sort labs by published_date descending (newest first).
+ */
+export const sortLabsByPublishedDate = (
+    labs: CollectionEntry<"labs">[] | null,
+): CollectionEntry<"labs">[] => {
+    if (!labs) return [];
+    return [...labs].sort(
+        (a, b) =>
+            new Date(b.data.published_date).getTime() -
+            new Date(a.data.published_date).getTime(),
+    );
+};

@@ -6,7 +6,7 @@ import RootLayout from "@/layouts/RootLayout.astro";
 import Link from "@/components/Link.astro";
 import Tag from "@/components/Tag.astro";
 import FormattedDate from "@/components/FormattedDate.astro";
-import { excludeDrafts, sortBlogPosts } from "@/functions";
+import { excludeDrafts, sortBlogPosts, sortLabsByPublishedDate } from "@/functions";
 import { useTranslations } from "@/i18n";
 import { Image } from "astro:assets";
 import { getEntry } from "astro:content";
@@ -15,7 +15,9 @@ import SocialIcon from "@/components/social-icons/index.astro";
 const t = useTranslations();
 
 const posts = await getCollection("blog", excludeDrafts).then(sortBlogPosts);
-const labs = await getCollection("labs", (entry) => !entry.data.draft);
+const labs = await getCollection("labs", (entry) => !entry.data.draft).then(
+    sortLabsByPublishedDate,
+);
 const author = await getEntry("authors", "default");
 
 const techStack = Array.isArray(author?.data.techStack)
@@ -222,7 +224,10 @@ const techStack = Array.isArray(author?.data.techStack)
                                         </span>
                                     )}
                                 </div>
-                                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1.5">
+                                <p class="text-xs tabular-nums text-gray-400 dark:text-gray-500 mt-1">
+                                    <FormattedDate date={lab.data.published_date} />
+                                </p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
                                     {lab.data.description}
                                 </p>
                             </Link>

@@ -3,10 +3,14 @@ import { getCollection } from "astro:content";
 import RootLayout from "@/layouts/RootLayout.astro";
 import Link from "@/components/Link.astro";
 import { useTranslations } from "@/i18n";
+import FormattedDate from "@/components/FormattedDate.astro";
+import { sortLabsByPublishedDate } from "@/functions";
 
 const t = useTranslations();
 
-const labs = await getCollection("labs", (entry) => !entry.data.draft);
+const labs = await getCollection("labs", (entry) => !entry.data.draft).then(
+  sortLabsByPublishedDate,
+);
 ---
 
 <RootLayout
@@ -38,12 +42,15 @@ const labs = await getCollection("labs", (entry) => !entry.data.draft);
                   {lab.data.title}
                 </h2>
                 {lab.data.badge && (
-                  <span class="text-xs text-gray-400 flex-shrink-0 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full px-2 py-0.5">
+                  <span class="text-xs text-gray-400 shrink-0 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full px-2 py-0.5">
                     {lab.data.badge}
                   </span>
                 )}
               </div>
-              <p class="text-xs text-gray-500 dark:text-gray-400 mt-1.5">
+              <p class="text-xs tabular-nums text-gray-400 dark:text-gray-500 mt-1.5">
+                <FormattedDate date={lab.data.published_date} />
+              </p>
+              <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
                 {lab.data.description}
               </p>
             </Link>

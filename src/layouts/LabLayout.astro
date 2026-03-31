@@ -1,20 +1,73 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import { getEntry } from "astro:content";
+import { getImage } from "astro:assets";
+import FormattedDate from "@/components/FormattedDate.astro";
 import RootLayout from "./RootLayout.astro";
 import { SITE_METADATA, POST_METADATA } from "@/consts";
 import Comments from "@/components/Comments.astro";
+import { useTranslations } from "@/i18n";
 
 type Props = {
   entry: CollectionEntry<"labs">;
 };
 
+const t = useTranslations();
 const { entry } = Astro.props;
+const author = await getEntry("authors", "default");
+const published = entry.data.published_date;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+
+let posterAbsoluteUrl: string | undefined;
+if (entry.data.cover) {
+  const poster = await getImage({
+    src: entry.data.cover,
+    width: 1200,
+    height: 630,
+  });
+  posterAbsoluteUrl = poster.src.startsWith("http")
+    ? poster.src
+    : new URL(poster.src, Astro.site).href;
+}
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: entry.data.title,
+  description: entry.data.description,
+  datePublished: published.toISOString(),
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": canonical.href,
+  },
+  ...(posterAbsoluteUrl && { image: posterAbsoluteUrl }),
+  ...(author && {
+    author: {
+      "@type": "Person",
+      name: author.data.name,
+    },
+  }),
+};
 ---
 
 <RootLayout
   title={`${entry.data.title} | Labs`}
   description={entry.data.description}
+  ogCover={entry.data.cover}
+  publishedDocument={{
+    publishedTime: published,
+    authors: author ? [author.data.name] : [],
+  }}
 >
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  <div class="max-w-5xl mx-auto pb-6">
+    <dl class="text-center text-sm text-gray-500 dark:text-gray-400">
+      <dt class="sr-only">{t("layouts.postLayout.publishedAt")}</dt>
+      <dd class="tabular-nums">
+        <FormattedDate date={published} />
+      </dd>
+    </dl>
+  </div>
   <slot />
   {
     SITE_METADATA.comments?.provider === "giscus" &&
