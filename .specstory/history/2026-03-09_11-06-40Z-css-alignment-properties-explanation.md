@@ -5956,4 +5956,250 @@ I'm constructing full URLs for images using `new URL(og.src, Astro.site).href` t
 
 **Checking layout props**
 
-I'm verifying that LabLayout and RootLayout properly handle the optional ogCover prop to prevent accidental misuse. </details></think>
+I'm verifying that LabLayout and RootLayout properly handle the optional ogCover prop to prevent accidental misuse. 
+
+**Updating tech article schema**
+
+I'm adding image data to JSON-LD TechArticle schema using `getImage` for ogCover. 
+
+**Checking image resolution**
+
+The ogCover isn't resolving for labs, possibly due to Cloudflare image service or prop naming issues. I'll add JSON-LD image for labs with cover and fix twitter:image prop for SEO. 
+
+**Adding json-ld image**
+
+I'm implementing JSON-LD image in LabLayout with getImage and absolute URL. 
+
+**Implementing json-ld**
+
+I'm adding JSON-LD image support to LabLayout using getImage and absolute URLs, checking Astro.site reference and optimized image paths. I'm using `getImage().src` with `new URL()` to generate absolute URLs for JSON-LD image support. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/ip/Projects/iprodan.dev",
+  "pattern": "ogCover|metaTags"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/ip/Projects/iprodan.dev",
+  "pattern": "ogCover|metaTags",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "./src/layouts/LabLayout.astro"
+    },
+    {
+      "matchCount": 1,
+      "uri": "./src/layouts/RootLayout.astro"
+    },
+    {
+      "matchCount": 4,
+      "uri": "./src/components/BaseHead.astro"
+    },
+    {
+      "matchCount": 2,
+      "uri": "./.specstory/history/2026-03-04_17-21-34Z-new-demo-example-for-@layer-css.md"
+    },
+    {
+      "matchCount": 2,
+      "uri": "./.specstory/history/2026-03-04_17-21Z-new-demo-example-for-@layer-css.md"
+    },
+    {
+      "matchCount": 2,
+      "uri": "./astro.config.mjs"
+    },
+    {
+      "matchCount": 2,
+      "uri": "./.specstory/history/2026-02-10_09-12Z-migration-to-tailwind-v4-and-vite.md"
+    }
+  ],
+  "totalFiles": 7,
+  "totalMatches": 14
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Adding JSON-LD image**
+
+I'm adding JSON-LD image support to LabLayout to improve SEO. I'm ensuring Twitter Cards get images by merging cover data into OG and Twitter blocks. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/ip/Projects/iprodan.dev/src/components/BaseHead.astro</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+Fixing Twitter tags (they only ran when `twitterCreator` was set, so lab shares could omit the image) and ensuring OG/Twitter use an absolute image URL. Adding the poster to JSON-LD when a lab has a `cover`.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/ip/Projects/iprodan.dev/src/components/BaseHead.astro</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/ip/Projects/iprodan.dev/src/components/BaseHead.astro</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/ip/Projects/iprodan.dev/src/layouts/LabLayout.astro</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/ip/Projects/iprodan.dev && npm run build 2>&1 | tail -25</summary>
+
+```bash
+cd /Users/ip/Projects/iprodan.dev && npm run build 2>&1 | tail -25
+```
+
+```
+15:20:41   └─ /labs/index.html (+3ms) 
+15:20:41 ▶ src/pages/projects.astro
+15:20:41   └─ /projects/index.html (+2ms) 
+15:20:41 λ src/pages/rss.xml.js
+15:20:41   └─ /rss.xml (+3ms) 
+15:20:41 λ src/pages/search.json.ts
+15:20:41   └─ /search.json (+4ms) 
+15:20:41 ▶ src/pages/tags/[slug]/[...page].astro
+15:20:41   ├─ /tags/default/index.html (+4ms) 
+15:20:41   └─ /tags/projects/index.html (+8ms) 
+15:20:41 ▶ src/pages/tags/index.astro
+15:20:41   └─ /tags/index.html (+5ms) 
+15:20:41 ▶ src/pages/index.astro
+15:20:41   └─ /index.html (+10ms) 
+15:20:41 ▶ /interpolate-size
+15:20:41   └─ /interpolate-size/index.html (+0ms) 
+15:20:41 ✓ Completed in 135ms.
+
+15:20:41 [build] Rearranging server assets...
+15:20:41 [@astrojs/sitemap] &#96;sitemap-index.xml&#96; created at &#96;dist&#96;
+[32mastro-robots-txt:[0m &#96;robots.txt&#96; is created.
+
+15:20:41 [build] Server built in 2.72s
+15:20:41 [build] Complete!
+🪵  Logs were written to "/Users/ip/Library/Preferences/.wrangler/logs/wrangler-2026-03-31_12-20-39_016.log"
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+Here’s what was going on and what changed:
+
+### Already in place
+Labs with **`cover:`** in frontmatter were already passed as **`ogCover`** from `LabLayout` → `RootLayout` → `BaseHead`, and `getImage()` was used for the social image. So the poster file in frontmatter was already intended to be the OG image.
+
+### What was wrong / improved
+1. **Twitter card** – Tags were only set when **`twitterCreator`** existed, so many lab shares had **no** `twitter:image`. Twitter now always gets **`summary_large_image`** with **title, description, and image**; **`creator`** is optional.
+2. **Absolute URLs** – Open Graph and Twitter now use a resolved **`ogImageAbsoluteUrl`** (from `Astro.site` when `src` is site-relative), which avoids broken previews on some platforms.
+3. **Structured data** – When a lab has **`cover`**, **`TechArticle`** JSON-LD now includes **`image`** with that same optimized, absolute URL (aligned with the OG poster).
+
+**Reminder:** The in-page poster and OG image both come from the same asset as long as **`cover:`** in the lab frontmatter points at it (as with `safe-alignment`). If you drop `cover` and only import the image in MDX, OG will fall back to the default avatar unless you add `cover` back.

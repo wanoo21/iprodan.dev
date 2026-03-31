@@ -4,7 +4,7 @@ const LABELS = ["A", "B", "C"] as const;
 
 const MIN_VIEWPORT = 96;
 const MAX_VIEWPORT = 360;
-const DEFAULT_VIEWPORT = 140;
+const DEFAULT_VIEWPORT = MAX_VIEWPORT;
 const ITEM_WIDTH = 88;
 const ITEM_GAP = 8;
 const INNER_PADDING = 16; // p-2 left + right
