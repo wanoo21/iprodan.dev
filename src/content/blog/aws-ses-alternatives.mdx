@@ -1,0 +1,77 @@
+---
+title: Why AWS SES Denied Prod Access (And the 5 Reddit Alternatives)
+cover: /src/assets/aws-ses-alternatives.png
+postLayout: "simple"
+date: 2026-04-16
+summary: AWS denied our SES production access for Zipitly.com. Here are the top Reddit alternatives ranked by real mentions + honest founders feedback. No sales pitch.
+---
+
+Yesterday I got the final 'no' from AWS.
+
+I’m building [Zipitly.com](https://zipitly.com) – an AI-powered support inbox that lets small support teams/founders (like you) easily add custom domains for both inbound and outbound email, alongside with other services like Stripe, Paddle, Zendesk and so on, and AI that combine all these services.
+
+Everything works great in development… until you tried to go live. AWS kept me stuck in the SES sandbox.
+
+Frustrated, I posted on Reddit [r/SaaS](https://www.reddit.com/r/SaaS/comments/1sm5i9m/any_aws_ses_alternatives/):
+> Any good alternatives to AWS SES? I can’t make it out of the sandbox…
+
+**The `r/SaaS` community was incredibly helpful.** Dozens of founders and engineers jumped in with real-world experience, so I decided to write a small blog post about these alternatives. Who knows, maybe it can help you, as it helped me!
+
+Here’s what stood out, ranked by **how many times each service was actually mentioned** in the thread, plus the honest feedback people gave.
+
+*(No one was paid or asked to be mentioned. These are purely the organic recommendations from the [thread](https://www.reddit.com/r/SaaS/comments/1sm5i9m/any_aws_ses_alternatives/).)*
+
+## 1. Mailgun (~16 mentions)
+
+By far the most recommended for exactly my use case — multi-domain inbound + outbound with customer-added custom domains. People highlighted easy webhook routing per domain, reply correlation via Message-ID headers, and the ability to build full inbox logic without managing raw email protocols.
+
+A few ran into occasional IP blacklisting at higher volumes, but most called it the best match for exactly this kind of SaaS use case. No major downsides were widely called out.
+
+Most likely, I'll send them a message about my use case and see what they say.
+
+## 2. Postmark (~10 mentions)
+Pure transactional speed, excellent deliverability, and much easier/faster to get started with than SES. Often listed as one of the 'usual alternatives.'
+
+More outbound-focused; inbound support is lighter than Mailgun's.
+
+A couple of people mentioned shared-IP blacklisting issues for certain email types (invoices, password resets, support replies), and again, a few folks saw blacklisting on shared IPs.
+
+This is the alternative I'm currently looking to, tbh. Sent them an email, waiting.
+
+## 3. Resend (~9 mentions)
+Modern, clean developer experience (DX), fast onboarding, and growing fast.
+
+Many said it's what they switched to when SES felt too heavyweight. More outbound-focused; inbound webhook features are more limited.
+
+One user (me, actually 😄) noted concern that pricing may double over time (for my use case). A couple of people mentioned shared-IP blacklisting for certain email types (support replies, invoices, etc.). Frequently praised right alongside Postmark.
+
+## 4. SendGrid (~7 mentions)
+Straightforward setup and solid for SaaS transactional email. Frequently paired with Mailgun as a reliable, easy-to-use option.
+
+Works well for multi-domain setups, but some mentioned verification delays and the same IP-reputation issues common to most providers.
+
+Some functionality quirks and verification delays were reported by one user.
+
+## 5. SparkPost (~2 mentions)
+Listed among the 'usual alternatives' alongside the bigger names.
+
+Mixed feedback – one user reported getting banned (like Postmark) after sending a few hundred invoices/password resets. A couple of people said prices feel a bit high, but the experience is smooth.
+
+Still seen as a viable option by some.
+
+## Other less-discussed alternatives
+A handful of other services got quick but positive mentions (1–2 each):
+
+-   **MailerSend** – “Simple and fast — just switch and keep shipping.”
+-   **SMTP2GO** – Fresh option some are checking out alongside Mailgun and Resend.
+-   **Brevo** – Praised for its generous free tier; good for early-stage projects.
+-   A few one-offs like **Bird** and **Zepto Mail** also popped up with “good when it works” notes, though customer-support complaints came up.
+
+## The big takeaway
+AWS SES is still powerful for simple high-volume sending – once you’re approved. But for SaaS products that need flexible multi-domain inbound/outbound email with customer custom domains, it’s often not the right fit.
+
+The Reddit thread showed that the top alternatives already solved the exact problem I’m facing.
+
+Huge thanks to everyone who replied. Reddit at its best — real help, no agenda.
+
+If you’re hitting the same SES wall, drop your story below. And if you’re curious about Zipitly.com, I'm now one step closer to launch thanks to these suggestions.
