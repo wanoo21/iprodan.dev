@@ -5891,7 +5891,6 @@ I'm adjusting the Open Graph image logic to prioritize lab cover images over blo
 
 _**Agent (composer-2)**_
 
-
 Checking how OG images are chosen for labs and blog posts.
 
 
@@ -5976,13 +5975,6 @@ I'm adding JSON-LD image support to LabLayout using getImage and absolute URLs, 
 
 _**Agent (composer-2)**_
 
-
-
-
-
-
-_**Agent (composer-2)**_
-
 <tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
 <details>
 <summary>Tool use: **ripgrep_raw_search**</summary>
@@ -6059,13 +6051,6 @@ I'm adding JSON-LD image support to LabLayout to improve SEO. I'm ensuring Twitt
 
 _**Agent (composer-2)**_
 
-
-
-
-
-
-_**Agent (composer-2)**_
-
 <tool-use data-tool-type="read" data-tool-name="read_file_v2">
 <details><summary>Tool use: **read_file_v2** • Read file: /Users/ip/Projects/iprodan.dev/src/components/BaseHead.astro</summary>
 
@@ -6078,7 +6063,6 @@ _**Agent (composer-2)**_
 </details></tool-use>
 
 _**Agent (composer-2)**_
-
 
 Fixing Twitter tags (they only ran when `twitterCreator` was set, so lab shares could omit the image) and ensuring OG/Twitter use an absolute image URL. Adding the poster to JSON-LD when a lab has a `cover`.
 
@@ -6116,13 +6100,6 @@ _**Agent (composer-2)**_
 
 _**Agent (composer-2)**_
 
-
-
-
-
-
-_**Agent (composer-2)**_
-
 <tool-use data-tool-type="write" data-tool-name="edit_file_v2">
 
 <details><summary>Tool use: **edit_file_v2** • Edit file: /Users/ip/Projects/iprodan.dev/src/layouts/LabLayout.astro</summary>
@@ -6135,13 +6112,6 @@ _**Agent (composer-2)**_
 <summary>Tool use: **edit_file_v2**</summary>
 
 </details></tool-use>
-
-_**Agent (composer-2)**_
-
-
-
-
-
 
 _**Agent (composer-2)**_
 
@@ -6189,8 +6159,6 @@ cd /Users/ip/Projects/iprodan.dev && npm run build 2>&1 | tail -25
 </details></tool-use>
 
 _**Agent (composer-2)**_
-
-
 
 Here’s what was going on and what changed:
 
