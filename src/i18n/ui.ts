@@ -71,6 +71,7 @@ export const ui = {
     "layouts.postLayout.previousPost": "Previous post",
     "layouts.postLayout.nextPost": "Next post",
     "layouts.postLayout.relatedPosts": "Related posts",
+    "layouts.postLayout.furtherReading": "Further reading",
     "layouts.postLayout.backToBlog": "Back to blog",
     "layouts.simplePostLayout.previousPost": "Previous post: {title}",
     "layouts.simplePostLayout.nextPost": "Next post: {title}",

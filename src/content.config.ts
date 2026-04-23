@@ -36,6 +36,9 @@ const blog = defineCollection({
         .default(POST_METADATA.defaultLayout as "simple" | "column"),
       canonicalUrl: z.string().optional(),
       related: z.array(reference("blog")).default([]),
+      furtherReading: z
+        .array(z.object({ title: z.string(), href: z.string() }))
+        .default([]),
     }),
 });
 
@@ -57,6 +60,9 @@ const labs = defineCollection({
       cover: image().optional(),
       badge: z.string().optional(),
       draft: z.boolean().default(false),
+      furtherReading: z
+        .array(z.object({ title: z.string(), href: z.string() }))
+        .default([]),
     }),
 });
 

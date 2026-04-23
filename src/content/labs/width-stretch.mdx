@@ -4,6 +4,13 @@ description: "What stretch does, how it differs from 100%, and which fallbacks t
 published_date: 2026-04-22
 cover: /src/assets/lib/with-stretch.png
 badge: "CSS"
+furtherReading:
+  - title: "CSS interpolate-size — smooth transitions to intrinsic sizes"
+    href: "/l/interpolate-size"
+  - title: "CSS safe alignment — the safe keyword in flex & grid"
+    href: "/l/safe-alignment"
+  - title: "MDN: width — stretch keyword"
+    href: "https://developer.mozilla.org/en-US/docs/Web/CSS/width#stretch"
 ---
 
 import { Image } from "astro:assets";
@@ -85,12 +92,4 @@ import WidthStretchDemo from "@/components/labs/WidthStretchDemo";
     <WidthStretchDemo client:idle />
   </section>
 
-  <section class="space-y-3 max-w-3xl mx-auto">
-    <h2 class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">Further reading</h2>
-    <ul class="space-y-1 text-neutral-600 dark:text-neutral-400 text-sm list-disc list-inside leading-relaxed">
-      <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/width#stretch" class="text-purple-600 dark:text-purple-300 hover:underline" target="_blank" rel="noopener">MDN — width: stretch</a></li>
-      <li><a href="https://caniuse.com/?search=webkit-fill-available" class="text-purple-600 dark:text-purple-300 hover:underline" target="_blank" rel="noopener">Can I Use — <code>-webkit-fill-available</code></a></li>
-      <li><a href="https://drafts.csswg.org/css-sizing-4/#sizing-values" class="text-purple-600 dark:text-purple-300 hover:underline" target="_blank" rel="noopener">CSS Box Sizing Level 4 spec — sizing values</a></li>
-    </ul>
-  </section>
 </div>
