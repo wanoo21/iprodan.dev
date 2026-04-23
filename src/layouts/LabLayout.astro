@@ -79,7 +79,7 @@ const structuredData = {
         <ul class="space-y-1">
           {entry.data.furtherReading.map(({ title, href }) => (
             <li class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
-              <Link href={href}>{title}</Link>
+              <Link href={href} class="underline">{title}</Link>
             </li>
           ))}
         </ul>

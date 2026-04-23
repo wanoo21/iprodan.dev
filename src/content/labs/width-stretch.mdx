@@ -45,7 +45,7 @@ import WidthStretchDemo from "@/components/labs/WidthStretchDemo";
       The <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">stretch</code> keyword sets the element's <strong>margin box</strong> to the width of its containing block. In practical terms: margins are included in the calculation, so the element automatically shrinks to leave room for them.
     </p>
     <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
-      This is defined in <a href="https://drafts.csswg.org/css-sizing-4/#sizing-values" class="text-purple-600 dark:text-purple-300 hover:underline" target="_blank" rel="noopener">CSS Box Sizing Level 4</a> and documented on <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/width#stretch" class="text-purple-600 dark:text-purple-300 hover:underline" target="_blank" rel="noopener">MDN</a>.
+      This is defined in <a href="https://drafts.csswg.org/css-sizing-4/#sizing-values" class="text-purple-600 dark:text-purple-300 underline" target="_blank" rel="noopener">CSS Box Sizing Level 4</a> and documented on <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/width#stretch" class="text-purple-600 dark:text-purple-300 underline" target="_blank" rel="noopener">MDN</a>.
     </p>
 
     <h2 class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">How it differs from <code>width: 100%</code></h2>
@@ -58,7 +58,7 @@ import WidthStretchDemo from "@/components/labs/WidthStretchDemo";
 
     <h2 class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">Not just <code>width</code></h2>
     <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
-      The same <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">stretch</code> keyword applies to <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">height</code>, <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">max-width</code>, and <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">max-height</code>. The sizing logic is the same: margin box fills the available space in the relevant dimension. See the respective MDN pages for details.
+      The same <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">stretch</code> keyword applies to <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">height</code>, <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">max-width</code>, and <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">max-height</code>. The sizing logic is the same: margin box fills the available space in the relevant dimension. When you later want to <strong>animate</strong> those intrinsic heights (for example toward <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">height: auto</code>), that is where <a href="/l/interpolate-size" class="inline whitespace-nowrap text-purple-600 dark:text-purple-300 underline font-mono text-sm px-1.5 py-0.5 rounded bg-purple-50 dark:bg-purple-900/50">interpolate-size</a> comes in. See the respective MDN pages for details on each property.
     </p>
   </section>
 
@@ -81,7 +81,7 @@ import WidthStretchDemo from "@/components/labs/WidthStretchDemo";
       <div class="text-gray-500">{"}"}</div>
     </div>
     <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
-      Global usage of <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">-webkit-fill-available</code> sits around <strong>~96%</strong> according to <a href="https://caniuse.com/?search=webkit-fill-available" class="text-purple-600 dark:text-purple-300 hover:underline" target="_blank" rel="noopener">Can I Use</a>.
+      Global usage of <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">-webkit-fill-available</code> sits around <strong>~96%</strong> according to <a href="https://caniuse.com/?search=webkit-fill-available" class="text-purple-600 dark:text-purple-300 underline" target="_blank" rel="noopener">Can I Use</a>.
     </p>
   </section>
 
