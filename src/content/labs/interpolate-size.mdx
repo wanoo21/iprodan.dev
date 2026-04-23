@@ -1,15 +1,20 @@
 ---
 title: "CSS interpolate-size"
-description: "Smooth transitions to and from intrinsic sizes like height: auto."
+description: "How interpolate-size: allow-keywords unlocks smooth transitions to intrinsic sizes like height: auto — and which browsers support it today."
 published_date: 2026-02-21
+cover: /src/assets/lib/interpolate-size.png
 badge: "CSS"
 furtherReading:
   - title: "CSS width: stretch — the fill-available successor"
     href: "/l/width-stretch"
   - title: "MDN: interpolate-size"
-    href: "https://developer.mozilla.org/en-US/docs/Web/CSS/interpolate-size"
+    href: "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/interpolate-size"
+  - title: "Can I Use: interpolate-size"
+    href: "https://caniuse.com/?search=interpolate-size"
 ---
 
+import { Image } from "astro:assets";
+import interpolateSizePoster from "@/assets/lib/interpolate-size.png";
 import ChatDemo from "@/components/labs/ChatDemo";
 
 <div class="max-w-5xl mx-auto space-y-10">
@@ -18,18 +23,8 @@ import ChatDemo from "@/components/labs/ChatDemo";
       CSS <code class="text-purple-600 bg-purple-50 dark:text-purple-300 dark:bg-purple-900/50 px-2 py-1 rounded-lg text-3xl md:text-4xl">interpolate-size</code>
     </h1>
     <p class="text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto text-lg">
-      A demonstration of the new CSS property that enables smooth transitions
-      to and from intrinsic sizes like <code>height: auto</code>.
+      A CSS property that opts elements into smooth transitions between a fixed length and an intrinsic size keyword like <code>height: auto</code>, <code>min-content</code>, or <code>max-content</code>.
     </p>
-    <div class="bg-amber-50 border border-amber-200 text-amber-800 dark:bg-amber-900/40 dark:border-amber-700 dark:text-amber-200 px-5 py-4 rounded-xl text-sm inline-flex items-start text-left max-w-2xl shadow-sm">
-      <svg class="w-5 h-5 mr-3 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-      <div>
-        <strong class="block mb-1">Browser Support Notice</strong>
-        This feature requires Chrome 129+, Edge 129+, or a browser with <code>interpolate-size: allow-keywords</code> support. In unsupported browsers, both examples will snap.
-      </div>
-    </div>
     <div class="interpolate-unsupported-alert bg-rose-50 border border-rose-200 text-rose-800 dark:bg-rose-900/40 dark:border-rose-700 dark:text-rose-200 px-5 py-4 rounded-xl text-sm inline-flex items-start text-left max-w-2xl shadow-sm">
       <svg class="w-5 h-5 mr-3 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
@@ -41,14 +36,102 @@ import ChatDemo from "@/components/labs/ChatDemo";
     </div>
   </header>
 
-  <section class="grid md:grid-cols-2 gap-8 items-start max-w-5xl mx-auto" aria-label="Interactive Labs">
-    <ChatDemo useInterpolateSize={false} client:idle />
-    <ChatDemo useInterpolateSize={true} client:idle />
+  <div class="max-w-3xl mx-auto">
+    <Image
+      src={interpolateSizePoster}
+      alt="CSS snippet illustrating interpolate-size: allow-keywords for animating height to auto"
+      widths={[360, 540, 720, 900]}
+      sizes="(max-width: 48rem) 100vw, 48rem"
+      loading="eager"
+      decoding="async"
+      class="w-full rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm"
+    />
+  </div>
+
+  <section class="space-y-6 max-w-3xl mx-auto">
+    <h2 class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">What does <code>interpolate-size</code> do?</h2>
+    <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+      By default, CSS cannot animate between a concrete length and an intrinsic size keyword. The browser simply doesn't know how to interpolate <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">height: 0</code> → <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">height: auto</code>, so it jumps. The <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">interpolate-size</code> property changes this by letting you <strong>opt in</strong> to keyword interpolation.
+    </p>
+    <p class="text-neutral-600 dark:text-purple-300 dark:text-neutral-400 leading-relaxed">
+      Setting it to <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">allow-keywords</code> tells the browser to resolve the intrinsic size at animation time and interpolate from there. The default value is <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">numeric-only</code>, which preserves the pre-existing (non-animating) behaviour.
+    </p>
+    <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+      Because the property is <strong>inherited</strong>, you can enable it for an entire document in one line — or scope it tightly to a single component:
+    </p>
+
+    <div class="rounded-lg bg-gray-950 border border-gray-800 p-4 font-mono text-xs leading-6">
+      <div class="text-gray-500 mb-1">/* document-wide opt-in */</div>
+      <div class="text-gray-300">
+        <span class="text-sky-400">:root</span>{" {"}
+      </div>
+      <div class="pl-4 text-gray-300">
+        <span class="text-sky-400">interpolate-size</span>{": "}
+        <span class="text-emerald-400">allow-keywords</span>{";"}
+      </div>
+      <div class="text-gray-300">{"}"}</div>
+      <div class="text-gray-500 mt-3 mb-1">/* scoped to one container */</div>
+      <div class="text-gray-300">
+        <span class="text-sky-400">.accordion</span>{" {"}
+      </div>
+      <div class="pl-4 text-gray-300">
+        <span class="text-sky-400">interpolate-size</span>{": "}
+        <span class="text-emerald-400">allow-keywords</span>{";"}
+      </div>
+      <div class="text-gray-300">{"}"}</div>
+    </div>
+  </section>
+
+  <section class="space-y-6 max-w-3xl mx-auto">
+    <h2 class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">Why <code>height: auto</code> used to snap</h2>
+    <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+      CSS transitions and animations require both endpoints to be <strong>interpolatable</strong> — meaning the browser must be able to compute a value at any point between them. Concrete lengths like <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">0px</code> and <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">200px</code> are easy: linear math. Intrinsic keywords like <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">auto</code> are not a number — they depend on content, which makes interpolation undefined.
+    </p>
+    <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+      Rather than silently enable this globally — which would break existing pages that rely on the snap behaviour — the CSS Working Group decided to gate it behind an explicit opt-in. The demos below show the difference: the left panel uses <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">numeric-only</code> (snaps), the right uses <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">allow-keywords</code> (animates).
+    </p>
+  </section>
+
+  <section class="space-y-6 max-w-3xl mx-auto">
+    <h2 class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">What can be interpolated</h2>
+    <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+      With <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">allow-keywords</code> active, you can animate between a <strong>length or percentage</strong> and any of these intrinsic keywords:
+    </p>
+    <ul class="space-y-1 text-neutral-600 dark:text-neutral-400 leading-relaxed list-disc list-inside">
+      <li><code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1 py-0.5 rounded text-sm">auto</code></li>
+      <li><code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1 py-0.5 rounded text-sm">min-content</code></li>
+      <li><code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1 py-0.5 rounded text-sm">max-content</code></li>
+      <li><code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1 py-0.5 rounded text-sm">fit-content</code></li>
+      <li><code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1 py-0.5 rounded text-sm">content</code> <span class="text-xs">(for flex-basis)</span></li>
+    </ul>
+    <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+      One side of the transition must always be a concrete length or percentage — animating between <em>two</em> intrinsic keywords is not supported. If you also need arithmetic on the intrinsic size (e.g. <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">auto + 2rem</code>), use the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/calc-size" class="text-purple-600 dark:text-purple-300 hover:underline" target="_blank" rel="noopener">calc-size()</a> function instead.
+    </p>
+  </section>
+
+  <section class="space-y-3 max-w-3xl mx-auto">
+    <h2 class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">Browser availability</h2>
+    <p class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed">
+      <strong>Experimental — not yet Baseline.</strong> Supported in Chromium browsers (Chrome/Edge 129+, Opera 115+, Samsung Internet 28+); <strong>not supported</strong> in Firefox or Safari. Check <a href="https://caniuse.com/?search=interpolate-size" class="text-purple-600 dark:text-purple-300 hover:underline" target="_blank" rel="noopener">Can I Use</a> or <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/interpolate-size#browser_compatibility" class="text-purple-600 dark:text-purple-300 hover:underline" target="_blank" rel="noopener">MDN</a> for the latest figures.
+    </p>
+    <p class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed">
+    The fallback is graceful — content still toggles, just without animation; use <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1 py-0.5 rounded">@supports (interpolate-size: allow-keywords)</code> to apply the transition only where it works.
+    </p>
+  </section>
+
+  <section class="max-w-5xl mx-auto space-y-4" aria-label="Interactive Labs">
+    <p class="text-sm text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto text-center">
+      Click a message in each panel to expand it. The left demo uses the default <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1 py-0.5 rounded text-xs">numeric-only</code> behaviour and snaps; the right uses <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1 py-0.5 rounded text-xs">allow-keywords</code> and animates smoothly. In unsupported browsers both panels will snap.
+    </p>
+    <div class="grid md:grid-cols-2 gap-8 items-start">
+      <ChatDemo useInterpolateSize={false} client:idle />
+      <ChatDemo useInterpolateSize={true} client:idle />
+    </div>
   </section>
 </div>
   <style>
     {`
-    /* Hide unsupported alert when interpolate-size is supported */
+    /* Hide unsupported-browser alert when interpolate-size is supported */
     @supports (interpolate-size: allow-keywords) {
       .interpolate-unsupported-alert {
         display: none;
