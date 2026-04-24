@@ -7,7 +7,7 @@ export const ui = {
       "Ion Prodan, 16+ yrs of frontend dev, mostly in Angular.",
     "siteMetadata.headerTitle": "Ion Prodan",
     "siteMetadata.description":
-      "Frontend engineer writing about Angular, TypeScript, Astro, and the art of building things on the open web.",
+      "Frontend engineer with 16+ years: Angular, TypeScript, Astro, and shipping maintainable UIs on the open web—tutorials, labs, and practical notes from the field.",
     "siteMetadata.language": "en-US",
 
     // Pages
@@ -30,7 +30,8 @@ export const ui = {
     "pages.labs.allLabs": "All labs",
     "pages.home.labs": "Labs",
     "pages.blog.title": "Blog",
-    "pages.blog.description": "All blog posts",
+    "pages.blog.description":
+      "Long-form posts on Angular, TypeScript, Astro, and frontend engineering: testing, performance, patterns, and maintainable UIs drawn from years in production.",
     "pages.404.title": "404 - Not Found",
     "pages.404.description": "The page you are looking for does not exist.",
     "pages.404.backToHome": "Back to home",
@@ -54,6 +55,7 @@ export const ui = {
     "nav.projects": "Projects",
     "nav.tags": "Tags",
     "nav.about": "About",
+    "nav.rssFeed": "RSS feed",
 
     // Layouts
     "layouts.authorLayout.aboutAuthor": "About {author}",

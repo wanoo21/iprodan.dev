@@ -1,0 +1,79 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { getImage } from "astro:assets";
+
+interface Props {
+  post: CollectionEntry<"blog">;
+  authors: CollectionEntry<"authors">[];
+  /** Must match the page canonical (including optional frontmatter override). */
+  pageUrl: string;
+}
+
+const { post, authors, pageUrl } = Astro.props;
+
+let imageUrl: string | undefined;
+if (post.data.cover) {
+  const img = await getImage({
+    src: post.data.cover,
+    width: 1200,
+    height: 630,
+  });
+  imageUrl = img.src.startsWith("http")
+    ? img.src
+    : new URL(img.src, Astro.site).href;
+}
+
+async function personNode(author: CollectionEntry<"authors">) {
+  const p: Record<string, unknown> = {
+    "@type": "Person",
+    name: author.data.name,
+  };
+  const sameAs = [
+    author.data.twitter,
+    author.data.linkedin,
+    author.data.github,
+  ].filter(Boolean) as string[];
+  if (sameAs.length) {
+    p.sameAs = sameAs;
+  }
+  if (author.data.avatar) {
+    const av = await getImage({
+      src: author.data.avatar,
+      width: 400,
+      height: 400,
+    });
+    p.image = av.src.startsWith("http")
+      ? av.src
+      : new URL(av.src, Astro.site).href;
+  }
+  return p;
+}
+
+const authorJsonLd = await Promise.all(authors.map(personNode));
+
+const structuredData: Record<string, unknown> = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: post.data.title,
+  description: post.data.summary,
+  datePublished: post.data.date.toISOString(),
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": pageUrl,
+  },
+  author: authorJsonLd.length === 1 ? authorJsonLd[0] : authorJsonLd,
+};
+
+if (post.data.lastmod) {
+  structuredData.dateModified = post.data.lastmod.toISOString();
+}
+if (imageUrl) {
+  structuredData.image = imageUrl;
+}
+---
+
+<script
+  is:inline
+  type="application/ld+json"
+  set:html={JSON.stringify(structuredData)}
+/>

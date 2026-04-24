@@ -1,20 +1,40 @@
 import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
 
-export const GET: APIRoute = async () => {
-  // Get all published blog posts
-  const posts = await getCollection("blog", ({ data }) => !data.draft);
+function byDateDesc(
+  a: { date: string },
+  b: { date: string },
+): number {
+  return new Date(b.date).getTime() - new Date(a.date).getTime();
+}
 
-  // Create searchable data structure
-  const searchData = posts.map((post) => ({
+export const GET: APIRoute = async () => {
+  const [posts, labs] = await Promise.all([
+    getCollection("blog", ({ data }) => !data.draft),
+    getCollection("labs", ({ data }) => !data.draft),
+  ]);
+
+  const fromBlog = posts.map((post) => ({
+    kind: "blog" as const,
     id: post.id,
     title: post.data.title,
     summary: post.data.summary,
-    content: post.body, // Include the markdown content for full-text search
+    content: post.body,
     date: post.data.date.toISOString(),
-    // Normalize tags to strings - tags can be either string references or objects
     tags: post.data.tags.map((tag) => (typeof tag === "string" ? tag : tag.id)),
   }));
+
+  const fromLabs = labs.map((lab) => ({
+    kind: "lab" as const,
+    id: lab.id,
+    title: lab.data.title,
+    summary: lab.data.description,
+    content: lab.body,
+    date: lab.data.published_date.toISOString(),
+    tags: lab.data.badge ? [lab.data.badge] : [],
+  }));
+
+  const searchData = [...fromBlog, ...fromLabs].sort(byDateDesc);
 
   return new Response(JSON.stringify(searchData), {
     status: 200,

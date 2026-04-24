@@ -15,6 +15,8 @@ type Props = {
   description: string;
   titleTemplate?: string;
   robots?: string;
+  /** Absolute canonical href; when set, overrides default from current path + `site`. */
+  canonical?: string;
   ogCover?: ImageMetadata;
   publishedDocument?: {
     publishedTime: Date;

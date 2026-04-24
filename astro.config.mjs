@@ -22,5 +22,6 @@ export default defineConfig({
   },
   redirects: {
     "/interpolate-size": "/l/interpolate-size",
+    "/sitemap.xml": "/sitemap-index.xml",
   },
 });

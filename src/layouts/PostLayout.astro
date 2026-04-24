@@ -12,6 +12,7 @@ import PostCover from "../components/PostCover.astro";
 import DetailsSummary from "../components/DetailsSummary.astro";
 import SocialShareButtons from "../components/social-icons/SocialShareButtons.astro";
 import Comments from "../components/Comments.astro";
+import BlogPostJsonLd from "../components/BlogPostJsonLd.astro";
 import { POST_METADATA, SITE_METADATA } from "@/consts";
 import { useTranslations } from "@/i18n";
 
@@ -40,13 +41,21 @@ const articleOgDetails = {
 };
 
 const { Content, headings } = await render(post);
+
+const canonicalHref = post.data.canonicalUrl
+  ? new URL(post.data.canonicalUrl, Astro.site).href
+  : undefined;
+const postPageUrl =
+  canonicalHref ?? new URL(`/blog/${post.id}/`, Astro.site).href;
 ---
 
 <RootLayout
   title={post.data.title}
   description={post.data.summary}
   article={articleOgDetails}
+  canonical={canonicalHref}
 >
+  <BlogPostJsonLd post={post} authors={authors} pageUrl={postPageUrl} />
   <SectionContainer>
     <ScrollTopAndComments client:only="solid-js" />
     <article>

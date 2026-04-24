@@ -32,6 +32,8 @@ interface Props {
         modifiedTime?: Date;
         authors?: string[];
     };
+    /** Full canonical URL; overrides default from path + `site` (e.g. blog `canonicalUrl` frontmatter). */
+    canonical?: string;
 }
 
 const {
@@ -42,7 +44,16 @@ const {
     ogCover,
     publishedDocument,
     titleTemplate,
+    canonical: canonicalOverride,
 } = Astro.props;
+
+const baseUrl = Astro.site ?? Astro.url;
+const canonicalForSeo = canonicalOverride
+    ? new URL(canonicalOverride, baseUrl).href
+    : undefined;
+const openGraphPageUrl = canonicalForSeo
+    ? new URL(canonicalForSeo)
+    : Astro.url;
 
 const openGraphArticle =
     article != null
@@ -128,7 +139,7 @@ const articleDateMeta = openGraphArticle
         description={description}
         nofollow={robots.includes("nofollow")}
         noindex={robots.includes("noindex")}
-        url={Astro.url}
+        canonical={canonicalForSeo}
         charset="utf-8"
         extend={{
             meta: [
@@ -187,7 +198,7 @@ const articleDateMeta = openGraphArticle
         openGraph={{
             basic: {
                 type: openGraphArticle ? "article" : "website",
-                url: Astro.url,
+                url: openGraphPageUrl,
                 title,
                 image: ogImageAbsoluteUrl,
             },

@@ -2,12 +2,20 @@ import { createSignal, createEffect, For, Show, onMount, onCleanup } from "solid
 import { formatDate } from "@/utils";
 
 interface SearchResult {
+  kind?: "blog" | "lab";
   id: string;
   title: string;
   summary: string;
   content: string;
   date: string;
   tags: string[];
+}
+
+function resultHref(r: SearchResult): string {
+  if (r.kind === "lab") {
+    return `/l/${r.id}`;
+  }
+  return `/blog/${r.id}`;
 }
 
 export default function SearchButton() {
@@ -50,11 +58,11 @@ export default function SearchButton() {
 
     // Debounce search by 150ms
     const timeout = setTimeout(() => {
-      const filtered = allPosts().filter((post) => {
-        const titleMatch = post.title.toLowerCase().includes(searchQuery);
-        const summaryMatch = post.summary.toLowerCase().includes(searchQuery);
-        const contentMatch = post.content.toLowerCase().includes(searchQuery);
-        const tagsMatch = post.tags.some((tag) =>
+      const filtered = allPosts().filter((item) => {
+        const titleMatch = item.title.toLowerCase().includes(searchQuery);
+        const summaryMatch = item.summary.toLowerCase().includes(searchQuery);
+        const contentMatch = item.content.toLowerCase().includes(searchQuery);
+        const tagsMatch = item.tags.some((tag) =>
           tag.toLowerCase().includes(searchQuery)
         );
         return titleMatch || summaryMatch || contentMatch || tagsMatch;
@@ -149,7 +157,7 @@ export default function SearchButton() {
                 </svg>
                 <input
                   type="text"
-                  placeholder="Search posts..."
+                  placeholder="Search posts and labs..."
                   class="flex-1 px-4 py-4 bg-transparent border-0 focus:outline-none text-gray-900 dark:text-gray-100 placeholder-gray-400"
                   value={query()}
                   onInput={(e) => setQuery(e.currentTarget.value)}
@@ -184,11 +192,16 @@ export default function SearchButton() {
                     {(result) => (
                       <li>
                         <a
-                          href={`/blog/${result.id}`}
+                          href={resultHref(result)}
                           class="block px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                         >
-                          <div class="font-semibold text-gray-900 dark:text-gray-100">
-                            {result.title}
+                          <div class="flex items-center gap-2 font-semibold text-gray-900 dark:text-gray-100">
+                            <span>{result.title}</span>
+                            <Show when={result.kind === "lab"}>
+                              <span class="shrink-0 text-[10px] font-medium uppercase tracking-wide text-primary-500">
+                                Lab
+                              </span>
+                            </Show>
                           </div>
                           <div class="text-sm text-gray-600 dark:text-gray-400 mt-1 line-clamp-2">
                             {result.summary}
@@ -218,7 +231,7 @@ export default function SearchButton() {
               <Show when={!isLoading() && !query()}>
                 <div class="px-4 py-8 text-center text-gray-500 dark:text-gray-400">
                   <div class="text-sm">
-                    Start typing to search posts...
+                    Start typing to search posts and labs...
                   </div>
                   <div class="text-xs mt-2 text-gray-400">
                     Tip: Press <kbd class="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded text-xs">⌘K</kbd> to open search
