@@ -13,6 +13,7 @@ import DetailsSummary from "../components/DetailsSummary.astro";
 import SocialShareButtons from "../components/social-icons/SocialShareButtons.astro";
 import Comments from "../components/Comments.astro";
 import BlogPostJsonLd from "../components/BlogPostJsonLd.astro";
+import BuyMeACoffeeLink from "../components/BuyMeACoffeeLink.astro";
 import { POST_METADATA, SITE_METADATA } from "@/consts";
 import { useTranslations } from "@/i18n";
 
@@ -224,6 +225,7 @@ const postPageUrl =
                 />
               ) : null
             }
+            <BuyMeACoffeeLink />
             {
               SITE_METADATA.comments?.provider === "giscus" &&
                 POST_METADATA.showComments && (

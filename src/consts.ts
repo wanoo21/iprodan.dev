@@ -9,6 +9,8 @@ export const SITE_METADATA = {
   language: "en",
   theme: "system", // Options: system, light, dark
   siteUrl: "https://iprodan.dev",
+  /** Ko-fi profile URL; empty string hides the end-of-article CTA. */
+  buyMeACoffeeUrl: "https://ko-fi.com/iprodan",
   siteRepo: "https://github.com/wanoo21/iprodan.dev",
   robots: "index, follow", // Options: index, noindex, follow, nofollow
 

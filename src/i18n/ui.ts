@@ -47,6 +47,7 @@ export const ui = {
     "components.pagination.next": "Next",
     "components.socialShareButtons.sharing": "Sharing is caring!",
     "components.comments.title": "Comments",
+    "components.buyMeACoffee.label": "Buy me a coffee",
 
     // Navigation
     "nav.home": "Home",
