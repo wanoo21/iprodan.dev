@@ -1,0 +1,71 @@
+---
+title: "CSS scroll-padding"
+description: "How scroll-padding on a scrollport reserves space for fixed UI when scrolling to anchors or using scrollIntoView."
+published_date: 2026-04-28
+badge: "CSS"
+furtherReading:
+  - title: "CSS safe alignment (flex & grid)"
+    href: "/l/safe-alignment"
+  - title: "Flexbox & Grid: align-content, align-items, justify-content, justify-items"
+    href: "/l/flexbox-align"
+  - title: "MDN: scroll-padding"
+    href: "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/scroll-padding"
+  - title: "Can I use: scroll-padding"
+    href: "https://caniuse.com/?search=scroll-padding"
+---
+
+import ScrollPaddingDemo from "@/components/labs/ScrollPaddingDemo";
+
+<div class="max-w-5xl mx-auto space-y-10">
+  <header class="text-center space-y-5">
+    <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
+      <code class="text-purple-600 bg-purple-50 dark:text-purple-300 dark:bg-purple-900/50 px-2 py-1 rounded-lg text-3xl md:text-4xl">scroll-padding</code>
+    </h1>
+    <p class="text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto text-lg">
+      Scroll padding tells the browser to treat the edges of a scrollport as inset by a fixed amount. That affects scroll snapping, scroll positioning, and where elements land when you call <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">scrollIntoView()</code> or follow an in-page link.
+    </p>
+    <div class="bg-amber-50 border border-amber-200 text-amber-800 dark:bg-amber-900/40 dark:border-amber-700 dark:text-amber-200 px-5 py-4 rounded-xl text-sm inline-flex items-start text-left max-w-2xl shadow-sm">
+      <svg class="w-5 h-5 mr-3 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <div>
+        <strong class="block mb-1">Browser support</strong>
+        <code class="text-purple-700 dark:text-purple-200 bg-amber-100/80 dark:bg-amber-950/50 px-1 rounded">scroll-padding</code> is widely available in current browsers; check{" "}
+        <a href="https://caniuse.com/?search=scroll-padding" class="underline font-medium text-amber-900 dark:text-amber-100">Can I use</a>{" "}
+        for precise version notes.
+      </div>
+    </div>
+  </header>
+
+  <section class="space-y-6 max-w-3xl mx-auto">
+    <h2 class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">What it does</h2>
+    <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+      The <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">scroll-padding</code> shorthand (and longhands like{" "}
+      <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">scroll-padding-top</code>) applies to the <strong>scroll container</strong>: the element whose overflow creates the scrollport. It defines an inner inset from each edge of that scrollport when the browser computes scroll snap alignment and scroll positioning APIs.
+    </p>
+    <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+      A common document-level pattern is <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">html {"{"} scroll-padding-top: 4rem; {"}"}</code> (or the same on <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">:root</code>) so hash navigation and focus scrolling leave room for a sticky site header instead of tucking headings underneath it.
+    </p>
+
+    <h2 class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">Scroll snap and <code class="text-purple-600 dark:text-purple-300">scrollIntoView</code></h2>
+    <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+      For scroll snapping, padding on the scrollport changes where snap points settle relative to the visible area. For programmatic scrolling and element-focused scrolling, the same inset is used so the &quot;optimal&quot; visible region respects your reserved chrome. For horizontally scrollable flex and grid strips where overflow alignment matters, the <a href="/l/safe-alignment" class="inline whitespace-nowrap text-purple-600 dark:text-purple-300 underline font-mono text-sm px-1.5 py-0.5 rounded bg-purple-50 dark:bg-purple-900/50">CSS safe alignment</a> lab is a good companion.
+    </p>
+
+    <h2 class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100"><code class="text-purple-600 dark:text-purple-300">scroll-padding</code> vs <code class="text-purple-600 dark:text-purple-300">scroll-margin</code></h2>
+    <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+      <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">scroll-margin</code> (on the <strong>target</strong> element) grows how big the element is considered for scroll alignment—useful when one section needs a different offset than others.{" "}
+      <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">scroll-padding</code> on the scrollport applies the same inset for <strong>every</strong> scroll into that viewport, which matches global UI like a fixed nav height.
+    </p>
+    <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+      When those scrollports also host flex or grid layouts, the <a href="/l/flexbox-align" class="inline whitespace-nowrap text-purple-600 dark:text-purple-300 underline font-mono text-sm px-1.5 py-0.5 rounded bg-purple-50 dark:bg-purple-900/50">Flexbox &amp; Grid alignment properties</a> guide maps justify- and align-* behavior interactively.
+    </p>
+  </section>
+
+  <section class="max-w-5xl mx-auto space-y-4" aria-label="Interactive Labs">
+    <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed max-w-3xl mx-auto text-center">
+      The demo updates <strong class="font-medium text-neutral-800 dark:text-neutral-200">only the two scroll boxes</strong> inside the card (the lab page stays put). Left keeps <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">scroll-padding-top: 0</code>; on the right, drag the slider — the violet line tracks the inset where <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">block: &quot;start&quot;</code> alignment lands for that scrollport.
+    </p>
+    <ScrollPaddingDemo client:idle />
+  </section>
+</div>
