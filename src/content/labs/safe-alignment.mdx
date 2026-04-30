@@ -5,6 +5,8 @@ published_date: 2026-03-31
 cover: /src/assets/lib/safe-grid-flex.png
 badge: "CSS"
 furtherReading:
+  - title: "CSS scroll-padding — scrollports and fixed chrome"
+    href: "/l/scroll-padding"
   - title: "Flexbox & Grid alignment properties — interactive lab"
     href: "/l/flexbox-align"
   - title: "MDN: CSS Box Alignment — overflow alignment"
@@ -55,7 +57,7 @@ import SafeAlignmentDemo from "@/components/labs/SafeAlignmentDemo";
       The same idea applies to both <strong>flex</strong> and <strong>grid</strong> wherever the <a href="/l/flexbox-align" class="text-purple-600 dark:text-purple-300 underline">Box Alignment properties</a> apply: for example <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">justify-content</code>, <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">align-items</code>, <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">justify-items</code>, <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">place-content</code>, and the <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">*-self</code> variants on individual items.
     </p>
     <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
-      You will notice it most in scrollable regions (overflow) or when the viewport is narrower than the aligned group. It is a small addition to your CSS that prevents subtle scroll traps for centered or end-aligned layouts.
+      You will notice it most in scrollable regions (overflow) or when the viewport is narrower than the aligned group. It is a small addition to your CSS that prevents subtle scroll traps for centered or end-aligned layouts. When fixed headers or sticky chrome cover hash targets or focus moves instead, <a href="/l/scroll-padding" class="inline whitespace-nowrap text-purple-600 dark:text-purple-300 underline font-mono text-sm px-1.5 py-0.5 rounded bg-purple-50 dark:bg-purple-900/50">scroll-padding on the scrollport</a> is the complementary lever.
     </p>
   </section>
 
