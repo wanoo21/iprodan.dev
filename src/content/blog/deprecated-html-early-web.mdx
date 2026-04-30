@@ -1,0 +1,80 @@
+---
+title: "Deprecated and “lost” HTML of the early web"
+postLayout: "simple"
+date: 2026-04-30
+tags: ["default"]
+summary: "A tour of marquee, blink, center, font, frames, and the cult of tables-for-layout—what was never standard, what HTML made obsolete, and what we should use instead. Nostalgia with receipts."
+furtherReading:
+  - title: "Obsolete but conforming features — MDN"
+    href: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element#obsolete_and_deprecated_elements"
+  - title: "HTML Living Standard"
+    href: "https://html.spec.whatwg.org/"
+  - title: "I asked Gemini for a prototype… and Snipsco happened!"
+    href: "/blog/snipsco"
+---
+
+A [thread on r/webdev](https://www.reddit.com/r/webdev/) asked who still remembers a certain HTML tag. The screenshot showed `<marquee>`—scrolling text that felt futuristic in the nineties and exhausting about three seconds after you scrolled past it again.
+
+That post is a time machine. It brought back nested marquees, the “partner in crime” `<blink>`, `<center>` blocks, GeoCities energy, and the quiet truth that **a lot of what we call “deprecated” never really died in browsers**—it just stopped being something you were supposed to ship.
+
+This is a short field guide: what those tags were, how the standards actually treat them, and what we do now.
+
+## The marquee era
+
+`<marquee>` made text or inline content scroll or bounce along an axis. In practice it was a one-element animation studio for personal pages, “under construction” sites, and portfolios that wanted “clouds” without learning CSS.
+
+In modern HTML, `<marquee>` is **obsolete**—browsers may still parse and render it for legacy pages, but it is not something you should rely on for new work. It is also **rough on readers**: constant motion distracts, and for people with [vestibular or motion sensitivity](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion) it can be genuinely unpleasant.
+
+If you want motion today, use **CSS animations or transitions**, respect **`prefers-reduced-motion`**, and give users a way to pause or avoid it. The old “DVD logo corner bounce” trick—nested marquees with different directions—belongs in CodePen history, not in production navigation.
+
+## Blink: the Netscape strobe
+
+`<blink>` toggled visibility on and off. It was a **Netscape-ism**, not a stable cross-browser standard in the way we think of HTML today. Internet Explorer did not ship the same feature; other engines had `<marquee>` stories instead. That split was an early taste of the **browser support matrix** every senior engineer still carries in their bones.
+
+`<blink>` is a punchline for a reason: flashing content is hostile to readability and accessibility. **Do not bring it back.** If you need emphasis, typography and color hierarchy beat theatrical blinking.
+
+## Presentational HTML: `<center>`, `<font>`, and friends
+
+Before CSS won, people styled pages by sprinkling HTML with alignment and font tags.
+
+- **`<center>`** horizontally centered its contents. It is **obsolete** in HTML5-style documents; use CSS (`margin: auto`, flexbox, grid, `text-align`) instead.
+- **`<font>`** set face, size, and color inline. Also **obsolete** for new documents; use CSS `font-family`, `font-size`, `color`, and design tokens.
+
+These elements still exist in the parser for **legacy markup**, but they are the wrong tool for **new** semantic, maintainable layouts.
+
+## Frames: whole pages were jigsaw puzzles
+
+**`<frameset>`** and **`<frame>`** split the viewport into rectangular panes, each loading its own document. Hit counters, nav bars, and “main” content often lived in separate frames. It felt modular; in practice it broke **bookmarking, deep linking, and accessible focus** in ways that annoyed everyone.
+
+The framing model is **obsolete** for authors building modern pages. When you need to embed another document, **`<iframe>`** is the standard tool (with tight sizing, sandboxing, and performance discipline when you own both sides).
+
+## Tables for layout (the trope)
+
+Using `<table>`, `<tr>`, and `<td>` to build **entire page grids** was normal when CSS layout was weak and tutorials literally said “put it in a table.” That is **not** a story about removing `<table>` from the spec—**tables are still correct for tabular data**. The anti-pattern was **layout abuse**: stretching structure tags until they became a grid framework.
+
+Today: **semantic landmarks**, **flexbox**, **grid**, and **logical properties** carry layout. Reserve tables for data that belongs in rows and columns.
+
+## `<strong>` vs `<b>`, `<em>` vs `<i>` (they are not “the old bad tags”)
+
+Threads often ask whether `<b>` and `<i>` are deprecated. **They are not.** They are still valid elements with defined meaning in HTML: **`<b>`** and **`<i>`** can mark spans where you want **bold** or **italic** without necessarily implying extra semantic “importance” or “stress emphasis”; **`<strong>`** and **`<em>`** carry **strong importance** and **emphasis** semantics.
+
+The shift was from “bold equals shouting” to “choose the element that matches *why* the text is highlighted.” That is a **documentation and culture** change more than a graveyard for tags.
+
+## Beyond tags: the texture of the old web
+
+Tags are only half the picture. The same era gifted us:
+
+- **Under construction** animated GIFs and earnest “best viewed in Netscape” badges.
+- **Visitor counters** powered by `/cgi-bin/` scripts, turning page loads into public scoreboards.
+- **JavaScript image rollovers** before `:hover` was dependable everywhere.
+- **Flash and Shockwave**, a parallel universe of motion and sound—later displaced by open web standards, mobile constraints, and hard lessons about **battery, security, and accessibility** (the “Thoughts on Flash” era is part of that story).
+
+None of that replaces good HTML—but it explains why `<marquee>` still evokes such strong reactions. The web was **loud** on purpose.
+
+## Nostalgia versus the reader
+
+It is fun to remember the chaos. It is less fun to **live** inside infinite motion, strobing text, and frames that fight the back button.
+
+Standards exist so we can be expressive **without** melting eyes or losing structure. The early web taught us what not to repeat; the modern web gives us better tools to say the same thing—**clearly, accessibly, and maintainably**.
+
+If you are maintaining a legacy page that still marquees: consider a static heading, a sentence of real copy, and a CSS animation that honors `prefers-reduced-motion`. Your future self—and your readers—will thank you.
