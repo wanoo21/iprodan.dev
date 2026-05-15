@@ -61,7 +61,11 @@ const structuredData = {
     authors: author ? [author.data.name] : [],
   }}
 >
-  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(structuredData)}
+  />
   <div class="max-w-5xl mx-auto pb-6">
     <dl class="text-center text-sm text-gray-500 dark:text-gray-400">
       <dt class="sr-only">{t("layouts.postLayout.publishedAt")}</dt>
@@ -80,7 +84,9 @@ const structuredData = {
         <ul class="space-y-1">
           {entry.data.furtherReading.map(({ title, href }) => (
             <li class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
-              <Link href={href} class="underline">{title}</Link>
+              <Link href={href} class="underline">
+                {title}
+              </Link>
             </li>
           ))}
         </ul>

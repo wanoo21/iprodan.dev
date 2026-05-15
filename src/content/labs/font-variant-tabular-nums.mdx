@@ -1,0 +1,79 @@
+---
+title: "Tabular numbers in CSS"
+description: "font-variant-numeric: tabular-nums gives digits equal widths so rows of changing numbers feel steady without switching to monospace."
+published_date: 2026-05-14
+cover: /src/assets/lib/tabular-nums.png
+badge: "CSS"
+furtherReading:
+  - title: "MDN: font-variant-numeric"
+    href: "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/font-variant-numeric"
+  - title: "Tailwind CSS: font-variant-numeric"
+    href: "https://tailwindcss.com/docs/font-variant-numeric"
+---
+
+import TabularNumsDemo from "@/components/labs/TabularNumsDemo";
+import tabularNumsPoster from "@/assets/lib/tabular-nums.png";
+import { Image } from "astro:assets";
+
+<div class="max-w-5xl mx-auto space-y-10">
+  <header class="text-center space-y-5">
+    <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
+      <code class="text-purple-600 bg-purple-50 dark:text-purple-300 dark:bg-purple-900/50 px-2 py-1 rounded-lg text-3xl md:text-4xl">tabular-nums</code>{" "}
+      for numbers that line up
+    </h1>
+    <p class="text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto text-lg">
+      Use <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded font-mono text-sm">font-variant-numeric: tabular-nums</code> when digits need to stay aligned. It gives every digit the same width, so counters, prices, timers, and table columns do not wiggle as values change.
+    </p>
+  </header>
+
+  <div class="max-w-3xl mx-auto">
+    <Image
+      src={tabularNumsPoster}
+      alt="CSS snippet illustrating font-variant-numeric: tabular-nums for aligning numbers"
+      widths={[360, 540, 720, 900]}
+      sizes="(max-width: 48rem) 100vw, 48rem"
+      loading="eager"
+      decoding="async"
+      fetchpriority="high"
+      class="w-full rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm"
+    />
+  </div>
+
+  <section class="space-y-6 max-w-3xl mx-auto">
+    <h2 class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">What changes?</h2>
+    <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">By default, many fonts use proportional numbers: a <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">1</code> is narrow, an <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">8</code> is wider, and the whole number can shift when the value changes. <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">tabular-nums</code> makes each digit take the same horizontal space, so the number keeps its shape and the right edge stays steady.</p>
+    
+    <div class="rounded-lg bg-gray-950 border border-gray-800 p-4 font-mono text-xs leading-6">
+      <div class="text-gray-500">.amount {"{"}</div>
+      <div class="pl-4 text-gray-300">
+        <span class="text-sky-400">font-variant-numeric</span>{": "}
+        <span class="text-emerald-400">tabular-nums</span>{";"}
+      </div>
+      <div class="text-gray-500">{"}"}</div>
+    </div>
+
+    <h2 class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">When to use it</h2>
+    <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">Use it for numbers that sit in rows, columns, or changing UI: prices, balances, timers, analytics cards, tables, and counters. Leave normal proportional numbers for paragraphs, where mixed digit widths usually read more naturally.</p>
+
+    <h2 class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">Tailwind utility</h2>
+    <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">Tailwind exposes the same declaration as <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">tabular-nums</code>, which is usually enough for table cells and compact numeric UI.</p>
+    <div class="rounded-lg bg-gray-950 border border-gray-800 p-4 font-mono text-xs leading-6">
+      <div class="text-gray-300">
+        <span class="text-gray-400">&lt;</span><span class="text-emerald-400">td</span> <span class="text-sky-400">class</span><span class="text-gray-500">=</span><span class="text-emerald-400">&quot;text-right tabular-nums&quot;</span><span class="text-gray-400">&gt;</span>
+      </div>
+      <div class="pl-4 text-gray-400">{"${amount}"}</div>
+      <div class="text-gray-300">
+        <span class="text-gray-400">&lt;/</span><span class="text-emerald-400">td</span><span class="text-gray-400">&gt;</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="max-w-5xl mx-auto space-y-6" aria-label="Interactive Labs">
+    <div class="max-w-3xl mx-auto space-y-4">
+      <p class="text-sm leading-relaxed text-neutral-600 dark:text-neutral-400">
+        Scrub the slider and compare the same number on both sides. The left side uses normal digit spacing; the right side uses <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">tabular-nums</code>. Watch how the right edge stays snapped to the purple rail.
+      </p>
+    </div>
+    <TabularNumsDemo client:idle />
+  </section>
+</div>
