@@ -19,7 +19,7 @@ const BEHAVIORS: { value: Behavior; label: string }[] = [
 const SCROLL_AMOUNTS = [2, 4, 6, 10, 14, 20] as const;
 
 const MARQUEE_COPY =
-  "★ Welcome to my home page !!! ★ Best viewed in Netscape ★";
+  "★ Welcome to my home page !!!";
 
 const MARQUEE_CLASS =
   "block text-gray-800 dark:text-gray-200 font-mono text-sm py-2 px-1";
@@ -63,8 +63,6 @@ export default function MarqueePlayground() {
       host.replaceChildren();
     });
   });
-
-  const vertical = () => direction() === "up" || direction() === "down";
 
   return (
     <div
@@ -143,10 +141,6 @@ export default function MarqueePlayground() {
 
           <div
             class="rounded-lg bg-gray-100 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 overflow-hidden"
-            style={{
-              height: vertical() ? "7.5rem" : "auto",
-              "min-height": vertical() ? "7.5rem" : "3rem",
-            }}
             ref={(el) => setPreviewHost(el ?? null)}
           />
         </div>

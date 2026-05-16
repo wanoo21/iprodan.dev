@@ -1,32 +1,54 @@
 ---
-title: "Deprecated and “lost” HTML of the early web"
+title: "Remembering the HTML we started with"
 postLayout: "simple"
 date: 2026-04-30
-cover: src/assets/blog/deprecated-marquee.png
+cover: src/assets/blog/deprecated-html/deprecated-marquee.png
 tags: ["default"]
-summary: "I threw a marquee joke on r/webdev and the comments showed up with their entire childhood. Tags, samples, a messy live demo I insisted on, and what MDN would whisper if it sat next to us on the couch."
+summary: "A small nostalgic walk through marquee, blink, center tags, table layouts, counters, guestbooks, and the loud little web many of us first learned on."
 furtherReading:
   - title: "Original r/webdev thread"
     href: "https://www.reddit.com/r/webdev/comments/1syrvjj/who_still_remembers_this_html_tag/"
   - title: "Obsolete but conforming features (MDN)"
     href: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element#obsolete_and_deprecated_elements"
-  - title: "HTML Living Standard"
-    href: "https://html.spec.whatwg.org/"
-  - title: "I asked Gemini for a prototype… and Snipsco happened!"
-    href: "/blog/snipsco"
+  - title: "Dan's article about blink and marquee"
+    href: "https://danq.me/2020/11/11/blink-and-marquee/"
 ---
 
 import MarqueePlayground from "@/components/labs/MarqueePlayground";
+import example from "@/assets/blog/deprecated-html/example.png";
+import blinkExample from "@/assets/blog/deprecated-html/Netscape5.gif";
+import { Image } from "astro:assets";
 
-I posted [Who still remembers this HTML tag?](https://www.reddit.com/r/webdev/comments/1syrvjj/who_still_remembers_this_html_tag/) on r/webdev as a dumb screenshot and walked away smug. Then the replies rolled in and suddenly I was fifteen again: nested marquees, someone calling `<blink>` the “partner in crime,” `<center>` holding up entire pages, and enough GeoCities callbacks that I could smell the free web host through the screen.
+I posted [Who still remembers this HTML tag?](https://www.reddit.com/r/webdev/comments/1syrvjj/who_still_remembers_this_html_tag/) on `r/webdev`, and the replies had me reminiscing about the old days, we used to "design" our websites 😀.
 
-Some people were delighted. Some said the combo gave them headaches. Both reactions felt honest. What I kept thinking about afterwards was simpler: a ton of that markup **still parses and sometimes still moves in a real browser**, even though every doc I trust tells us not to build new work on it. So this post is my attempt to pin down what I think I know: how it looked in the wild, what I remember feeling, and what the specs politely call it now.
+People remembered `<blink>`, `<center>`, `<font>`, frames, table layouts, guestbooks, visitor counters, and those tiny "under construction" GIFs that somehow made every empty page feel official.
 
-I am writing it for Future Me too, and for anyone who got pulled into that thread at 11 p.m. and suddenly remembered the exact sound of a dial-up handshake. Tiny samples of the actual markup, links when I want receipts, and a playground because I still cannot leave a `<marquee>` alone. Treat every snippet like a fossil: great campfire story, terrible dependency for a launch.
+<Image src={example} alt="Example of a website with frames layouts"
+  widths={[360, 540, 720, 900]}
+  sizes="auto, (max-width: 48rem) 100vw, 48rem"
+  loading="eager"
+  decoding="async"
+  fetchpriority="high"
+  class="w-full rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm"
+/>
 
-## The marquee era
+Check this out [webrender.net/immigrationbusinesslaw/](https://webrender.net/immigrationbusinesslaw/) and you will see what I mean.
 
-I will be honest: `<marquee>` was my first idea of “animation.” No keyframes, no easing curves, just the promise that text could *go somewhere* because the browser said so. Personal pages, “under construction” banners, and that portfolio where someone tried to paint clouds with pure manic energy all leaned on it. Technically it shoves text or inline content along an axis: scroll, slide, bounce, repeat.
+It was messy, loud, and not always **kind to readers.** But it was also the web many of us learned on. We copied source, changed a color, refreshed the page, and felt like we had **unlocked something.**
+
+So this is not really a strict guide to deprecated HTML. 
+
+It is more like looking through an old box of cables: some of them still work, some should stay in the box, but every one of them reminds you where you started.
+
+And yes, I still made a little playground, because apparently I cannot see a `<marquee>` and just move on with my life 😅.
+
+## When text could move (animations at its best 😀)
+
+Before I knew about CSS animations, `<marquee>` felt like magic. Text did not have to sit still anymore. It could slide across the page and announce that my homepage was alive.
+
+Was it tasteful? Not really.
+
+Did I use it anyway? Of course!
 
 ```html
 <marquee direction="left" behavior="scroll" scrollamount="6">
@@ -34,19 +56,35 @@ I will be honest: `<marquee>` was my first idea of “animation.” No keyframes
 </marquee>
 ```
 
-<div class="not-prose max-w-3xl mx-auto my-8">
+Play with it in the playground below:
+
+<div class="not-prose">
   <MarqueePlayground client:idle />
 </div>
 
-When I put the spec hat on, the picture is blunt: `<marquee>` is **obsolete** in the HTML sense. Engines may still parse and render it for crusty legacy pages, but I would not bet a client checkout flow on it. Emotionally it is also **rough on readers**. I get distracted by looping motion even when I am the one who turned it on; for people with [vestibular or motion sensitivity](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion) it is worse than annoying. That is why the toy below bails out when the OS asks for reduced motion.
+The funny thing is that `<marquee>` [still works in many browsers](https://caniuse.com/marquee). It sticks around because the web tries very hard not to break old pages. That is one of the sweetest and strangest things about the platform.
 
-When I want motion today, I reach for **CSS animations or transitions**, keep **`prefers-reduced-motion`** in the back pocket, and leave the “DVD logo corner bounce” trick (nested marquees, different directions) in a CodePen tab where it cannot hurt anyone’s stakeholders.
+But I would not use it on a real site today. CSS animations are a better way to achieve the same effect today.
 
-## Blink: the Netscape strobe
+Also, moving text is distracting, and for some people it can be genuinely uncomfortable.
 
-Someone in that thread called `<blink>` marquee’s accomplice, and I laughed because it hurt. `<blink>` toggled text on and off like it owed you money. Growing up on a machine that actually honored it felt like wielding forbidden power; opening the same page somewhere else and seeing static text was my first peek behind the curtain.
+## The little chaos of `<blink>`
 
-It was a **Netscape thing**, not a stable cross-browser standard the way I teach HTML now. Internet Explorer skipped it; other engines chased different shiny objects (`<marquee>` drama on their side). That mismatch quietly taught me what a **support matrix** was before I learned the vocabulary.
+If `<marquee>` was movement, `<blink>` was pure attention-seeking.
+
+<Image src={blinkExample} alt="Example of a website with blinking text"
+  widths={[360, 540, 720, 900]}
+  sizes="auto, (max-width: 48rem) 100vw, 48rem"
+  loading="lazy"
+  decoding="async"
+  class="w-full rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm"
+/>
+
+Source: [danq.me/2020/11/11/blink-and-marquee/](https://danq.me/2020/11/11/blink-and-marquee/)
+
+You wrapped text in it and the browser made it <blink>flash</blink>. That was the whole idea. 
+
+No design review. No accessibility checklist. Just blinking text 'yelling' at whoever opened the page.
 
 ```html
 <p>
@@ -54,11 +92,17 @@ It was a **Netscape thing**, not a stable cross-browser standard the way I teach
 </p>
 ```
 
-You will not see that flash in most browsers today, which makes this sample feel like a museum placard. `<blink>` is a punchline because it literally fights readability and accessibility standards. I am not reviving it, and if you are tempted for the bit: typography and color hierarchy still win every time.
+I didn't used it much, when I started to learn HTML, it was already not so popular, but `<marquee>` was still there.
 
-## Presentational HTML: `<center>`, `<font>`, and friends
+## Center everything
 
-I distinctly remember the phase where “layout” meant right-click, View Source, and a blush-inducing wall of `<font>` tags. Comic Sans was not ironic yet. Before CSS really won, I styled pages by sprinkling presentational HTML everywhere; nobody handed me a design system, so I hoarded inline attributes like treasure.
+There was a time when `<center>` felt like a layout system (maybe because it was).
+
+Want the title in the middle? Wrap it in `<center>`.
+
+Want the whole page to look more "finished"? Wrap more things in `<center>`!
+
+Then came `<font>`, and suddenly you could choose a face, a size, and a color right there in the HTML.
 
 ```html
 <center>
@@ -68,14 +112,17 @@ I distinctly remember the phase where “layout” meant right-click, View Sourc
 </center>
 ```
 
-- **`<center>`** horizontally centered its contents. The spec-minded read: it is **obsolete** in HTML5-style documents. I use CSS instead (`margin: auto`, flexbox, grid, `text-align`).
-- **`<font>`** set face, size, and color inline. Also **obsolete** for new documents. My brain now reaches for `font-family`, `font-size`, `color`, and whatever design tokens the project already has.
+You did not need to understand architecture. You only needed curiosity and the courage to break the page a few times.
 
-They still exist in the parser for **legacy markup** and I am grateful for that when I open some ancient saved HTML. I still would not ship them on something new.
+Today we have: `text-align`, `font-family`, `color`, proper layout, and the design system if the project has one. But I still understand why those tags felt so good when we were starting.
 
-## Frames: whole pages were jigsaw puzzles
+## Frames made pages feel bigger
 
-**`<frameset>`** and **`<frame>`** chopped the viewport into panes, each loading its own document. I can still picture the tiny templates: `header.html`, `nav.html`, `content.html`, like a static-site generator built out of guilt. Hit counters and sticky nav columns lived in their own little worlds. It looked modular when I sketched it on paper. In real life it shredded **bookmarking, deep linking, and focus** for anyone who just wanted to share one URL and land in the right place.
+Frames were another thing that felt clever at the time.
+
+You could have a header, a menu, and a content page all living in their own files. It felt almost professional. 
+
+It felt like building a tiny application before most of us had words for that. But it was also a lot of fun!
 
 ```html
 <frameset rows="80,*">
@@ -87,11 +134,21 @@ They still exist in the parser for **legacy markup** and I am grateful for that 
 </frameset>
 ```
 
-The framing model is **obsolete** for the kind of pages I build today. When I embed another document, **`<iframe>`** is the tool, with tight sizing, sandboxing, and the guilty performance audit when I own both sides.
+The problem was that the browser did not feel as clever as we did. 
 
-## Tables for layout (the trope)
+URLs got weird. Bookmarks did not always point where you expected. Sharing a page could land someone inside the wrong frame or at the wrong starting point.
 
-Confession: I absolutely laid out whole sites with `<table>`, `<tr>`, and `<td>` because tutorials said “put it in a table” and CSS layout felt like guesswork with bruises. I could *see* the grid in my head; the markup was lying, but it worked until it did not. That habit is **not** the same as `<table>` going away. **Tables are still correct for tabular data.** The sin was **layout abuse**: wrenching table markup until it became a grid you never admitted out loud.
+Still, I remember the appeal. `header.html`, `nav.html`, `main.html`. A whole site split into pieces. 
+
+It was clumsy, but it was also a real attempt to organize things.
+
+## Tables before layout was comfortable
+
+I also remember using tables for layout. Not data. Layout.
+
+A header row, a left navigation cell, a main content cell, maybe a footer. 
+
+If you needed more control, you nested another table inside. Then another. And somehow the page held together 😅.
 
 ```html
 <table width="100%" cellpadding="8" border="0">
@@ -105,11 +162,23 @@ Confession: I absolutely laid out whole sites with `<table>`, `<tr>`, and `<td>`
 </table>
 ```
 
-These days, after enough table-shaped scar tissue, I lean on **semantic landmarks**, **flexbox**, **grid**, and **logical properties** for layout. I save tables for what they were meant for: data in rows and columns, not for smuggling a homepage into a spreadsheet costume.
+It was not semantic, and it was not fun to maintain. 
 
-## `<strong>` vs `<b>`, `<em>` vs `<i>` (they are not “the old bad tags”)
+But if you were learning from tutorials and View Source, it made sense. You could see rows and columns. You could imagine the page as a spreadsheet and push things into place.
 
-That Reddit rabbit hole resurfaced a question I used to feel guilty about: are `<b>` and `<i>` deprecated? **They are not.** They are still valid elements with defined meaning in HTML. **`<b>`** and **`<i>`** can mark spans where you want **bold** or **italic** without necessarily implying extra semantic “importance” or “stress emphasis”; **`<strong>`** and **`<em>`** carry **strong importance** and **emphasis** semantics.
+Now we have <a href="/l/flexbox-align">flexbox and grid</a>, and better ways to describe the structure of a page. 
+
+Tables can go back to being tables. Still, so useful for email layouts, **there's nothing better than multiple nested tables for email templates**.
+
+## Bold, italic, and learning meaning later
+
+For a long time, I thought `<b>` and `<i>` were simply the old bad tags, and `<strong>` and `<em>` were the new good ones.
+
+The real story is softer than that!
+
+They are not all the same, and they are not all deprecated.
+
+Some describe meaning. Some describe a different kind of text. The important part is knowing why the text is different.
 
 ```html
 <p>
@@ -121,23 +190,28 @@ That Reddit rabbit hole resurfaced a question I used to feel guilty about: are `
 </p>
 ```
 
-For me the shift was learning that “bold” is not automatically “shouting,” and that the honest question is *why* the text looks different. That is mostly **documentation and culture**, not some mass funeral for tags that offended the lint rules in my head for a few years.
+That was one of the bigger lessons of growing up with HTML: at first I only cared how the page looked. Later I started caring what the markup meant.
 
-## Beyond tags: the texture of the old web
+## The rest of the old web (the web of the 90s)
 
-The tags were loud, but the *culture* was louder. I still smile, and sometimes cringe, when I remember:
+The tags were only part of it. 
 
-- **Under construction** GIFs that promised a million-dollar redesign someday, paired with “best viewed in Netscape” badges like we were handing out varsity letters.
-- **Visitor counters** fed by `/cgi-bin/` scripts, because your page had not truly existed until a number ticked upward in public.
-- **JavaScript image rollovers** before `:hover` was a comfort zone, which meant every nav bar carried a faint smell of `onmouseover` duct tape.
-- **Flash and Shockwave**, their own universe of motion and sound, later kneecapped by open standards, phones that refused to melt, and the slow public argument about **battery, security, and accessibility** (Steve Jobs weighing in is forever burned into my RSS memory).
+The old web had a whole texture that is hard to explain if you did not live in it. But I will try to explain it in a few words:
 
-None of that replaces good HTML, yet it explains why a single `<marquee>` meme can still light up a comment section. The web I grew up on was **loud** on purpose, and I kind of miss the noise even when I refuse to ship it.
+- "Best viewed in Netscape" badges.
+- Under construction GIFs.
+- Guestbooks.
+- Visitor counters.
+- Web rings.
+- Tiny animated email icons.
+- Background music you did not ask for.
+- JavaScript image rollovers.
+- Flash intros with a "Skip" link that everyone clicked.
 
-## Nostalgia versus the reader
+It was personal in a way that many sites are not anymore. Pages looked like someone made them at a desk after school, late at night, or during a weekend when they were supposed to be doing something else.
 
-I love remembering this stuff; it reminds me why I care about the web. I do not love subjecting real people to it on a deadline.
+Not everything was better, it was a **different kind of better**.
 
-Standards, for me, are the compromise that lets us be weird in the chat thread and disciplined in production. The early web showed what not to repeat. The modern stack gives me better tools to say the same thing: **clearly, accessibly, and maintainably**.
+A lot of it was inaccessible, slow, broken, or just painful to read. But it had a sense of discovery. You could right-click, view source, <a href="/blog/snipsco">copy a weird trick</a>, and suddenly your own page had a little more life.
 
-If you are still babysitting a legacy page that marquees: give it a real heading, a calm sentence of copy, and a CSS animation that honors `prefers-reduced-motion`. Your future self and your readers will quietly thank you, and you will sleep better than I did the night I nested three marquees “just to see.”
+How about you? What do you remember from the early web?
