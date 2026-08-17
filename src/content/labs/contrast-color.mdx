@@ -1,0 +1,83 @@
+---
+title: "CSS contrast-color()"
+description: "The browser picks black or white against a color so you stop pairing text and background by hand."
+published_date: 2026-08-17
+cover: /src/assets/lib/contrast-color.png
+badge: "CSS"
+furtherReading:
+  - title: "MDN: contrast-color()"
+    href: "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/color_value/contrast-color"
+  - title: "CSS Color Module Level 5 — contrast-color()"
+    href: "https://drafts.csswg.org/css-color-5/#contrast-color"
+  - title: "I asked Gemini for a prototype… and Snipsco happened"
+    href: "/blog/snipsco"
+---
+
+import { Image } from "astro:assets";
+import contrastColorPoster from "@/assets/lib/contrast-color.png";
+import ContrastColorDemo from "@/components/labs/ContrastColorDemo";
+
+<div class="max-w-5xl mx-auto space-y-10">
+  <header class="text-center space-y-5">
+    <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
+      CSS <code class="text-purple-600 bg-purple-50 dark:text-purple-300 dark:bg-purple-900/50 px-2 py-1 rounded-lg text-3xl md:text-4xl">contrast-color()</code>
+    </h1>
+    <p class="text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto text-lg">
+      Pass a color, get black or white — whichever contrasts more.
+    </p>
+    <div class="contrast-color-unsupported-alert bg-rose-50 border border-rose-200 text-rose-800 dark:bg-rose-900/40 dark:border-rose-700 dark:text-rose-200 px-5 py-4 rounded-xl text-sm inline-flex items-start text-left max-w-2xl shadow-sm">
+      <svg class="w-5 h-5 mr-3 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+      </svg>
+      <div>
+        <strong class="block mb-1">Unsupported Browser</strong>
+        Your browser does not support <code>contrast-color()</code>. Use Chrome 147+, Firefox 146+, or Safari 26+.
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-3xl mx-auto">
+    <Image
+      src={contrastColorPoster}
+      alt="CSS snippet showing color: contrast-color(var(--brand)) on a card with a brand background"
+      widths={[360, 540, 720, 900]}
+      sizes="(max-width: 48rem) 100vw, 48rem"
+      loading="eager"
+      decoding="async"
+      class="w-full rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm"
+    />
+  </div>
+
+  <section class="space-y-6 max-w-3xl mx-auto">
+    <h2 class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">What does it do?</h2>
+    <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+      <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">contrast-color()</code> takes a color and returns <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">white</code> or <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">black</code>, whichever contrasts more. Tie goes to white. The snippet above is the whole API — made in <a href="/blog/snipsco" class="inline whitespace-nowrap text-purple-600 dark:text-purple-300 underline font-mono text-sm px-1.5 py-0.5 rounded bg-purple-50 dark:bg-purple-900/50">Snipsco</a>.
+    </p>
+    <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+      No luminance helper, no hardcoded text pair. When <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">--brand</code> changes, the foreground follows. Baseline since April 2026 (Chrome 147, Firefox 146, Safari 26). Spec: <a href="https://drafts.csswg.org/css-color-5/#contrast-color" class="text-purple-600 dark:text-purple-300 underline" target="_blank" rel="noopener">CSS Color Module Level 5</a>. Docs: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/color_value/contrast-color" class="text-purple-600 dark:text-purple-300 underline" target="_blank" rel="noopener">MDN</a>.
+    </p>
+    <h2 class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">Fallback</h2>
+    <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+      Gate the declaration with <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">@supports (color: contrast-color(red))</code>, and keep a hardcoded <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">color</code> first so older engines still paint text.
+    </p>
+
+    <h2 class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">The mid-tone trap</h2>
+    <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+      Only black or white, targeting WCAG 2 AA (~4.5:1). Mid-tones lose: <code class="text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/50 px-1.5 py-0.5 rounded">#2277d3</code> picks black, and small text still fails. Keep palettes at the light or dark ends.
+    </p>
+  </section>
+
+  <section class="max-w-3xl mx-auto" aria-label="Interactive Labs">
+    <ContrastColorDemo client:idle />
+  </section>
+</div>
+
+<style>
+  {`
+  @supports (color: contrast-color(red)) {
+    .contrast-color-unsupported-alert {
+      display: none;
+    }
+  }
+  `}
+</style>
