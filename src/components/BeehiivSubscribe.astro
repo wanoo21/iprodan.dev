@@ -1,0 +1,21 @@
+---
+---
+
+<div class:list={["not-prose", Astro.props.class]} data-beehiiv-mount></div>
+<script>
+  const SRC = "https://subscribe-forms.beehiiv.com/v3/loader.js";
+  const FORM = "8e8dc79c-7786-40a2-83e6-c876fbb301b1";
+
+  function mount() {
+    document.querySelectorAll("[data-beehiiv-mount]").forEach((el) => {
+      el.replaceChildren();
+      const s = document.createElement("script");
+      s.async = true;
+      s.src = `${SRC}?v=${Date.now()}`;
+      s.setAttribute("data-beehiiv-form", FORM);
+      el.appendChild(s);
+    });
+  }
+
+  document.addEventListener("astro:page-load", mount);
+</script>

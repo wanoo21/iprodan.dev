@@ -7,7 +7,7 @@ import FormattedDate from "@/components/FormattedDate.astro";
 import RootLayout from "./RootLayout.astro";
 import { SITE_METADATA, POST_METADATA } from "@/consts";
 import Comments from "@/components/Comments.astro";
-import BuyMeACoffeeLink from "@/components/BuyMeACoffeeLink.astro";
+import BeehiivSubscribe from "@/components/BeehiivSubscribe.astro";
 import { useTranslations } from "@/i18n";
 
 type Props = {
@@ -93,7 +93,7 @@ const structuredData = {
       </div>
     )
   }
-  <BuyMeACoffeeLink class="max-w-5xl mx-auto px-4" />
+  <BeehiivSubscribe class="max-w-5xl mx-auto px-4 py-8" />
   {
     SITE_METADATA.comments?.provider === "giscus" &&
       POST_METADATA.showComments && (

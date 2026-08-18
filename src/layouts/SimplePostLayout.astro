@@ -11,7 +11,7 @@ import DetailsSummary from "../components/DetailsSummary.astro";
 import SocialShareButtons from "../components/social-icons/SocialShareButtons.astro";
 import Comments from "../components/Comments.astro";
 import BlogPostJsonLd from "../components/BlogPostJsonLd.astro";
-import BuyMeACoffeeLink from "../components/BuyMeACoffeeLink.astro";
+import BeehiivSubscribe from "../components/BeehiivSubscribe.astro";
 import { POST_METADATA, SITE_METADATA } from "@/consts";
 import { useTranslations } from "@/i18n";
 
@@ -164,7 +164,7 @@ const postPageUrl =
             </div>
           )
         }
-        <BuyMeACoffeeLink />
+        <BeehiivSubscribe class="py-8" />
         {
           SITE_METADATA.comments?.provider === "giscus" &&
             POST_METADATA.showComments && (
