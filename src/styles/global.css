@@ -58,58 +58,86 @@ input:-webkit-autofill:focus {
 }
 
 .mobile-nav {
-    position: fixed;
-    inset: 0 0 0 auto;
-    width: min(20rem, 80vw);
-    height: 100dvh;
+    --drawer-width: min(20rem, 80vw);
+    --drawer-backdrop: 0;
+    width: auto;
+    height: auto;
     max-width: none;
     max-height: none;
     margin: 0;
     border: 0;
     padding: 0;
-    overflow: auto;
-    background: white;
-    translate: 100% 0;
-    transition:
-        translate 0.3s ease,
-        overlay 0.3s allow-discrete,
-        display 0.3s allow-discrete;
-}
-
-.dark .mobile-nav {
-    background: var(--color-gray-950);
-}
-
-.mobile-nav:popover-open {
-    translate: 0;
+    overflow: visible;
+    background: transparent;
 }
 
 .mobile-nav::backdrop {
-    background: rgb(0 0 0 / 0.4);
-    opacity: 0;
-    transition:
-        opacity 0.3s ease,
-        overlay 0.3s allow-discrete,
-        display 0.3s allow-discrete;
+    background: #000;
+    opacity: calc(var(--drawer-backdrop) / 2);
 }
 
-.mobile-nav:popover-open::backdrop {
-    opacity: 1;
+.mobile-nav-scroller {
+    display: grid;
+    grid-template-columns: 100% var(--drawer-width);
+    width: 100vw;
+    height: 100svh;
+    overflow-x: scroll;
+    overscroll-behavior: none;
+    scrollbar-width: none;
+    scroll-snap-type: x mandatory;
 }
 
-@starting-style {
-    .mobile-nav:popover-open {
-        translate: 100% 0;
+.mobile-nav-scroller::-webkit-scrollbar {
+    display: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .mobile-nav-scroller {
+        scroll-behavior: smooth;
+    }
+}
+
+.mobile-nav-scroller::before {
+    content: "";
+    scroll-snap-align: start;
+    scroll-initial-target: nearest;
+}
+
+.mobile-nav-sheet {
+    height: 100svh;
+    overflow-y: auto;
+    background: white;
+    scrollbar-width: none;
+    scroll-snap-align: end;
+}
+
+.dark .mobile-nav-sheet {
+    background: var(--color-gray-950);
+}
+
+@supports (animation-timeline: scroll()) {
+    .mobile-nav {
+        timeline-scope: --drawer-fade;
+        animation: fade-drawer-backdrop linear both;
+        animation-timeline: --drawer-fade;
     }
 
-    .mobile-nav:popover-open::backdrop {
-        opacity: 0;
+    .mobile-nav-scroller {
+        scroll-timeline: --drawer-fade x;
     }
-}
 
-@media (prefers-reduced-motion: reduce) {
-    .mobile-nav,
-    .mobile-nav::backdrop {
-        transition: none;
+    @property --drawer-backdrop {
+        syntax: "<number>";
+        inherits: true;
+        initial-value: 0;
+    }
+
+    @keyframes fade-drawer-backdrop {
+        0% {
+            --drawer-backdrop: 0;
+        }
+        100% {
+            --drawer-backdrop: 1;
+        }
     }
 }

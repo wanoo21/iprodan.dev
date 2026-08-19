@@ -43,9 +43,10 @@ const iconClass =
       </a>
       <button
         type="button"
+        id="drawer-open"
         class:list={["sm:hidden", iconClass]}
-        popovertarget="mobile-nav"
         aria-controls="mobile-nav"
+        aria-expanded="false"
         aria-label={t("components.mobileNav.toggleMenu")}
       >
         <svg
@@ -64,39 +65,125 @@ const iconClass =
     </div>
   </div>
 </header>
-<nav id="mobile-nav" popover="auto" class="mobile-nav">
-  <div class="flex justify-end p-3">
-    <button
-      type="button"
-      class={iconClass}
-      popovertarget="mobile-nav"
-      popovertargetaction="hide"
-      aria-label={t("components.mobileNav.toggleMenu")}
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 20 20"
-        fill="currentColor"
-        class="size-5"
-        aria-hidden="true"
-      >
-        <path
-          fill-rule="evenodd"
-          d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-          clip-rule="evenodd"></path>
-      </svg>
-    </button>
-  </div>
-  <div class="flex flex-col gap-1 px-4 pb-6">
-    {
-      NAVIGATION.map((link) => (
-        <HeaderLink
-          href={link.href}
-          class="rounded-md px-3 py-2 text-lg font-medium text-gray-700 transition hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800 aria-[current=page]:bg-gray-100 aria-[current=page]:text-gray-900 dark:aria-[current=page]:bg-gray-800 dark:aria-[current=page]:text-gray-100"
+<div id="mobile-nav" popover="manual" class="mobile-nav">
+  <div class="mobile-nav-scroller">
+    <nav class="mobile-nav-sheet" tabindex="-1">
+      <div class="flex justify-end p-3">
+        <button
+          type="button"
+          class={iconClass}
+          data-drawer-close
+          aria-label={t("components.mobileNav.toggleMenu")}
         >
-          {t(link.title)}
-        </HeaderLink>
-      ))
-    }
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            class="size-5"
+            aria-hidden="true"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+              clip-rule="evenodd"></path>
+          </svg>
+        </button>
+      </div>
+      <div class="flex flex-col gap-1 px-4 pb-6">
+        {
+          NAVIGATION.map((link) => (
+            <HeaderLink
+              href={link.href}
+              class="rounded-md px-3 py-2 text-lg font-medium text-gray-700 transition hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800 aria-[current=page]:bg-gray-100 aria-[current=page]:text-gray-900 dark:aria-[current=page]:bg-gray-800 dark:aria-[current=page]:text-gray-100"
+            >
+              {t(link.title)}
+            </HeaderLink>
+          ))
+        }
+      </div>
+    </nav>
   </div>
-</nav>
+</div>
+<script>
+  let observer: IntersectionObserver | undefined;
+  let isOpen = false;
+
+  function els() {
+    const drawer = document.getElementById("mobile-nav");
+    return {
+      drawer,
+      scroller: drawer?.querySelector<HTMLElement>(".mobile-nav-scroller"),
+      sheet: drawer?.querySelector<HTMLElement>(".mobile-nav-sheet"),
+      openBtn: document.getElementById("drawer-open"),
+    };
+  }
+
+  async function openDrawer() {
+    const { drawer, scroller, sheet, openBtn } = els();
+    if (!drawer || !scroller || !sheet) return;
+    drawer.showPopover();
+    openBtn?.setAttribute("aria-expanded", "true");
+    const open = () => scroller.scrollTo({ left: sheet.offsetWidth, behavior: "auto" });
+    if (!CSS.supports("scroll-initial-target", "nearest")) {
+      scroller.scrollTo({ left: 0, behavior: "instant" });
+      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    }
+    open();
+    sheet.focus();
+  }
+
+  function closeDrawer() {
+    els().scroller?.scrollTo({ left: 0, behavior: "auto" });
+  }
+
+  document.addEventListener("click", (e) => {
+    const t = e.target as Element;
+    if (t.closest("#drawer-open")) {
+      const { drawer } = els();
+      drawer?.matches(":popover-open") ? closeDrawer() : openDrawer();
+      return;
+    }
+    if (t.closest("[data-drawer-close]")) {
+      closeDrawer();
+      return;
+    }
+    const { drawer, sheet } = els();
+    if (drawer?.matches(":popover-open") && sheet && !sheet.contains(t) && drawer.contains(t)) {
+      closeDrawer();
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeDrawer();
+  });
+
+  document.addEventListener("astro:page-load", () => {
+    observer?.disconnect();
+    isOpen = false;
+    const { drawer, sheet, openBtn } = els();
+    if (!drawer || !sheet) return;
+    const threshold = 1 / window.innerWidth;
+    observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries.at(-1)!;
+        if (entry.intersectionRatio === 1) isOpen = true;
+        if (isOpen && entry.intersectionRatio < threshold) {
+          isOpen = false;
+          drawer.hidePopover();
+          openBtn?.setAttribute("aria-expanded", "false");
+        }
+      },
+      { root: drawer, threshold: [threshold, 1] },
+    );
+    observer.observe(sheet);
+    if (!CSS.supports("animation-timeline: scroll()")) {
+      const { scroller } = els();
+      scroller?.addEventListener("scroll", () => {
+        drawer.style.setProperty(
+          "--drawer-backdrop",
+          String(scroller.scrollLeft / sheet.offsetWidth || 0),
+        );
+      });
+    }
+  });
+</script>
