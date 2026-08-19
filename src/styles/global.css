@@ -56,3 +56,93 @@ input:-webkit-autofill:focus {
         background-color 600000s 0s,
         color 600000s 0s;
 }
+
+.mobile-nav {
+    --drawer-width: min(20rem, 80vw);
+    --drawer-backdrop: 0;
+    width: auto;
+    height: auto;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    overflow: visible;
+    background: transparent;
+}
+
+.mobile-nav::backdrop {
+    background: #000;
+    opacity: calc(var(--drawer-backdrop) / 2);
+}
+
+.mobile-nav-scroller {
+    display: grid;
+    grid-template-columns: 100% var(--drawer-width);
+    width: 100vw;
+    height: 100svh;
+    overflow-x: scroll;
+    overscroll-behavior: none;
+    scrollbar-width: none;
+    scroll-snap-type: x mandatory;
+}
+
+.mobile-nav-scroller::-webkit-scrollbar {
+    display: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .mobile-nav-scroller {
+        scroll-behavior: smooth;
+    }
+}
+
+.mobile-nav-scroller::before {
+    content: "";
+    scroll-snap-align: start;
+    scroll-initial-target: nearest;
+}
+
+.mobile-nav-sheet {
+    height: 100svh;
+    overflow-y: auto;
+    background: white;
+    scrollbar-width: none;
+    scroll-snap-align: end;
+}
+
+.dark .mobile-nav-sheet {
+    background: var(--color-gray-950);
+}
+
+.below-fold {
+    content-visibility: auto;
+    contain-intrinsic-size: auto none auto 24rem;
+}
+
+@supports (animation-timeline: scroll()) {
+    .mobile-nav {
+        timeline-scope: --drawer-fade;
+        animation: fade-drawer-backdrop linear both;
+        animation-timeline: --drawer-fade;
+    }
+
+    .mobile-nav-scroller {
+        scroll-timeline: --drawer-fade x;
+    }
+
+    @property --drawer-backdrop {
+        syntax: "<number>";
+        inherits: true;
+        initial-value: 0;
+    }
+
+    @keyframes fade-drawer-backdrop {
+        0% {
+            --drawer-backdrop: 0;
+        }
+        100% {
+            --drawer-backdrop: 1;
+        }
+    }
+}

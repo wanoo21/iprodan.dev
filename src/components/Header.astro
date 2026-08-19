@@ -2,44 +2,188 @@
 import { NAVIGATION } from "@/consts";
 import HeaderLink from "./HeaderLink.astro";
 import Logo from "./Logo.astro";
-import MobileNav from "@/solid/MobileNav.tsx";
 import ThemeSwitcher from "@/solid/ThemeSwitcher.tsx";
 import SearchButton from "@/solid/SearchButton.tsx";
 import { useTranslations } from "@/i18n";
 import Rss from "@/components/social-icons/icons/Rss.astro";
 
 const t = useTranslations();
+const linkClass =
+  "rounded-md px-2.5 py-1 text-sm font-medium text-gray-600 transition hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-100 aria-[current=page]:bg-gray-100 aria-[current=page]:text-gray-900 dark:aria-[current=page]:bg-gray-800 dark:aria-[current=page]:text-gray-100";
+const iconClass =
+  "size-9 inline-flex items-center justify-center rounded-lg text-gray-900 transition hover:bg-gray-100 dark:text-gray-100 dark:hover:bg-gray-800";
 ---
 
-<header class="flex items-center justify-between py-10">
+<header
+  class="sticky top-0 z-20 -mx-4 flex items-center justify-between border-b border-gray-200/60 bg-white/80 px-4 py-3 backdrop-blur-md sm:-mx-6 sm:px-6 xl:mx-0 dark:border-gray-800/60 dark:bg-gray-950/80"
+>
   <div class="mr-3 w-10">
     <a href="/" aria-label={t("siteMetadata.headerTitle")}>
       <Logo class="w-full rounded-4xl" />
     </a>
   </div>
-  <div class="flex items-center leading-5 space-x-4 sm:space-x-6">
+  <div class="flex items-center gap-1 sm:gap-2">
     {
       NAVIGATION.filter((link) => link.href !== "/").map((link) => (
-        <HeaderLink
-          href={link.href}
-          class="hidden sm:block font-medium text-gray-900 dark:text-gray-100"
-        >
+        <HeaderLink href={link.href} class:list={["hidden sm:block", linkClass]}>
           {t(link.title)}
         </HeaderLink>
       ))
     }
-    <div class="flex items-center gap-4">
+    <div class="flex items-center">
       <SearchButton client:only="solid-js" />
       <ThemeSwitcher client:only="solid-js" />
       <a
         href="/rss.xml"
-        class="text-gray-900 transition hover:text-primary-500 dark:text-gray-100 dark:hover:text-primary-400"
+        class={iconClass}
         aria-label={t("nav.rssFeed")}
         title={t("nav.rssFeed")}
       >
-        <Rss class="h-6 w-6" />
+        <Rss class="size-5" />
       </a>
-      <MobileNav client:only="solid-js" />
+      <button
+        type="button"
+        id="drawer-open"
+        class:list={["sm:hidden", iconClass]}
+        aria-controls="mobile-nav"
+        aria-expanded="false"
+        aria-label={t("components.mobileNav.toggleMenu")}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          class="size-5"
+          aria-hidden="true"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+            clip-rule="evenodd"></path>
+        </svg>
+      </button>
     </div>
   </div>
 </header>
+<div id="mobile-nav" popover="manual" class="mobile-nav">
+  <div class="mobile-nav-scroller">
+    <nav class="mobile-nav-sheet" tabindex="-1">
+      <div class="flex justify-end p-3">
+        <button
+          type="button"
+          class={iconClass}
+          data-drawer-close
+          aria-label={t("components.mobileNav.toggleMenu")}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            class="size-5"
+            aria-hidden="true"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+              clip-rule="evenodd"></path>
+          </svg>
+        </button>
+      </div>
+      <div class="flex flex-col gap-1 px-4 pb-6">
+        {
+          NAVIGATION.map((link) => (
+            <HeaderLink
+              href={link.href}
+              class="rounded-md px-3 py-2 text-lg font-medium text-gray-700 transition hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800 aria-[current=page]:bg-gray-100 aria-[current=page]:text-gray-900 dark:aria-[current=page]:bg-gray-800 dark:aria-[current=page]:text-gray-100"
+            >
+              {t(link.title)}
+            </HeaderLink>
+          ))
+        }
+      </div>
+    </nav>
+  </div>
+</div>
+<script>
+  let observer: IntersectionObserver | undefined;
+  let isOpen = false;
+
+  function els() {
+    const drawer = document.getElementById("mobile-nav");
+    return {
+      drawer,
+      scroller: drawer?.querySelector<HTMLElement>(".mobile-nav-scroller"),
+      sheet: drawer?.querySelector<HTMLElement>(".mobile-nav-sheet"),
+      openBtn: document.getElementById("drawer-open"),
+    };
+  }
+
+  async function openDrawer() {
+    const { drawer, scroller, sheet, openBtn } = els();
+    if (!drawer || !scroller || !sheet) return;
+    drawer.showPopover();
+    openBtn?.setAttribute("aria-expanded", "true");
+    const open = () => scroller.scrollTo({ left: sheet.offsetWidth, behavior: "auto" });
+    if (!CSS.supports("scroll-initial-target", "nearest")) {
+      scroller.scrollTo({ left: 0, behavior: "instant" });
+      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    }
+    open();
+    sheet.focus();
+  }
+
+  function closeDrawer() {
+    els().scroller?.scrollTo({ left: 0, behavior: "auto" });
+  }
+
+  document.addEventListener("click", (e) => {
+    const t = e.target as Element;
+    if (t.closest("#drawer-open")) {
+      const { drawer } = els();
+      drawer?.matches(":popover-open") ? closeDrawer() : openDrawer();
+      return;
+    }
+    if (t.closest("[data-drawer-close]")) {
+      closeDrawer();
+      return;
+    }
+    const { drawer, sheet } = els();
+    if (drawer?.matches(":popover-open") && sheet && !sheet.contains(t) && drawer.contains(t)) {
+      closeDrawer();
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeDrawer();
+  });
+
+  document.addEventListener("astro:page-load", () => {
+    observer?.disconnect();
+    isOpen = false;
+    const { drawer, sheet, openBtn } = els();
+    if (!drawer || !sheet) return;
+    const threshold = 1 / window.innerWidth;
+    observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries.at(-1)!;
+        if (entry.intersectionRatio === 1) isOpen = true;
+        if (isOpen && entry.intersectionRatio < threshold) {
+          isOpen = false;
+          drawer.hidePopover();
+          openBtn?.setAttribute("aria-expanded", "false");
+        }
+      },
+      { root: drawer, threshold: [threshold, 1] },
+    );
+    observer.observe(sheet);
+    if (!CSS.supports("animation-timeline: scroll()")) {
+      const { scroller } = els();
+      scroller?.addEventListener("scroll", () => {
+        drawer.style.setProperty(
+          "--drawer-backdrop",
+          String(scroller.scrollLeft / sheet.offsetWidth || 0),
+        );
+      });
+    }
+  });
+</script>
