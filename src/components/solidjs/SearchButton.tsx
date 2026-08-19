@@ -112,7 +112,7 @@ export default function SearchButton() {
       <button
         onClick={openSearch}
         aria-label="Search"
-        class="text-gray-900 dark:text-gray-100"
+        class="size-9 inline-flex items-center justify-center rounded-lg text-gray-900 transition hover:bg-gray-100 dark:text-gray-100 dark:hover:bg-gray-800"
         title="Search (⌘K)"
       >
         <svg
@@ -121,7 +121,7 @@ export default function SearchButton() {
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="h-6 w-6"
+          class="size-5"
         >
           <path
             stroke-linecap="round"

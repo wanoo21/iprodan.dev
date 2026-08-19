@@ -56,3 +56,60 @@ input:-webkit-autofill:focus {
         background-color 600000s 0s,
         color 600000s 0s;
 }
+
+.mobile-nav {
+    position: fixed;
+    inset: 0 0 0 auto;
+    width: min(20rem, 80vw);
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    overflow: auto;
+    background: white;
+    translate: 100% 0;
+    transition:
+        translate 0.3s ease,
+        overlay 0.3s allow-discrete,
+        display 0.3s allow-discrete;
+}
+
+.dark .mobile-nav {
+    background: var(--color-gray-950);
+}
+
+.mobile-nav:popover-open {
+    translate: 0;
+}
+
+.mobile-nav::backdrop {
+    background: rgb(0 0 0 / 0.4);
+    opacity: 0;
+    transition:
+        opacity 0.3s ease,
+        overlay 0.3s allow-discrete,
+        display 0.3s allow-discrete;
+}
+
+.mobile-nav:popover-open::backdrop {
+    opacity: 1;
+}
+
+@starting-style {
+    .mobile-nav:popover-open {
+        translate: 100% 0;
+    }
+
+    .mobile-nav:popover-open::backdrop {
+        opacity: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mobile-nav,
+    .mobile-nav::backdrop {
+        transition: none;
+    }
+}
