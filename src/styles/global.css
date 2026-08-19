@@ -115,6 +115,11 @@ input:-webkit-autofill:focus {
     background: var(--color-gray-950);
 }
 
+.below-fold {
+    content-visibility: auto;
+    contain-intrinsic-size: auto none auto 24rem;
+}
+
 @supports (animation-timeline: scroll()) {
     .mobile-nav {
         timeline-scope: --drawer-fade;
