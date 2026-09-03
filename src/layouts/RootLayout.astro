@@ -11,42 +11,42 @@ import { useTranslations } from "@/i18n";
 const t = useTranslations();
 
 type Props = {
-  title: string;
-  description: string;
-  titleTemplate?: string;
-  robots?: string;
-  /** Absolute canonical href; when set, overrides default from current path + `site`. */
-  canonical?: string;
-  ogCover?: ImageMetadata;
-  publishedDocument?: {
-    publishedTime: Date;
-    modifiedTime?: Date;
-    authors?: string[];
-  };
-  article?: {
-    publishedTime: Date;
-    modifiedTime?: Date;
-    authors: string[];
-    authorTwitter?: string;
-    tags: string[];
-    cover: CollectionEntry<"blog">["data"]["cover"];
-  };
+    title: string;
+    description: string;
+    titleTemplate?: string;
+    robots?: string;
+    /** Absolute canonical href; when set, overrides default from current path + `site`. */
+    canonical?: string;
+    ogCover?: ImageMetadata;
+    publishedDocument?: {
+        publishedTime: Date;
+        modifiedTime?: Date;
+        authors?: string[];
+    };
+    article?: {
+        publishedTime: Date;
+        modifiedTime?: Date;
+        authors: string[];
+        authorTwitter?: string;
+        tags: string[];
+        cover: CollectionEntry<"blog">["data"]["cover"];
+    };
 };
 ---
 
 <html lang={t("siteMetadata.language")} class="scroll-smooth">
-  <BaseHead {...Astro.props} />
-  <body
-    class="bg-white text-black antialiased dark:bg-gray-950 dark:text-white"
-  >
-    <SectionContainer>
-      <div class="flex min-h-screen flex-col justify-between font-sans">
-        <Header />
-        <main class="mb-auto">
-          <slot />
-        </main>
-        <Footer />
-      </div>
-    </SectionContainer>
-  </body>
+    <BaseHead {...Astro.props} />
+    <body
+        class="bg-white text-black antialiased dark:bg-gray-950 dark:text-white"
+    >
+        <SectionContainer>
+            <div class="flex min-h-screen flex-col justify-between font-sans">
+                <Header />
+                <main class="mb-auto mt-8">
+                    <slot />
+                </main>
+                <Footer />
+            </div>
+        </SectionContainer>
+    </body>
 </html>
