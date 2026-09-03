@@ -18,203 +18,223 @@ import { useTranslations } from "@/i18n";
 const t = useTranslations();
 
 interface Props {
-  post: CollectionEntry<"blog">;
-  next?: CollectionEntry<"blog">;
-  prev?: CollectionEntry<"blog">;
+    post: CollectionEntry<"blog">;
+    next?: CollectionEntry<"blog">;
+    prev?: CollectionEntry<"blog">;
 }
 
 const { post, next, prev } = Astro.props as Props;
 const authors: CollectionEntry<"authors">[] = await getEntries(
-  post.data.authors,
+    post.data.authors,
 );
 const tags: CollectionEntry<"tags">[] = await getEntries(post.data.tags);
 // const related: CollectionEntry<'blog'>[] = await getEntries(post.data.related);
 
 const articleOgDetails = {
-  publishedTime: post.data.date,
-  modifiedTime: post.data.lastmod,
-  authors: authors.map(({ data }) => data.name),
-  authorTwitter: authors.map(({ data }) => data.twitter).at(0),
-  tags: tags.map(({ data }) => data.name),
-  cover: post.data.cover,
+    publishedTime: post.data.date,
+    modifiedTime: post.data.lastmod,
+    authors: authors.map(({ data }) => data.name),
+    authorTwitter: authors.map(({ data }) => data.twitter).at(0),
+    tags: tags.map(({ data }) => data.name),
+    cover: post.data.cover,
 };
 
 const { Content, headings } = await render(post);
 
 const canonicalHref = post.data.canonicalUrl
-  ? new URL(post.data.canonicalUrl, Astro.site).href
-  : undefined;
+    ? new URL(post.data.canonicalUrl, Astro.site).href
+    : undefined;
 const postPageUrl =
-  canonicalHref ?? new URL(`/blog/${post.id}/`, Astro.site).href;
+    canonicalHref ?? new URL(`/blog/${post.id}/`, Astro.site).href;
 ---
 
 <RootLayout
-  title={post.data.title}
-  description={post.data.summary}
-  article={articleOgDetails}
-  canonical={canonicalHref}
+    title={post.data.title}
+    description={post.data.summary}
+    article={articleOgDetails}
+    canonical={canonicalHref}
 >
-  <BlogPostJsonLd post={post} authors={authors} pageUrl={postPageUrl} />
-  <SectionContainer>
-    <ScrollTopAndComments client:only="solid-js" />
-    <article>
-      <header>
-        <div class="space-y-1 pb-10 text-center dark:border-gray-700">
-          <dl>
-            <dt class="sr-only">{t("layouts.postLayout.publishedAt")}</dt>
-            <dd
-              class="text-base font-medium leading-6 text-gray-500 dark:text-gray-400"
-            >
-              <FormattedDate date={post.data.date} />
-            </dd>
-          </dl>
-          <PageTitle>{post.data.title}</PageTitle>
-        </div>
-        {
-          post.data.cover && POST_METADATA.showCover && (
-            <div class="space-y-1 pb-10 text-center dark:border-gray-700">
-              <PostCover {post} />
-            </div>
-          )
-        }
-        {
-          POST_METADATA.showSummary && (
-            <div class="pb-10 text-center border-b border-gray-200">
-              <p>{post.data.summary}</p>
-            </div>
-          )
-        }
-      </header>
-      <div
-        class="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-8 dark:divide-gray-700 xl:divide-y-0"
-      >
-        {
-          post.data.draft && (
-            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 dark:bg-yellow-500 dark:border-yellow-300 mt-10">
-              <p class="leading-5 text-yellow-700 dark:text-yellow-300">
-                {t("layouts.postLayout.draftMessage")}
-              </p>
-            </div>
-          )
-        }
-        {
-          ["top", "both"].includes(POST_METADATA.showShareButtons) ? (
-            <SocialShareButtons
-              title={post.data.title}
-              description={post.data.summary}
-              class="mt-4"
-            />
-          ) : null
-        }
-        {
-          headings.length > 0 && POST_METADATA.showTableOfContents && (
-            <DetailsSummary
-              class="border border-gray-100 dark:border-gray-600 rounded mt-4 max-w-none"
-              title={t("layouts.postLayout.tableOfContents")}
-            >
-              <ul class="space-y-2 list-none mt-0 ps-0">
-                {headings.map(({ slug, text, depth }) => (
-                  <li
-                    class:list={{
-                      "ml-0": depth === 2,
-                      "ml-4": depth === 3,
-                      "ml-8": depth === 4,
-                      "ml-12": depth === 5,
-                      "ml-16": depth === 6,
-                    }}
-                  >
-                    <Link href={`#${slug}`} class="no-underline">
-                      {text}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </DetailsSummary>
-          )
-        }
-        <div
-          class="divide-y divide-gray-200 dark:divide-gray-700 xl:col-span-3 xl:row-span-2 xl:pb-0"
-        >
-          <div class="prose max-w-none pb-8 pt-10 dark:prose-invert md:text-lg prose-a:underline">
-            <slot />
-            <Content />
-          </div>
-        </div>
-        {
-          ["bottom", "both"].includes(POST_METADATA.showShareButtons) ? (
-            <SocialShareButtons
-              title={post.data.title}
-              description={post.data.summary}
-            />
-          ) : null
-        }
-        {
-          post.data.furtherReading.length > 0 && (
-            <div class="max-w-5xl mx-auto py-8 border-t border-gray-200 dark:border-gray-700 mt-8">
-              <h2 class="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-3">
-                {t("layouts.postLayout.furtherReading")}
-              </h2>
-              <ul class="space-y-1">
-                {post.data.furtherReading.map(({ title, href }) => (
-                  <li class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
-                    <Link href={href} class="underline">{title}</Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )
-        }
-        <BeehiivSubscribe class="py-8" />
-        {
-          SITE_METADATA.comments?.provider === "giscus" &&
-            POST_METADATA.showComments && (
-              <div id="comments">
-                <Comments />
-              </div>
-            )
-        }
-        <!--{siteMetadata.comments && (-->
-        <!--        <div class="pb-6 pt-6 text-center text-gray-700 dark:text-gray-300" id="comment">-->
-        <!--            <Comments slug={slug} />-->
-        <!--        </div>-->
-        <!--)}-->
-        <footer>
-          <div
-            class="flex flex-col text-sm font-medium sm:flex-row sm:justify-between sm:text-base"
-          >
-            {
-              prev && (
-                <div class="pt-4 xl:pt-8">
-                  <Link
-                    href={`/blog/${prev.id}`}
-                    class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
-                    aria-label={t("layouts.postLayout.previousPost", {
-                      title: prev.data.title,
-                    })}
-                  >
-                    &larr; {prev.data.title}
-                  </Link>
+    <BlogPostJsonLd post={post} authors={authors} pageUrl={postPageUrl} />
+    <SectionContainer>
+        <ScrollTopAndComments client:only="solid-js" />
+        <article contentEditable={post.data.draft}>
+            <header>
+                <div class="space-y-1 pb-10 text-center dark:border-gray-700">
+                    <dl>
+                        <dt class="sr-only">
+                            {t("layouts.postLayout.publishedAt")}
+                        </dt>
+                        <dd
+                            class="text-base font-medium leading-6 text-gray-500 dark:text-gray-400"
+                        >
+                            <FormattedDate date={post.data.date} />
+                        </dd>
+                    </dl>
+                    <PageTitle>{post.data.title}</PageTitle>
                 </div>
-              )
-            }
-            {
-              next && (
-                <div class="pt-4 xl:pt-8">
-                  <Link
-                    href={`/blog/${next.id}`}
-                    class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
-                    aria-label={t("layouts.postLayout.nextPost", {
-                      title: next.data.title,
-                    })}
-                  >
-                    {next.data.title} &rarr;
-                  </Link>
+                {
+                    post.data.cover && POST_METADATA.showCover && (
+                        <div class="space-y-1 pb-10 text-center dark:border-gray-700">
+                            <PostCover {post} />
+                        </div>
+                    )
+                }
+                {
+                    POST_METADATA.showSummary && (
+                        <div class="pb-10 text-center border-b border-gray-200">
+                            <p>{post.data.summary}</p>
+                        </div>
+                    )
+                }
+            </header>
+            <div
+                class="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-8 dark:divide-gray-700 xl:divide-y-0"
+            >
+                {
+                    post.data.draft && (
+                        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 dark:bg-yellow-500 dark:border-yellow-300 mt-10">
+                            <p class="leading-5 text-yellow-700 dark:text-yellow-300">
+                                {t("layouts.postLayout.draftMessage")}
+                            </p>
+                        </div>
+                    )
+                }
+                {
+                    ["top", "both"].includes(POST_METADATA.showShareButtons) ? (
+                        <SocialShareButtons
+                            title={post.data.title}
+                            description={post.data.summary}
+                            class="mt-4"
+                        />
+                    ) : null
+                }
+                {
+                    headings.length > 0 &&
+                        POST_METADATA.showTableOfContents && (
+                            <DetailsSummary
+                                class="border border-gray-100 dark:border-gray-600 rounded mt-4 max-w-none"
+                                title={t("layouts.postLayout.tableOfContents")}
+                            >
+                                <ul class="space-y-2 list-none mt-0 ps-0">
+                                    {headings.map(({ slug, text, depth }) => (
+                                        <li
+                                            class:list={{
+                                                "ml-0": depth === 2,
+                                                "ml-4": depth === 3,
+                                                "ml-8": depth === 4,
+                                                "ml-12": depth === 5,
+                                                "ml-16": depth === 6,
+                                            }}
+                                        >
+                                            <Link
+                                                href={`#${slug}`}
+                                                class="no-underline"
+                                            >
+                                                {text}
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </DetailsSummary>
+                        )
+                }
+                <div
+                    class="divide-y divide-gray-200 dark:divide-gray-700 xl:col-span-3 xl:row-span-2 xl:pb-0"
+                >
+                    <div
+                        class="prose max-w-none pb-8 pt-10 dark:prose-invert md:text-lg prose-a:underline"
+                    >
+                        <slot />
+                        <Content />
+                    </div>
                 </div>
-              )
-            }
-          </div>
-        </footer>
-      </div>
-    </article>
-  </SectionContainer>
+                {
+                    ["bottom", "both"].includes(
+                        POST_METADATA.showShareButtons,
+                    ) ? (
+                        <SocialShareButtons
+                            title={post.data.title}
+                            description={post.data.summary}
+                        />
+                    ) : null
+                }
+                {
+                    post.data.furtherReading.length > 0 && (
+                        <div class="max-w-5xl mx-auto py-8 border-t border-gray-200 dark:border-gray-700 mt-8">
+                            <h2 class="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-3">
+                                {t("layouts.postLayout.furtherReading")}
+                            </h2>
+                            <ul class="space-y-1">
+                                {post.data.furtherReading.map(
+                                    ({ title, href }) => (
+                                        <li class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
+                                            <Link href={href} class="underline">
+                                                {title}
+                                            </Link>
+                                        </li>
+                                    ),
+                                )}
+                            </ul>
+                        </div>
+                    )
+                }
+                <BeehiivSubscribe class="py-8" />
+                {
+                    SITE_METADATA.comments?.provider === "giscus" &&
+                        POST_METADATA.showComments && (
+                            <div id="comments">
+                                <Comments />
+                            </div>
+                        )
+                }
+                <!--{siteMetadata.comments && (-->
+                <!--        <div class="pb-6 pt-6 text-center text-gray-700 dark:text-gray-300" id="comment">-->
+                <!--            <Comments slug={slug} />-->
+                <!--        </div>-->
+                <!--)}-->
+                <footer>
+                    <div
+                        class="flex flex-col text-sm font-medium sm:flex-row sm:justify-between sm:text-base"
+                    >
+                        {
+                            prev && (
+                                <div class="pt-4 xl:pt-8">
+                                    <Link
+                                        href={`/blog/${prev.id}`}
+                                        class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
+                                        aria-label={t(
+                                            "layouts.postLayout.previousPost",
+                                            {
+                                                title: prev.data.title,
+                                            },
+                                        )}
+                                    >
+                                        &larr; {prev.data.title}
+                                    </Link>
+                                </div>
+                            )
+                        }
+                        {
+                            next && (
+                                <div class="pt-4 xl:pt-8">
+                                    <Link
+                                        href={`/blog/${next.id}`}
+                                        class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
+                                        aria-label={t(
+                                            "layouts.postLayout.nextPost",
+                                            {
+                                                title: next.data.title,
+                                            },
+                                        )}
+                                    >
+                                        {next.data.title} &rarr;
+                                    </Link>
+                                </div>
+                            )
+                        }
+                    </div>
+                </footer>
+            </div>
+        </article>
+    </SectionContainer>
 </RootLayout>

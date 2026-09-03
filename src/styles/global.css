@@ -6,7 +6,8 @@
 
 @theme {
     /* Use Onest as the primary sans font */
-    --font-sans: "Onest", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    --font-sans:
+        "Onest", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
         sans-serif;
 
     /* Additional line-heights that existed in the Tailwind v3 config */
@@ -27,6 +28,13 @@
     --color-primary-800: var(--color-pink-800);
     --color-primary-900: var(--color-pink-900);
     --color-primary-950: var(--color-pink-950);
+}
+
+@utility prose {
+    code::before,
+    code::after {
+        content: none; /* Removes the default backticks */
+    }
 }
 
 .task-list-item::before {
@@ -144,5 +152,12 @@ input:-webkit-autofill:focus {
         100% {
             --drawer-backdrop: 1;
         }
+    }
+}
+
+@scope (article) to (pre) {
+    code {
+        @apply bg-gray-100 dark:bg-gray-800;
+        padding-inline: 0.3rem;
     }
 }
