@@ -3,7 +3,7 @@ title: "What’s new on the web — week of 22 Sep 2026"
 postLayout: "simple"
 date: 2026-09-22
 tags: ["default"]
-summary: "Safari 27 ships a huge quality + features release, scroll anchoring and several CSS/JS pieces land as Baseline newly available, and Firefox 156 / Chromium 153 keep the two-week cadence going."
+summary: "Safari 27 ships a huge quality + features release, scroll anchoring and several CSS/JS pieces land as Baseline newly available, and Chrome 154 / Edge 154 continue the two-week Chromium train."
 draft: true
 furtherReading:
   - title: "WebKit Features for Safari 27.0"
@@ -14,15 +14,19 @@ furtherReading:
     href: "https://bcd-watch.igalia.com/weekly-completed/"
   - title: "Firefox 156 for developers"
     href: "https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/Releases/156"
+  - title: "New in Chrome 154"
+    href: "https://developer.chrome.com/blog/new-in-chrome-154"
+  - title: "Microsoft Edge 154 web platform notes"
+    href: "https://learn.microsoft.com/en-us/microsoft-edge/web-platform/release-notes/154"
   - title: "New in Chrome 153"
     href: "https://developer.chrome.com/blog/new-in-chrome-153"
   - title: "Microsoft Edge 153 web platform notes"
     href: "https://learn.microsoft.com/en-us/microsoft-edge/web-platform/release-notes/153"
-  - title: "Submit ideas for Interop 2027"
+  - title: "Interop 2027 proposals (closed 23 Sep)"
     href: "https://webkit.org/blog/18310/submit-your-ideas-for-interop-2027/"
 ---
 
-This week is mostly **Safari 27** landing for real, plus a **Baseline newly** wave that finally catches several features Safari just made universal. Chromium is on its new two-week train; Firefox 156 is the quiet but useful mid-month release.
+This week is mostly **Safari 27** landing for real, plus a **Baseline newly** wave that finally catches several features Safari just made universal. Chrome **154** and Edge **154** are out on the two-week train; Firefox 156 is the quiet but useful mid-month release.
 
 ## Safari 27.0 (17 Sep) — quality first, then a long feature list
 
@@ -57,7 +61,7 @@ select::picker(select) {
 
 Safari 27 also refreshed the UA defaults (cheaper starting point than the June beta).
 
-**Status:** Chromium shipped this earlier; Safari 27 joins. [webstatus.dev](https://webstatus.dev/) still lists **customizable-select** as **limited** (badges can lag BCD by days). **Do not call this Baseline** until Firefox + the badge catch up. MDN: [Customizable select](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Customizable_select) · [appearance](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/appearance). Vendor: [WebKit](https://webkit.org/blog/18325/webkit-features-for-safari-27-0/).
+**Status:** Chromium shipped this earlier; Safari 27 joins. [webstatus.dev](https://webstatus.dev/features/customizable-select) still lists **customizable-select** as **limited** (Safari 27 is on the board; Firefox is not). **Do not call this Baseline.** MDN: [Customizable select](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Customizable_select) · [appearance](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/appearance). Vendor: [WebKit](https://webkit.org/blog/18325/webkit-features-for-safari-27-0/).
 
 ### Top-level `await` — fixed, not “newly invented”
 
@@ -83,11 +87,12 @@ Also Safari-only / early for most sites: HTML `<model>` on iOS/iPadOS/macOS, imm
 
 ## Baseline newly this week (roughly 1–14 Sep, badges catching Safari)
 
-Confirmed on [webstatus.dev `baseline_status:newly`](https://webstatus.dev/?q=baseline_status:newly) (API checked 22 Sep). Badges can lag BCD; I still treat webstatus as the Baseline source of truth.
+Confirmed on [webstatus.dev `baseline_status:newly`](https://webstatus.dev/?q=baseline_status:newly) (re-checked 27 Sep). Badges can lag BCD; I still treat webstatus as the Baseline source of truth.
 
 | Feature | Newly date | Why care | MDN | Vendor / notes |
 | --- | --- | --- | --- | --- |
 | **`overflow-anchor`** | 2026-09-14 | Scroll jumps from injected content stop being “just how the web is” | [overflow-anchor](https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-anchor) | Safari 27 scroll anchoring |
+| **`ariaNotify()`** | 2026-09-14 | Screen reader announcements without hidden live-region hacks | [Element.ariaNotify()](https://developer.mozilla.org/en-US/docs/Web/API/Element/ariaNotify) | Safari 27; Chrome 141, Firefox 150 |
 | **`alpha()`** | 2026-09-14 | `alpha(from var(--brand) / 40%)` without rewriting the whole relative color | [alpha()](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/color_value/alpha) | Safari 27 color section; Chrome 151+ |
 | **`light-dark()` image values** | 2026-09-14 | One declaration for light/dark `background-image` / gradients | [light-dark()](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/color_value/light-dark) (images are the newly bit; colors were already Baseline) | Safari 27 |
 | **Async iterable streams** | 2026-09-14 | `for await (const chunk of response.body)` | Streams / async iteration on MDN (feature id `async-iterable-streams` on webstatus) | Safari 27 ReadableStream work |
@@ -109,17 +114,34 @@ Slightly older but still fresh: **`progress()`** became Baseline newly on **2026
 
 **Experimental / Nightly-flagged** (do not ship as “works now”): scoped custom element registries (on by default in Nightly), `named-feature()` in `@supports`, Container Timing API.
 
-Firefox **157** (Beta, ships ~29 Sep) is still WIP on MDN; early note: `@supports at-rule(@scope)` via `at-rule()`.
+Firefox **157** ships **Tue 29 Sep** — [MDN 157 notes](https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/Releases/157) are still WIP; early note: `@supports at-rule(@scope)` via `at-rule()`.
 
 ---
 
-## Chromium / Edge — 153 landed, 154 on the ramp
+## Chromium / Edge — 154 is out
 
-Chrome moved to a **two-week** Stable cadence starting with **Chrome 153** (stable **8 Sep**): [announcement](https://developer.chrome.com/blog/chrome-two-week-start), [New in Chrome 153](https://developer.chrome.com/blog/new-in-chrome-153). Edge **153** notes: **10 Sep** ([learn.microsoft.com](https://learn.microsoft.com/en-us/microsoft-edge/web-platform/release-notes/153)). Edge **154** is dated **24 Sep** ([notes](https://learn.microsoft.com/en-us/microsoft-edge/web-platform/release-notes/154)); Chrome 154 Beta was already up as 153 shipped.
+Chrome **154** hit stable **22 Sep** ([New in Chrome 154](https://developer.chrome.com/blog/new-in-chrome-154), [release notes](https://developer.chrome.com/release-notes/154)). Edge **154** followed **24 Sep** ([learn.microsoft.com](https://learn.microsoft.com/en-us/microsoft-edge/web-platform/release-notes/154)). That’s the second stop on the two-week train that started with Chrome **153** (8 Sep) / Edge **153** (10 Sep): [cadence announcement](https://developer.chrome.com/blog/chrome-two-week-start).
 
-### Worth watching (label carefully)
+### 154 highlights (Chromium-family — not Baseline)
 
-**Single-axis scroll containers** — `overflow: scroll clip` (and friends) so one axis scrolls and the other clips; unlocks sticky header/column patterns. Chrome’s “New in 153” post says this is for **non-stable channels** in 153; Edge 153 lists it in the shipping notes. Treat as **Chromium-family, verify channel** — **not Baseline**. MDN: [`overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/overflow). Vendors: [Chrome 153](https://developer.chrome.com/blog/new-in-chrome-153), [Edge 153](https://learn.microsoft.com/en-us/microsoft-edge/web-platform/release-notes/153).
+**Responsive iframes** — drop the `postMessage` height dance. On the embed: `frame-sizing: content-height`. The child opts in with `<meta name="responsive-embedded-sizing" content="allow-origins=*">`. MDN: [`frame-sizing`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/frame-sizing) is **limited**; [`responsive-embedded-sizing`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta/name/responsive-embedded-sizing) same. **Not Baseline.** Vendors: [Chrome 154](https://developer.chrome.com/blog/new-in-chrome-154), [Edge 154](https://learn.microsoft.com/en-us/microsoft-edge/web-platform/release-notes/154).
+
+**`scroll-marker-group` modes** — `links` (default, nav-list semantics) and `tabs` (tablist / tab / tabpanel). Focus order and a11y roles follow the mode:
+
+```css
+scroll-marker-group: after links;
+scroll-marker-group: before tabs;
+```
+
+MDN: [`::scroll-marker-group`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/::scroll-marker-group) is **limited**. **Not Baseline.**
+
+**`text-decoration-inset`** — shorten, lengthen, or shift underlines without fake background tricks. `10px` insets both ends; two values set start/end independently. MDN: [`text-decoration-inset`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/text-decoration-inset) (experimental; no Baseline badge). **Not Baseline.**
+
+**Edge extras on the same train** (also Chromium 154): [`Iterator.includes`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Iterator/includes) — `someIterator.includes(value)`, same idea as `Array.includes`. **`font-width`** as the `@font-face` / `FontFace` alias for `font-stretch` ([MDN descriptor](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@font-face/font-width) is **limited**). CSS Typed OM constructors (`CSSStyleValue`, `CSSNumericValue`, …) now work in workers — Edge says this matches Firefox/Safari. None of these are Baseline on webstatus as of 27 Sep.
+
+### Still from 153 (if you skipped last cycle)
+
+**Single-axis scroll containers** — `overflow: scroll clip` (and friends) so one axis scrolls and the other clips; unlocks sticky header/column patterns. Chrome’s “New in 153” post said this was for **non-stable channels** in 153; Edge 153 listed it in the shipping notes. Treat as **Chromium-family, verify channel** — **not Baseline**. MDN: [`overflow`](https://developer.mozilla.org/en-US/docs/Web/CSS/overflow). Vendors: [Chrome 153](https://developer.chrome.com/blog/new-in-chrome-153), [Edge 153](https://learn.microsoft.com/en-us/microsoft-edge/web-platform/release-notes/153).
 
 Related Chromium work (CSS-Tricks Nightly ticker / Edge notes): **`scroll-axis-lock`** (`auto` | `none`) to allow or constrain diagonal scroll locking — **Edge 153 lists it**; still **single-engine / early**, not Baseline. MDN may still be thin — caveat **not fully documented on MDN yet** if the page is missing.
 
@@ -139,8 +161,8 @@ I scanned [csswg-drafts issues by recently updated](https://github.com/w3c/csswg
 
 ## Watch next
 
-- **Interop 2027 proposals** are open through **23 Sep 2026** — [WebKit call for ideas](https://webkit.org/blog/18310/submit-your-ideas-for-interop-2027/). If a sticky interop bug has been burning you, this is the window.
-- **Edge 154 / Chrome 154** (late this week): scroll-marker-group modes, `text-decoration-inset`, WebSocket constructor options, more Iterator helpers — preview in [Edge 154 notes](https://learn.microsoft.com/en-us/microsoft-edge/web-platform/release-notes/154).
+- **Interop 2027 proposals** closed **23 Sep** — [WebKit’s call](https://webkit.org/blog/18310/submit-your-ideas-for-interop-2027/) is now the archive; selection is underway.
+- **Firefox 157** ships **Tue 29 Sep** ([MDN 157](https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/Releases/157) still WIP).
 - Re-test production sites in **Safari 27** specifically for module graphs with top-level `await`, SVG, and form controls.
 
 If you only do one thing: install/update Safari 27 and run your app’s module + layout smoke tests. The Baseline newly list is the “we can start using this without a polyfill strategy” pile.
