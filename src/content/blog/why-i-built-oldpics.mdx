@@ -4,28 +4,28 @@ cover: /src/assets/oldpics-og.jpg
 postLayout: "simple"
 date: 2026-10-23
 tags: ["projects"]
-summary: "OldPics repairs scratches, tears, stains, and fading. Five free Standard restores per device, then one-time packs. No account and no subscription."
+summary: "I'm a frontend engineer who ships small tools, mostly in Angular. Here is why OldPics stayed narrow, with no account and no subscription."
 furtherReading:
+  - title: "I asked Gemini for a prototype… and Snipsco happened!"
+    href: "/blog/snipsco"
   - title: "OldPics"
     href: "https://oldpics.ai"
   - title: "Restore old photos free"
     href: "https://oldpics.ai/restore-old-photos-free"
 ---
 
-The prints I actually want to fix are old family ones. A scratch across a face, a tear at the edge, a stain from an album that got damp, color that faded until everyone in the picture looks the same washed-out yellow. The person is still there. The paper is just worn out.
+I'm a frontend engineer. I work mostly with Angular, and with TypeScript and Astro when the job fits. I care about developer experience, performance, and making a tool that another developer would actually enjoy using. What I find interesting is tooling, developer productivity, and a UX that people actually like. The side projects stay small.
 
-I tried the tools that already do this, and they all asked for something before they would touch the photo. An account before you can see a result. A subscription if you want to keep going. A watermark on the file you download. For a small stack of family prints, that is a lot of product wrapped around a small job. I didn't want a login standing in front of the first restore, and I didn't want a plan that bills again next month after the album is back on the shelf. So I built OldPics, and I kept it narrow. It repairs scratches, tears, stains and fading. That is the job I wanted it to do.
+[snipsco.com](https://snipsco.com) is code snippets made easy, built entirely with Angular. There was no plan for it. I asked for an Angular prototype, it did a better job than I expected, and I turned that into a real app. I wrote that up in <a href="/blog/snipsco">how Snipsco happened</a>. The workspace there stays free, with no limits, because I remember what it felt like to hit a limit in someone else's tool and I didn't want that for people sharing code. [quiky.email](https://quiky.email) is free email writing tools, built with Astro. [tailwind-astro-starting-blog](https://github.com/wanoo21/tailwind-astro-starting-blog) is an Astro and Tailwind blog starter that a lot of people use. I share a lot of code examples, tricks and bits of code that made me laugh or just made me sad, and Snipsco came out of that habit. I've been a frontend developer for a long time. Back when I started, table layouts were how a page got built, so I'm a senior developer still trying to keep a foot in how fast AI coding is changing. I didn't use to think of myself as an indie hacker. These are the small things I ship anyway. When I'm not building, I'm usually thinking about how to improve a tool I already have. This blog is where I write that down. Mostly frontend, sometimes the shape of a project, sometimes something that will not fit in a tweet.
 
-## How I built it
+[Ion: what made you start this?]
 
-It is Angular with server-side rendering, running on Cloudflare Workers. Angular is what I already build in, so I didn't start by learning a new framework just to ship a photo page. The page is the studio. You drop the print, you run a restore, you download the file. I wanted the visit to be that, and not a tour of settings before you get a result.
+[OldPics](https://oldpics.ai) is the side project after those. I kept the choices few.
 
-The free restores are counted on the device, not on an account. Each device gets 5 free Standard restores. No signup, no card. I did it that way because an account would have meant email and passwords before anyone could find out if a scratch would come off. A count on the device is enough to give those first restores away and to know when they have been used. I wrote what that free tier includes, and what it doesn't, on [restore old photos free](https://oldpics.ai/restore-old-photos-free).
+I kept it narrow. One job. No account. Each device gets 5 free restores, and after that the next restores are a one-time pack instead of a subscription, $9 for 20 or $29 for 100. I didn't want the project to turn into signup, passwords, and a plan that bills again next month. What those free restores include is on [restore old photos free](https://oldpics.ai/restore-old-photos-free).
 
-After the five, more restores come from a one-time pack, not a subscription. $9 is 20 High quality restores. $29 is 100. Creem is the merchant of record, so the payment goes through them and I don't store the card, and buying a pack does not start a plan. You pay once. The credits stay on that device. Nothing renews. A box of prints is not a monthly habit, and I didn't want the pricing to pretend that it is.
+I built it in Angular with server-side rendering, on Cloudflare Workers, because that is what I already use. Snipsco is Angular. Quiky and the blog starter are both Astro, which is the other thing I work in. A tool that is one page, drop a photo, restore it, download it, did not need a new framework. I stayed in the stack I already ship with.
 
-## Where it stops
+A soft or blurry scan stays soft. It does not invent detail that was never in the photo.
 
-It is good at the damage that is sitting on a picture you can still see: the scratch, the tear, the stain, the fade. A soft or blurry scan stays soft, because the restore does not invent detail that was never in the photo. A large missing area is filled from what is nearby, so that fill is a guess, not the piece that was lost. Colorize is a guess too. A black-and-white print has no color record, so the colors it adds are estimated.
-
-If you have a print like that, drop it on [OldPics](https://oldpics.ai).
+[Ion: what did you learn building this, or what would you do differently?]
