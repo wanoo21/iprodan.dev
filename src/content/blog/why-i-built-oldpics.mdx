@@ -10,26 +10,22 @@ furtherReading:
     href: "https://oldpics.ai"
   - title: "Restore old photos free"
     href: "https://oldpics.ai/restore-old-photos-free"
-  - title: "OldPics affiliate program"
-    href: "https://oldpics.ai/affiliates"
 ---
 
-I built [OldPics](https://oldpics.ai) so a damaged print can be repaired without an account, a subscription, or a watermark.
+The prints I actually want to fix are old family ones. A scratch across a face, a tear at the edge, a stain from an album that got damp, color that faded until everyone in the picture looks the same washed-out yellow. The person is still there. The paper is just worn out.
 
-The job stays narrow. You upload a photo you own — JPG, PNG, or WebP, up to 10MB — and it repairs scratches, tears, stains, and fading on color and black-and-white prints. The file keeps the original aspect ratio. There is no square crop. You download the result. Uploads and restored files are deleted after 7 days. Email ion@iprodan.dev if you want them deleted sooner.
+I tried the tools that already do this, and they all asked for something before they would touch the photo. An account before you can see a result. A subscription if you want to keep going. A watermark on the file you download. For a small stack of family prints, that is a lot of product wrapped around a small job. I didn't want a login standing in front of the first restore, and I didn't want a plan that bills again next month after the album is back on the shelf. So I built OldPics, and I kept it narrow. It repairs scratches, tears, stains and fading. That is the job I wanted it to do.
 
-I left the login out of the first restore. Each device gets 5 free Standard restores. No account and no card. The count sits on the device, using a device id, not an email. Standard takes about 5–20 seconds. One upload uses one of the five. The exact limits of that free tier are on [restore old photos free](https://oldpics.ai/restore-old-photos-free).
+## How I built it
 
-After those five, more restores come from a one-time pack. $9 is 20 High quality restores. $29 is 100. There is no subscription, and buying a pack does not start a plan. The credits stay on that device. They are not cash. High quality takes about a minute. A card is only used when you buy a pack. Creem is the merchant of record, and OldPics does not store the card number. Free restores are used before pack credits, so High quality starts once the five free ones are gone.
+It is Angular with server-side rendering, running on Cloudflare Workers. Angular is what I already build in, so I didn't start by learning a new framework just to ship a photo page. The page is the studio. You drop the print, you run a restore, you download the file. I wanted the visit to be that, and not a tour of settings before you get a result.
 
-You do not pick the quality on the upload. Free restores are Standard. Restores from a pack are High. Both keep the aspect ratio, and both repair the same kinds of damage.
+The free restores are counted on the device, not on an account. Each device gets 5 free Standard restores. No signup, no card. I did it that way because an account would have meant email and passwords before anyone could find out if a scratch would come off. A count on the device is enough to give those first restores away and to know when they have been used. I wrote what that free tier includes, and what it doesn't, on [restore old photos free](https://oldpics.ai/restore-old-photos-free).
 
-Compare is a switch on the upload. It runs several versions of the same photo and keeps them as one library group, not as separate uploads. Open a thumb for the full size and download that version. On a free restore, Compare returns 2 versions and still uses 1 Standard restore. On a pack, Compare returns 6 High quality versions and uses 4 restores. Colorize is the other switch. Leave it off to keep the photo's own tones. Turn it on and the added colors are a guess, because a black-and-white print has no color record. Clothes are the usual place that guess shows.
+After the five, more restores come from a one-time pack, not a subscription. $9 is 20 High quality restores. $29 is 100. Creem is the merchant of record, so the payment goes through them and I don't store the card, and buying a pack does not start a plan. You pay once. The credits stay on that device. Nothing renews. A box of prints is not a monthly habit, and I didn't want the pricing to pretend that it is.
 
-A soft or blurry scan stays soft. The restore does not invent missing detail. A large missing area is filled from nearby pixels, so the fill is a guess, not the lost piece. High quality has the same limit. A dark photo, or a shot through glass, limits the result. A restore can also miss damage or look uneven. Running it again uses another restore. A result that looks wrong is still a finished restore.
+## Where it stops
 
-Photos go to a third-party model for that restore only. I do not use them to train models.
+It is good at the damage that is sitting on a picture you can still see: the scratch, the tear, the stain, the fade. A soft or blurry scan stays soft, because the restore does not invent detail that was never in the photo. A large missing area is filled from what is nearby, so that fill is a guess, not the piece that was lost. Colorize is a guess too. A black-and-white print has no color record, so the colors it adds are estimated.
 
-The app is Angular with server-side rendering, running on Cloudflare Workers. The page is the studio: drop the file, run the restore, download it. A phone photo of the print works when the print is sharp and evenly lit, with the flash off and the print out of a glass frame. A flatbed scan is the steadier option when you have one. Crop off mounts and captions before upload if you do not want them in the restored file. They stay in the picture otherwise.
-
-There is an affiliate program. It pays 20% of every purchase from people you refer, including every pack they buy later, with no end date. A purchase within 180 days of a click counts. You apply on Creem. New partners are approved before they get a link. Payouts are handled by Creem.
+If you have a print like that, drop it on [OldPics](https://oldpics.ai).
