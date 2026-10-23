@@ -113,12 +113,12 @@ export const OPEN_SOURCE_PROJECTS = [
     ariaLabel: "View quiky.email",
   },
   {
-    title: "ngb.email",
-    description: "A fully customizable, open-source drag-and-drop email template editor for Angular, integrated with MJML and TailwindCSS (no longer maintained).",
-    href: "https://github.com/wanoo21/ngb.email",
-    badge: "Archived",
+    title: "OldPics",
+    description: "Repairs scratches, tears, stains and fading in old photos. 5 free restores, no account.",
+    href: "https://oldpics.ai",
+    badge: "Angular",
     lang: "Angular",
-    ariaLabel: "View ngb.email on GitHub",
+    ariaLabel: "View OldPics",
   },
 ] as const;
 

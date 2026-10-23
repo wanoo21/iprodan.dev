@@ -20,7 +20,7 @@ Open source and side projects featured on this site:
 | [tailwind-astro-starting-blog](https://github.com/wanoo21/tailwind-astro-starting-blog) | A feature-rich Astro + TailwindCSS blog starter used by developers worldwide |
 | [snipsco.com](https://snipsco.com) | Code snippets made easy. Built entirely with Angular |
 | [quiky.email](https://quiky.email) | Free AI-powered email writing tools. No sign-up required. Built with Astro |
-| [ngb.email](https://github.com/wanoo21/ngb.email) | A fully customizable, open-source drag-and-drop email template editor for Angular (archived) |
+| [OldPics](https://oldpics.ai) | Repairs scratches, tears, stains and fading in old photos. 5 free restores, no account. |
 
 ## Features
 
