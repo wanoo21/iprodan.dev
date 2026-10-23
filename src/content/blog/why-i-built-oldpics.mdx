@@ -1,0 +1,35 @@
+---
+title: "Why I built OldPics"
+cover: /src/assets/oldpics-og.jpg
+postLayout: "simple"
+date: 2026-10-23
+tags: ["projects"]
+summary: "OldPics repairs scratches, tears, stains, and fading. Five free Standard restores per device, then one-time packs. No account and no subscription."
+furtherReading:
+  - title: "OldPics"
+    href: "https://oldpics.ai"
+  - title: "Restore old photos free"
+    href: "https://oldpics.ai/restore-old-photos-free"
+  - title: "OldPics affiliate program"
+    href: "https://oldpics.ai/affiliates"
+---
+
+I built [OldPics](https://oldpics.ai) so a damaged print can be repaired without an account, a subscription, or a watermark.
+
+The job stays narrow. You upload a photo you own — JPG, PNG, or WebP, up to 10MB — and it repairs scratches, tears, stains, and fading on color and black-and-white prints. The file keeps the original aspect ratio. There is no square crop. You download the result. Uploads and restored files are deleted after 7 days. Email ion@iprodan.dev if you want them deleted sooner.
+
+I left the login out of the first restore. Each device gets 5 free Standard restores. No account and no card. The count sits on the device, using a device id, not an email. Standard takes about 5–20 seconds. One upload uses one of the five. The exact limits of that free tier are on [restore old photos free](https://oldpics.ai/restore-old-photos-free).
+
+After those five, more restores come from a one-time pack. $9 is 20 High quality restores. $29 is 100. There is no subscription, and buying a pack does not start a plan. The credits stay on that device. They are not cash. High quality takes about a minute. A card is only used when you buy a pack. Creem is the merchant of record, and OldPics does not store the card number. Free restores are used before pack credits, so High quality starts once the five free ones are gone.
+
+You do not pick the quality on the upload. Free restores are Standard. Restores from a pack are High. Both keep the aspect ratio, and both repair the same kinds of damage.
+
+Compare is a switch on the upload. It runs several versions of the same photo and keeps them as one library group, not as separate uploads. Open a thumb for the full size and download that version. On a free restore, Compare returns 2 versions and still uses 1 Standard restore. On a pack, Compare returns 6 High quality versions and uses 4 restores. Colorize is the other switch. Leave it off to keep the photo's own tones. Turn it on and the added colors are a guess, because a black-and-white print has no color record. Clothes are the usual place that guess shows.
+
+A soft or blurry scan stays soft. The restore does not invent missing detail. A large missing area is filled from nearby pixels, so the fill is a guess, not the lost piece. High quality has the same limit. A dark photo, or a shot through glass, limits the result. A restore can also miss damage or look uneven. Running it again uses another restore. A result that looks wrong is still a finished restore.
+
+Photos go to a third-party model for that restore only. I do not use them to train models.
+
+The app is Angular with server-side rendering, running on Cloudflare Workers. The page is the studio: drop the file, run the restore, download it. A phone photo of the print works when the print is sharp and evenly lit, with the flash off and the print out of a glass frame. A flatbed scan is the steadier option when you have one. Crop off mounts and captions before upload if you do not want them in the restored file. They stay in the picture otherwise.
+
+There is an affiliate program. It pays 20% of every purchase from people you refer, including every pack they buy later, with no end date. A purchase within 180 days of a click counts. You apply on Creem. New partners are approved before they get a link. Payouts are handled by Creem.
